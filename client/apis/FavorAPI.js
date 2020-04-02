@@ -42,7 +42,7 @@ class FavorApi {
     }
 
     bindGetAllRoute(app) {
-        // route for showing all the users (DEBUG ONLY)
+        // route for showing all the favors
         app.use('/favors/all', (req, res) => {
             // find all the user objects in the database
             favor.find( {}, (err, favors) => {
@@ -66,9 +66,9 @@ class FavorApi {
     }
 
     bindDeleteRoute(app) {
-        // route for showing all the users (DEBUG ONLY)
+        // route for deleting a favor
         app.use('/favors/delete', (req, res) => {
-            // find all the user objects in the database
+            // try to find one favor in the database
             favor.findOne( { _id: mongoose.Types.ObjectId(req.query.id) }, (err1, favor) => {
                 if (err1) {
                     res.type('html').status(200);
@@ -93,9 +93,7 @@ class FavorApi {
                         res.write('There is no favor with that id');
                     }
                 }
-
-                
-            }); // this sorts them BEFORE rendering the results
+            });
         });
     }
 }
