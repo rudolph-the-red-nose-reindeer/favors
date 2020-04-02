@@ -9,6 +9,7 @@ class UserApi {
     bindRoutes(app) {
         this.bindCreateRoute(app);
         this.bindGetAllRoute(app);
+        this.bindGetFindUserRoute(app);
     }
 
     bindCreateRoute(app) {
@@ -62,6 +63,40 @@ class UserApi {
                 }
             }).sort({ 'age': 'asc' }); // this sorts them BEFORE rendering the results
         });
+    }
+
+    bindGetFindUserRoute(app) {
+        app.use('/users/find', (req, res) => {
+            var queryObject = {};
+            if (req.body.email) {
+                queryObject = {email : req.body.email};
+            } else if (req.body.id) {
+                queryObject = {_id : req.body.id};
+            } else if (req.body.username) {
+                queryObject = {username : req.body.username};
+            } else {
+                res.type('html').status(200);
+                console.log('Error: you must specify at least one field');
+                return;
+            }
+            user.findOne(queryObject, (err, user) => {
+                if (err) {
+                    res.type('html').status(200);
+                    console.log('Error: ' + err);
+                    res.write(err);
+                } else {
+                    if (user) {
+                        res.render('user_findone', {user: user});
+                        return;
+                    } else {
+                        res.type('html').status(200);
+                        res.write('There is no user with that : ' + queryObject);
+                        res.end();
+                        return;
+                    }
+                }
+            })
+        })
     }
 }
 
