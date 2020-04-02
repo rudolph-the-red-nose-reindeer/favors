@@ -20,6 +20,7 @@ class UserApi {
                 email: req.body.email,
                 password: req.body.password,
                 photo: req.body.photo,
+                bio: req.body.bio,
                 rating: 0,
                 points: 0
             });

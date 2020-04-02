@@ -10,6 +10,7 @@ var userSchema = new Schema({
 	email: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
 	photo: {type: String, required: false},
+    bio: {type: String, required: false},
 	rating: {type:Number, required: true},
 	points: {type:Number, required: true}
     });

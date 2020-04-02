@@ -67,20 +67,16 @@ class FavorApi {
 
     bindDeleteRoute(app) {
         // route for showing all the users (DEBUG ONLY)
-        console.log('trying to delete something lol')
         app.use('/favors/delete', (req, res) => {
             // find all the user objects in the database
             favor.findOne( { _id: mongoose.Types.ObjectId(req.query.id) }, (err1, favor) => {
                 if (err1) {
-
-                    console.log('err1')
                     res.type('html').status(200);
                     console.log('Error: ' + err);
                     res.write(err);
                 }
                 else {
                     if (favor) {
-                        console.log('thing exists to delete lol')
                         favor.deleteOne( {_id: mongoose.Types.ObjectId(req.query.id)}, (err2, result) => {
                             if (err1) {
                                 res.type('html').status(200);
