@@ -73,6 +73,8 @@ class UserApi {
         app.use('/users/login', (req, res) => {
             user.findOne( {$or:[{ username: req.body.login },
                                { email: req.body.login }]}, (err, user) => {
+                console.log(req.body.login);
+                console.log(req.body.password)
                 if (err) {
                     res.type('html').status(200);
                     console.log('Error: ' + err);
@@ -82,7 +84,9 @@ class UserApi {
                         var salt = user.salt;
                         var hash = user.hash;
                         if (password.authenticate(req.body.password, salt, hash)) {
-                            res.send({ auth: true });
+                            res.send({ auth: true,
+                                       id: user._id,
+                                       name: user.username });
                         } else {
                             res.send({ auth: false});
                         }
