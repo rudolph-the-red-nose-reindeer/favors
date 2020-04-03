@@ -33,13 +33,14 @@ class UserApi {
             // save the user to the database
             newUser.save( (err) => { 
                 if (err) {
-                    res.type('html').status(200);
-                    res.write('Error: ' + err);
                     console.log(err);
-                    res.end();
+                    res.send({success: false,
+                              code: err.code});
                 } else {
+                    res.send({success: true,
+                              user: newUser});
                     // display the "successfully created" page using EJS
-                    res.render('user_created', {user : newUser});
+                    // res.render('user_created', {user : newUser});
                 }
             } ); 
         });
@@ -52,8 +53,9 @@ class UserApi {
             user.find( {}, (err, users) => {
                 if (err) {
                     res.type('html').status(200);
-                    console.log('Error: ' + err);
-                    res.write(err);
+                    res.write('Error: ' + err);
+                    console.log(err);
+                    res.end();
                 } else {
                     if (users.length == 0) {
                         res.type('html').status(200);
@@ -61,6 +63,7 @@ class UserApi {
                         res.end();
                         return;
                     }
+                    res.send(users);
                     // use EJS to show all the users
                     res.render('user_all', { users: users });
                 }
@@ -71,6 +74,7 @@ class UserApi {
     bindLoginRoute(app) {
         //route for login
         app.use('/users/login', (req, res) => {
+            console.log(req.body);
             user.findOne( {$or:[{ username: req.body.login },
                                { email: req.body.login }]}, (err, user) => {
                 console.log(req.body.login);
@@ -86,14 +90,14 @@ class UserApi {
                         if (password.authenticate(req.body.password, salt, hash)) {
                             res.send({ auth: true,
                                        id: user._id,
-                                       name: user.username });
+                                       username: user.username });
                         } else {
                             res.send({ auth: false});
                         }
                     } else {
                         res.type('html').status(200);
                         console.log('No such user');
-                        res.send('No such user');
+                        res.send({ auth: false});
                     }
                 }
             });

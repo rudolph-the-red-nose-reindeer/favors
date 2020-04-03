@@ -1,5 +1,7 @@
 package cis350.project.favor_app.data;
 
+import android.util.Log;
+
 import cis350.project.favor_app.data.model.LoggedInUser;
 
 /**

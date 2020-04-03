@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,12 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.ui.login.LoginViewModel;
-import cis350.project.favor_app.ui.login.LoginViewModelFactory;
+import cis350.project.favor_app.ui.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private AppCompatActivity self = this;
     private LoginViewModel loginViewModel;
+    public static final int REGISTER_ACTIVITY_ID = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button registerButton = findViewById(R.id.sign_up);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -115,6 +118,14 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(self, RegisterActivity.class);
+                startActivityForResult(intent, REGISTER_ACTIVITY_ID);
             }
         });
     }
