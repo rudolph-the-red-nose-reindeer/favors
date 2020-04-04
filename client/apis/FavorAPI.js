@@ -1,4 +1,4 @@
-var favor = require('../schemas/Favor.js');
+var favorSchema = require('../schemas/Favor.js');
 var mongoose = require('mongoose');
 
 class FavorApi {
@@ -17,7 +17,7 @@ class FavorApi {
         // route for creating a new favor
         app.use('/favors/create', (req, res) => {
             // construct the favor from the form data which is in the request body
-            var newFavor = new favor ({
+            var newFavor = new favorSchema ({
                 userId: mongoose.Types.ObjectId(req.body.userId),
                 datePosted: Date.parse(req.body.datePosted),
                 urgency: req.body.urgency,
@@ -45,7 +45,7 @@ class FavorApi {
         // route for showing all the favors
         app.use('/favors/all', (req, res) => {
             // find all the user objects in the database
-            favor.find( {}, (err, favors) => {
+            favorSchema.find( {}, (err, favors) => {
                 if (err) {
                     res.type('html').status(200);
                     console.log('Error: ' + err);
@@ -69,7 +69,7 @@ class FavorApi {
         // route for deleting a favor
         app.use('/favors/delete', (req, res) => {
             // try to find one favor in the database
-            favor.findOne( { _id: mongoose.Types.ObjectId(req.query.id) }, (err1, favor) => {
+            favorSchema.findOne( { _id: mongoose.Types.ObjectId(req.query.id) }, (err1, favor) => {
                 if (err1) {
                     res.type('html').status(200);
                     console.log('Error: ' + err);

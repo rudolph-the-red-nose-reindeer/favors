@@ -60,16 +60,18 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
                 Log.d("register", "got here 1");
-    //              auth.sendSignInLinkToEmail(email, getActionCodeSettings())
-    //                      .addOnCompleteListener(new OnCompleteListener<Void>() {
-    //                          @Override
-    //                      public void onComplete(@NonNull Task<Void> task) {
-    //                              if (task.isSuccessful()) {
-    //                              Log.d("auth", "Email sent.");
-    //                          }
-    //                      }
-    //                      }
-    //                  );
+
+                // try email verification :\
+                //auth.sendSignInLinkToEmail(email, getActionCodeSettings())
+                //      .addOnCompleteListener(new OnCompleteListener<Void>() {
+                //          @Override
+                //      public void onComplete(@NonNull Task<Void> task) {
+                //              if (task.isSuccessful()) {
+                //              Log.d("auth", "Email sent.");
+                //          }
+                //      }
+                //      }
+                //  );
 
                 Task<AuthResult> task = auth.createUserWithEmailAndPassword(email, password);
                 task.addOnCompleteListener(new OnCompleteListener<AuthResult>() {

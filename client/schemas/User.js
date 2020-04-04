@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var args = require('./args.js')
+var args = require('./args.js');
 
 mongoose.connect(args.connectionString);
 

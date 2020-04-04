@@ -1,6 +1,9 @@
 package cis350.project.favor_app.data;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -28,12 +31,18 @@ public class LoginDataSource {
             task.execute(username, password);
             String res = task.get();
             JSONObject resObj = new JSONObject(res);
+            JSONObject userObj = resObj.getJSONObject("user");
 
             Log.d("RESULT", res);
 
             if (resObj.getBoolean("auth")) {
-                LoggedInUser user = new LoggedInUser(resObj.getString("id"),
-                        resObj.getString("username"));
+                LoggedInUser user = new LoggedInUser(userObj.getString("_id"),
+                        userObj.getString("username"),
+                        userObj.getString("email"),
+                        userObj.getString("photo"),
+                        userObj.getString("bio"),
+                        userObj.getInt("rating"),
+                        userObj.getInt("points"));
 
                 return new Result.Success<>(user);
             } else {

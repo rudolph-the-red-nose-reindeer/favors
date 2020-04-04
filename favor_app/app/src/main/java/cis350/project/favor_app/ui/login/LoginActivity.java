@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.model.LoggedInUser;
 import cis350.project.favor_app.ui.profile.ProfileActivity;
 import cis350.project.favor_app.ui.register.SignupActivity;
 
@@ -75,8 +76,15 @@ public class LoginActivity extends AppCompatActivity {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    LoggedInUserView successResult = loginResult.getSuccess();
+                    updateUiWithUser(successResult);
                     Intent intent = new Intent(self, ProfileActivity.class);
+                    intent.putExtra("username", successResult.getDisplayName());
+                    intent.putExtra("email", successResult.getEmail());
+                    intent.putExtra("photo", successResult.getPhoto());
+                    intent.putExtra("bio", successResult.getBio());
+                    intent.putExtra("rating", successResult.getRating());
+                    intent.putExtra("points", successResult.getPoints());
                     startActivity(intent);
                     setResult(Activity.RESULT_OK);
                     finish();

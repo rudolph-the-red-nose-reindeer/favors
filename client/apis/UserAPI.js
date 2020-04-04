@@ -1,5 +1,7 @@
-var user = require('../schemas/User.js');
+var userSchema = require('../schemas/User.js');
 var password = require('../tools/password.js');
+var fs = require('fs');
+var sharp = require('sharp');
 
 class UserApi {
     constructor(app) {
@@ -12,6 +14,7 @@ class UserApi {
         this.bindGetAllRoute(app);
         this.bindGetFindUserRoute(app);
         this.bindLoginRoute(app);
+        this.bindUpdateRoute(app);
     }
 
     bindCreateRoute(app) {
@@ -19,13 +22,13 @@ class UserApi {
         app.use('/users/create', (req, res) => {
             // construct the user from the form data which is in the request body
             var encode = password.hashAndSalt(req.body.password);
-            var newUser = new user ({
+            var newUser = new userSchema ({
                 username: req.body.username,
                 email: req.body.email,
                 salt: encode.salt,
                 hash: encode.hash,
-                photo: req.body.photo,
-                bio: req.body.bio,
+                photo: req.body.photo ? req.body.photo : null,
+                bio: req.body.bio ? req.body.bio : '',
                 rating: 0,
                 points: 0
             });
@@ -39,18 +42,83 @@ class UserApi {
                 } else {
                     res.send({success: true,
                               user: newUser});
-                    // display the "successfully created" page using EJS
+                    // display the 'successfully created' page using EJS
                     // res.render('user_created', {user : newUser});
                 }
             } ); 
         });
     }
 
+    bindUpdateRoute(app) {
+        // route for creating a new user
+        app.use('/users/update', (req, res) => {
+            if (req.body.id) {
+                console.log(req.body.id);
+                userSchema.findById( (req.body.id), (err, user) => {
+                    if (err) {
+                        console.log('Error: ' + err);
+                    } else if (user) {
+                        this.update(user, req, res);
+                    }
+                });
+            } else {
+                var queryObject = [{email : req.body.email ? req.body.email : null},
+                               {username: req.body.username ? req.body.username : null}];
+
+                console.log(queryObject);
+                userSchema.findOne( {$or:queryObject}, (err, user) => {
+                    if (err) {
+                        //res.type('html').status(200);
+                        console.log('Error: ' + err);
+                        res.send({user: null, err: err});
+                    } else {
+                        if (user) {
+                            console.log("found user " + user);
+                            //res.render('user_findone', {user: user});
+                            this.update(user, req, res);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    // helper to update document
+    async update(user, req, res) {
+        // update user data
+        var promise = this.resize(req.body.photo);
+        promise.then(data => {
+            user.bio = req.body.bio;
+            user.photo = Buffer.from(data).toString('base64');
+            this.saveUser(user, res);
+        });
+        
+    }
+
+    // resize image to 250x250 if larger
+    resize(img) {
+        var buffer = Buffer.from(img, 'base64');
+        return sharp(buffer).resize({width: 250, height: 250}).toBuffer();
+    }
+
+    saveUser(user, res) {
+        user.save((err) => {
+            if (err) {
+                console.log("Error: " + err);
+            } else {
+                console.log("Saved: " + user);
+                res.send({user: user});
+            }
+
+        });
+    }
+
+
     bindGetAllRoute(app) {
         // route for showing all the users
         app.use('/users/all', (req, res) => {
             // find all the user objects in the database
-            user.find( {}, (err, users) => {
+            userSchema.find( {}, (err, users) => {
                 if (err) {
                     res.type('html').status(200);
                     res.write('Error: ' + err);
@@ -65,7 +133,7 @@ class UserApi {
                     }
                     res.send(users);
                     // use EJS to show all the users
-                    res.render('user_all', { users: users });
+                    // res.render('user_all', { users: users });
                 }
             }).sort({ 'age': 'asc' }); // this sorts them BEFORE rendering the results
         });
@@ -75,7 +143,7 @@ class UserApi {
         //route for login
         app.use('/users/login', (req, res) => {
             console.log(req.body);
-            user.findOne( {$or:[{ username: req.body.login },
+            userSchema.findOne( {$or:[{ username: req.body.login },
                                { email: req.body.login }]}, (err, user) => {
                 console.log(req.body.login);
                 console.log(req.body.password)
@@ -89,8 +157,7 @@ class UserApi {
                         var hash = user.hash;
                         if (password.authenticate(req.body.password, salt, hash)) {
                             res.send({ auth: true,
-                                       id: user._id,
-                                       username: user.username });
+                                       user: user });
                         } else {
                             res.send({ auth: false});
                         }
@@ -106,36 +173,40 @@ class UserApi {
 
     bindGetFindUserRoute(app) {
         app.use('/users/find', (req, res) => {
-            var queryObject = {};
-            if (req.body.email) {
-                queryObject = {email : req.body.email};
-            } else if (req.body.id) {
-                queryObject = {_id : req.body.id};
-            } else if (req.body.username) {
-                queryObject = {username : req.body.username};
-            } else {
-                res.type('html').status(200);
-                console.log('Error: you must specify at least one field');
-                return;
-            }
-            user.findOne(queryObject, (err, user) => {
-                if (err) {
-                    res.type('html').status(200);
-                    console.log('Error: ' + err);
-                    res.write(err);
-                } else {
-                    if (user) {
-                        res.render('user_findone', {user: user});
-                        return;
+            if (req.body.id) {
+                userSchema.findById( (req.body.id), (err, user) => {
+                    if (err) {
+                        console.log('Error: ' + err);
                     } else {
-                        res.type('html').status(200);
-                        res.write('There is no user with that : ' + queryObject);
-                        res.end();
-                        return;
+                        if (user) {
+                            res.send({user : user});
+                        }
                     }
-                }
-            })
-        })
+                });
+            } else {
+                var queryObject = [{email : req.body.email ? req.body.email : null},
+                               {username: req.body.username ? req.body.username : null}];
+                userSchema.findOne( {$or:queryObject}, (err, user) => {
+                    if (err) {
+                        //res.type('html').status(200);
+                        console.log('Error: ' + err);
+                        res.send({user: null, err: err});
+                    } else {
+                        if (user) {
+                            //res.render('user_findone', {user: user});
+                            res.send({user: user});
+                            return;
+                        } else {
+                            //res.type('html').status(200);
+                            //res.write('There is no user with that : ' + queryObject);
+                            //res.end();
+                            res.send({user: null, err: 'no such users exist'});
+                            return;
+                        }
+                    }
+                });
+            }
+        });
     }
 }
 
