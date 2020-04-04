@@ -24,7 +24,6 @@ public class LoginDataSource {
     public Result<LoggedInUser> login(String username, String password) {
 
         try {
-            // TODO: handle loggedInUser authentication
             WebAuthTask task = new WebAuthTask();
             task.execute(username, password);
             String res = task.get();

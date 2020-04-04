@@ -10,6 +10,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
+/*
+ * AsyncTask to perform request for registration, returns JSON format response as a String
+ */
 public class WebRegisterTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {

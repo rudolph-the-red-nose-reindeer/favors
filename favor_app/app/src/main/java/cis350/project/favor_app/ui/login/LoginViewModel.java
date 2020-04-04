@@ -13,7 +13,6 @@ import cis350.project.favor_app.data.model.LoggedInUser;
 import cis350.project.favor_app.R;
 
 public class LoginViewModel extends ViewModel {
-
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;

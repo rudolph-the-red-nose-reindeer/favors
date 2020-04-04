@@ -13,6 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
+/*
+ * AsyncTask to perform authentication check for login, returns JSON format response as a String
+ */
 public class WebAuthTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {

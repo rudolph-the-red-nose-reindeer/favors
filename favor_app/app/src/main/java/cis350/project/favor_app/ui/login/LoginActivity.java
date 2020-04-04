@@ -3,7 +3,6 @@ package cis350.project.favor_app.ui.login;
 import android.app.Activity;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,24 +22,28 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.ui.register.RegisterActivity;
+import cis350.project.favor_app.ui.profile.ProfileActivity;
+import cis350.project.favor_app.ui.register.SignupActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
     private AppCompatActivity self = this;
-    private LoginViewModel loginViewModel;
+    private LoginViewModel loginViewModel = (new LoginViewModelFactory())
+            .create(LoginViewModel.class);
     public static final int REGISTER_ACTIVITY_ID = 1;
+    public static final int PROFILE_ACTIVITY_ID = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        FirebaseApp.initializeApp(this);
 
-        final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
+        final EditText usernameEditText = findViewById(R.id.login_username);
+        final EditText passwordEditText = findViewById(R.id.login_password);
         final Button loginButton = findViewById(R.id.login);
         final Button registerButton = findViewById(R.id.sign_up);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
@@ -73,11 +76,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+                    Intent intent = new Intent(self, ProfileActivity.class);
+                    startActivity(intent);
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
-                setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
+                //finish();
             }
         });
 
@@ -124,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(self, RegisterActivity.class);
+                Intent intent = new Intent(self, SignupActivity.class);
                 startActivityForResult(intent, REGISTER_ACTIVITY_ID);
             }
         });
