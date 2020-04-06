@@ -6,20 +6,20 @@ import android.media.Image;
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
-public class LoggedInUser {
+public class User {
 
     private String userId;
-    private String displayName;
+    private String username;
     private String email;
     private String photo;
     private String bio;
     private int rating;
     private int points;
 
-    public LoggedInUser(String userId, String displayName, String email, String photo, String bio,
-                        int rating, int points) {
+    public User(String userId, String username, String email, String photo, String bio,
+                int rating, int points) {
         this.userId = userId;
-        this.displayName = displayName;
+        this.username = username;
         this.email = email;
         this.photo = photo;
         this.bio = bio;
@@ -31,8 +31,8 @@ public class LoggedInUser {
         return userId;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getUsername() {
+        return username;
     }
 
     public String getEmail() {

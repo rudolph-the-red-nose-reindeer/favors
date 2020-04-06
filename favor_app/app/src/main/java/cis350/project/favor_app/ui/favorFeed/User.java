@@ -1,6 +1,6 @@
 package cis350.project.favor_app.ui.favorFeed;
 
-class User {
+public class User {
     String uname;
     String uemail;
     String upassword;

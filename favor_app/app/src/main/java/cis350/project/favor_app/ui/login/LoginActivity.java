@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.data.model.LoggedInUser;
 import cis350.project.favor_app.ui.profile.ProfileActivity;
 import cis350.project.favor_app.ui.register.SignupActivity;
 
@@ -150,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
+    private void showLoginFailed(String errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }

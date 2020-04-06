@@ -117,7 +117,6 @@ public class SignupActivity extends AppCompatActivity {
                             // after email is sent just logout the user and finish this activity
                             FirebaseAuth.getInstance().signOut();
                             success();
-                            finish();
                         }
                         else
                         {

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Patterns;
 
@@ -14,12 +15,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.concurrent.Executor;
-
 import cis350.project.favor_app.data.LoginRepository;
 import cis350.project.favor_app.data.Result;
-import cis350.project.favor_app.data.model.LoggedInUser;
+import cis350.project.favor_app.data.model.User;
+import cis350.project.favor_app.util.UserApiUtil;
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.util.userApi.UserApiFindTask;
+
+import cis350.project.favor_app.util.userApi.UserApiFindTask;
 
 public class LoginViewModel extends ViewModel {
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
@@ -40,13 +43,13 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Result<User> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
-            verifyEmail(username, password);
+            verifyEmail(username, password, result);
         } else {
             Log.d("LOGIN FAILURE:", result.toString());
-            loginResult.setValue(new LoginResult(R.string.login_failed));
+            loginResult.setValue(new LoginResult("Username or password is incorrect"));
         }
     }
 
@@ -61,7 +64,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     // A placeholder username validation check
-    private boolean isUserNameValid(String username, String) {
+    private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
         }
@@ -77,44 +80,55 @@ public class LoginViewModel extends ViewModel {
         return password != null && password.trim().length() >= 5;
     }
 
-    private void verifyEmail(final String user, final String password)
+    private void verifyEmail(final String user, final String password, final Result result)
     {
 
-        if (!validPennEmail(user)) {
-            failure();
-        }
+        //if (!validPennEmail(user)) {
+        //  failure();
+        //}
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        Task<AuthResult> task = auth.signInWithEmailAndPassword(user, password)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+
+        try {
+            AsyncTask<String, Void, User> getUserTask = new UserApiFindTask();
+            getUserTask.execute(user);
+            User foundUser = getUserTask.get();
+            String email = foundUser.getEmail();
+            Log.d("Email located: ", email);
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            failure();
+                            failure("Error occurred while verifying email");
                         } else {
                             FirebaseUser userInstance = FirebaseAuth.getInstance().getCurrentUser();
                             if (!userInstance.isEmailVerified()) {
                                 FirebaseAuth.getInstance().signOut();
-                                failure();
+                                failure("Please verify your email");
                             } else {
-                               success();
+                                success((Result.Success<User>) result);
                             }
                         }
                     }
                 });
+        } catch (Exception e) {
+            Log.d("Error verifying email:", e.toString());
+            failure("Error occurred while verifying email");
+        }
     }
 
-    private void failure() {
+    private void failure(String result) {
         //loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        Log.d("LOGIN FAILURE:", result.toString());
-        loginResult.setValue(new LoginResult(R.string.login_failed));
+        //Log.d("LOGIN FAILURE:", result.toString());
+        loginResult.setValue(new LoginResult(result));
     }
 
 
-    private void success() {
-        Log.d("LOGIN SUCCESS:", username + " " + password);
-        LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-        loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName(),
+    private void success(Result.Success<User> result) {
+        //Log.d("LOGIN SUCCESS:", username + " " + password);
+        User data = result.getData();
+        loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUsername(),
                 data.getEmail(),
                 data.getPhoto(),
                 data.getBio(),
