@@ -1,4 +1,4 @@
 # Files that we don't need in the repo
 *.iml
 .gradle
-./node_modules
+/node_modules
