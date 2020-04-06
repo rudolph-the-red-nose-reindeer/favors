@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">favour_app</string>
+    <string name="title_activity_favor">FavorActivity</string>
+    <string name="title_activity_created_favor">CreatedFavorActivity</string>
 </resources>
