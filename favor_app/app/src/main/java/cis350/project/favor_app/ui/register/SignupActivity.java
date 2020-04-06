@@ -9,6 +9,7 @@ import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.text.InputType;
 import android.util.Log;
@@ -61,24 +62,14 @@ public class SignupActivity extends AppCompatActivity {
                 }
                 Log.d("register", "got here 1");
 
-                // try email verification :\
-                //auth.sendSignInLinkToEmail(email, getActionCodeSettings())
-                //      .addOnCompleteListener(new OnCompleteListener<Void>() {
-                //          @Override
-                //      public void onComplete(@NonNull Task<Void> task) {
-                //              if (task.isSuccessful()) {
-                //              Log.d("auth", "Email sent.");
-                //          }
-                //      }
-                //      }
-                //  );
+
 
                 Task<AuthResult> task = auth.createUserWithEmailAndPassword(email, password);
                 task.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            sendVerificationEmail();
                             Log.d("register", "got here 2");
                             WebRegisterTask registerTask = new WebRegisterTask();
                             registerTask.execute(username, email, password);
@@ -106,6 +97,42 @@ public class SignupActivity extends AppCompatActivity {
                 });
             }
         });;
+    }
+
+    private void sendVerificationEmail()
+    {
+        Toast.makeText(SignupActivity.this, "hi1",
+                Toast.LENGTH_LONG).show();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // email sent
+
+
+                            // after email is sent just logout the user and finish this activity
+                            FirebaseAuth.getInstance().signOut();
+                            success();
+                            finish();
+                        }
+                        else
+                        {
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
+
+                            //restart this activity
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
+
+                        }
+                    }
+                });
+
     }
 
     private void success() {
