@@ -6,23 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/editText"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+
+    <TextView
+        android:id="@+id/etDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="center"
-        android:inputType="textPersonName"
         android:text="Welcome to Favor App "
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="282dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btCreateNewFavorOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Create New Favor"
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="386dp" />
 
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
