@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
 import cis350.project.favor_app.ui.register.WebRegisterTask;
 import cis350.project.favor_app.util.ImageUtil;
 
@@ -35,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView pointsView;
     private View saveButton;
     private View uploadButton;
+    private View seeFavorsButton;
 
     private String username;
     private String email;
@@ -44,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
     private int points;
 
     public static final int GET_FROM_GALLERY = 3;
+    public static final int REGISTER_ACTIVITY_ID = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +60,14 @@ public class ProfileActivity extends AppCompatActivity {
         pointsView = findViewById(R.id.points_text);
         saveButton = findViewById(R.id.profile_save_button);
         uploadButton = findViewById(R.id.upload_button);
+        seeFavorsButton = findViewById(R.id.see_favors_button);
 
         username = getIntent().getStringExtra("username");
         email = getIntent().getStringExtra("email");
         photo = ImageUtil.decodeBase64(getIntent().getStringExtra("photo"));
-        photo = Bitmap.createScaledBitmap(photo, 250, 250, false);
+        if (photo != null) {
+            photo = Bitmap.createScaledBitmap(photo, 250, 250, false);
+        }
         bio = getIntent().getStringExtra("bio");
         rating = getIntent().getIntExtra("rating", 0);
         points = getIntent().getIntExtra("points", 0);
@@ -101,6 +107,14 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        seeFavorsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(self, FavorFeedActivity.class);
+                startActivityForResult(intent, REGISTER_ACTIVITY_ID);
+            }
+        });
+
 
         assignProfileFeatures();
     }
@@ -128,7 +142,9 @@ public class ProfileActivity extends AppCompatActivity {
     private void assignProfileFeatures() {
         usernameView.setText(username);
         emailView.setText(email);
-        photoView.setImageBitmap(photo);
+        if (photo != null) {
+            photoView.setImageBitmap(photo);
+        }
         bioView.setText(bio);
         ratingView.setText("Rating: " + String.valueOf(rating));
         pointsView.setText("Points: " + String.valueOf(points));

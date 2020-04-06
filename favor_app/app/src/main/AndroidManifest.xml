@@ -28,6 +28,11 @@
             android:name=".ui.profile.ProfileActivity"
             android:label="Profile">
         </activity>
+        <activity
+            android:name=".ui.favorFeed.FavorFeedActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

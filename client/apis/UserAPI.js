@@ -177,9 +177,12 @@ class UserApi {
                 userSchema.findById( (req.body.id), (err, user) => {
                     if (err) {
                         console.log('Error: ' + err);
+                        res.send(err);
                     } else {
                         if (user) {
-                            res.send({user : user});
+                            res.send(user);
+                        } else {
+                            res.send({err: "there is no such user"});
                         }
                     }
                 });
@@ -190,17 +193,17 @@ class UserApi {
                     if (err) {
                         //res.type('html').status(200);
                         console.log('Error: ' + err);
-                        res.send({user: null, err: err});
+                        res.send(err);
                     } else {
                         if (user) {
                             //res.render('user_findone', {user: user});
-                            res.send({user: user});
+                            res.send(user);
                             return;
                         } else {
                             //res.type('html').status(200);
                             //res.write('There is no user with that : ' + queryObject);
                             //res.end();
-                            res.send({user: null, err: 'no such users exist'});
+                            res.send({err: 'no such users exist'});
                             return;
                         }
                     }
