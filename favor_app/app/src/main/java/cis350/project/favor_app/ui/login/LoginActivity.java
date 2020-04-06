@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoggedInUserView successResult = loginResult.getSuccess();
                     updateUiWithUser(successResult);
                     Intent intent = new Intent(self, ProfileActivity.class);
+                    intent.putExtra("userId", successResult.getUserId());
                     intent.putExtra("username", successResult.getDisplayName());
                     intent.putExtra("email", successResult.getEmail());
                     intent.putExtra("photo", successResult.getPhoto());

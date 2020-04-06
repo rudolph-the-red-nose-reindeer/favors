@@ -128,7 +128,8 @@ public class LoginViewModel extends ViewModel {
     private void success(Result.Success<User> result) {
         //Log.d("LOGIN SUCCESS:", username + " " + password);
         User data = result.getData();
-        loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUsername(),
+        loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUserId(),
+                data.getUsername(),
                 data.getEmail(),
                 data.getPhoto(),
                 data.getBio(),

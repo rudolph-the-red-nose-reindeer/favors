@@ -3,8 +3,6 @@ package cis350.project.favor_app.ui.profile;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,11 +16,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
-import cis350.project.favor_app.ui.register.WebRegisterTask;
+import cis350.project.favor_app.ui.favorSubmission.SubmitFavorActivity;
 import cis350.project.favor_app.util.ImageUtil;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -37,7 +33,9 @@ public class ProfileActivity extends AppCompatActivity {
     private View saveButton;
     private View uploadButton;
     private View seeFavorsButton;
+    private View favorSubmissionButton;
 
+    private String userId;
     private String username;
     private String email;
     private Bitmap photo;
@@ -61,7 +59,9 @@ public class ProfileActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.profile_save_button);
         uploadButton = findViewById(R.id.upload_button);
         seeFavorsButton = findViewById(R.id.see_favors_button);
+        favorSubmissionButton = findViewById(R.id.launch_favor_submit_button);
 
+        userId = getIntent().getStringExtra("userId");
         username = getIntent().getStringExtra("username");
         email = getIntent().getStringExtra("email");
         photo = ImageUtil.decodeBase64(getIntent().getStringExtra("photo"));
@@ -115,6 +115,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        favorSubmissionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateFavorActivity();
+            }
+        });
+
 
         assignProfileFeatures();
     }
@@ -148,6 +155,13 @@ public class ProfileActivity extends AppCompatActivity {
         bioView.setText(bio);
         ratingView.setText("Rating: " + String.valueOf(rating));
         pointsView.setText("Points: " + String.valueOf(points));
+    }
+
+
+    public void openCreateFavorActivity() {
+        Intent intent = new Intent(this, SubmitFavorActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
     }
 
 

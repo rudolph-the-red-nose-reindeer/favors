@@ -7,6 +7,7 @@ import android.media.Image;
  * Class exposing authenticated user details to the UI.
  */
 class LoggedInUserView {
+    private String userId;
     private String displayName;
     private String email;
     private String photo;
@@ -14,14 +15,19 @@ class LoggedInUserView {
     private int rating;
     private int points;
 
-    LoggedInUserView(String displayName, String email, String photo, String bio, int rating,
-                     int points) {
+    LoggedInUserView(String userId, String displayName, String email, String photo, String bio,
+                     int rating, int points) {
+        this.userId = userId;
         this.displayName = displayName;
         this.email = email;
         this.photo = photo;
         this.bio = bio;
         this.rating = rating;
         this.points = points;
+    }
+
+    String getUserId() {
+        return userId;
     }
 
     String getDisplayName() {

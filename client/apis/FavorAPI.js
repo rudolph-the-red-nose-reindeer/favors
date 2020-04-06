@@ -25,19 +25,16 @@ class FavorApi {
                 details: req.body.details
             });
 
-            
-
             // save the favor to the database
             newFavor.save( (err) => { 
                 if (err) {
-                    res.type('html').status(200);
-                    res.write('Error: ' + err);
                     console.log(err);
-                    res.end();
+                    res.send({err: err});
                 }
                 else {
                     // display the "successfully created" page using EJS
-                    res.render('favor_created', {favor : newFavor});
+                    //res.render('favor_created', {favor : newFavor});
+                    res.send(newFavor);
                 }
             } ); 
         });
@@ -47,28 +44,25 @@ class FavorApi {
         // route for deleting a favor
         app.use('/favors/delete', (req, res) => {
             // try to find one favor in the database
-            favorSchema.findOne( { _id: mongoose.Types.ObjectId(req.body.id) }, (err1, favor) => {
+            favorSchema.findById(mongoose.Types.ObjectId(req.body.id), (err1, favor) => {
                 if (err1) {
-                    res.type('html').status(200);
                     console.log('Error: ' + err);
-                    res.write(err);
+                    res.send({err: err});
                 }
                 else {
                     if (favor) {
-                        favor.deleteOne( {_id: mongoose.Types.ObjectId(req.body.id)}, (err2, result) => {
-                            if (err1) {
-                                res.type('html').status(200);
+                        favorSchema.deleteOne({_id: mongoose.Types.ObjectId(req.body.id)}, (err2) => {
+                            if (err2) {
                                 console.log('Error: ' + err);
-                                res.write(err);
+                                res.send({err: err});
                             } else {
-                                res.render('favor_deleted', { favor: favor });
+                                res.send(favor);
                             }
                         });
                     }
                     else {
-                        res.type('html').status(200);
                         console.log('There is no favor with that id');
-                        res.write('There is no favor with that id');
+                        res.send({err: "there is no favor with that id"});
                     }
                 }
             });
