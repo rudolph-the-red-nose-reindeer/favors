@@ -25,6 +25,8 @@ class FavorApi {
                 details: req.body.details
             });
 
+            
+
             // save the favor to the database
             newFavor.save( (err) => { 
                 if (err) {
@@ -45,7 +47,7 @@ class FavorApi {
         // route for deleting a favor
         app.use('/favors/delete', (req, res) => {
             // try to find one favor in the database
-            favorSchema.findOne( { _id: mongoose.Types.ObjectId(req.query.id) }, (err1, favor) => {
+            favorSchema.findOne( { _id: mongoose.Types.ObjectId(req.body.id) }, (err1, favor) => {
                 if (err1) {
                     res.type('html').status(200);
                     console.log('Error: ' + err);
@@ -53,7 +55,7 @@ class FavorApi {
                 }
                 else {
                     if (favor) {
-                        favor.deleteOne( {_id: mongoose.Types.ObjectId(req.query.id)}, (err2, result) => {
+                        favor.deleteOne( {_id: mongoose.Types.ObjectId(req.body.id)}, (err2, result) => {
                             if (err1) {
                                 res.type('html').status(200);
                                 console.log('Error: ' + err);
@@ -85,14 +87,14 @@ class FavorApi {
                 } else if (favors.length == 1) {
                     var favor = favors[0];
                     var returnArray = [];
-                    returnArray.push( { "id" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
+                    returnArray.push( { "_id" : favor._id, "id" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
                                         "details" : favor.details});
                     res.json(returnArray); 
                 } else {
                     // construct an array out of the result
                     var returnArray = [];
                     favors.forEach( (favor) => {
-                    returnArray.push( { "id" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
+                    returnArray.push( { "_id" : favor._id, "id" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
                                         "details" : favor.details});
                     });
                     res.json(returnArray); 
