@@ -8,7 +8,7 @@ public class Sorter {
         public int compare(Object favor, Object t1) {
             Favor f = (Favor) favor;
             Favor g = (Favor) t1;
-            return f.furgency - g.furgency;
+            return g.furgency - f.furgency;
         }
     }
     public class UsernameComparator<Object> implements Comparator<Object> {
@@ -16,7 +16,10 @@ public class Sorter {
         public int compare(Object favor, Object t1) {
             Favor f = (Favor) favor;
             Favor g = (Favor) t1;
-            return f.fuserId.compareTo(g.fuserId);
+            Database db = new Database();
+            User u = db.getUserFromId(f.fuserId);
+            User v = db.getUserFromId(g.fuserId);
+            return u.uname.compareTo(v.uname);
         }
     }
     public class DateComparator<Object> implements Comparator<Object> {

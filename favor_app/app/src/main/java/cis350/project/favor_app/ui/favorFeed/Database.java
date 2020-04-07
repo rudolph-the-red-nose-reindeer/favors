@@ -25,11 +25,10 @@ public class Database {
                     JSONObject jUser = (JSONObject) allUsersArray.get(i);
                     String name = (String) jUser.get("username");
                     String email = (String) jUser.get("email");
-                    String password = (String) jUser.get("password");
                     String photo = (String) jUser.get("photo");
                     int rating = (Integer) jUser.get("rating");
                     int points = (Integer) jUser.get("points");
-                    User user = new User(name, email, password, photo, rating, points);
+                    User user = new User(name, email, photo, rating, points);
                     allUsersSet.add(user);
                 } catch (JSONException e) {
                     Log.e("Error getting JObject", e.toString());
@@ -54,11 +53,14 @@ public class Database {
             AccessAllFavorsTask task = new AccessAllFavorsTask();
             task.execute(url);
             JSONArray allFavorArray = task.get();
+            if (allFavorArray == null) {
+                return null;
+            }
             HashSet allFavorSet = new HashSet<User>();
             for (int i = 0; i < allFavorArray.length(); i++) {
                 try {
                     JSONObject jFavor = (JSONObject) allFavorArray.get(i);
-                    String userid = (String) jFavor.get("id");
+                    String userid = (String) jFavor.get("userId");
                     String date = (String) jFavor.get("date");
                     String location = (String) jFavor.get("location");
                     int urgency = (Integer) jFavor.get("urgency");
@@ -66,7 +68,7 @@ public class Database {
                     Favor favor = new Favor(userid, date, urgency, location, details);
                     allFavorSet.add(favor);
                 } catch (JSONException e) {
-                    Log.e("Error getting JSONObject jUser", e.toString());
+                    Log.e("Error getting jUser", e.toString());
                     return null;
                 }
             }
@@ -87,27 +89,27 @@ public class Database {
             URL url = new URL("http://10.0.2.2:3000/users/find");
             AccessUserFromFavorTask task = new AccessUserFromFavorTask();
             task.userId = id;
+            Log.d("userid", id);
             task.execute(url);
             JSONObject jUser = task.get();
             if (jUser == null) {
                 return null;
             }
-           try {
-               String name = (String) jUser.get("username");
-               String email = (String) jUser.get("email");
-               String password = (String) jUser.get("password");
-               //String photo = (String) jUser.get("photo");
-               int rating = (Integer) jUser.get("rating");
-               int points = (Integer) jUser.get("points");
-               User user = new User(name, email, password, "", rating, points);
-               return user;
-           } catch (JSONException e) {
-               Log.e("errpr", e.toString());
-               return null;
-           } catch (Exception e) {
-               Log.e("errpr", e.toString());
-               return null;
-           }
+            try {
+                String name = (String) jUser.get("username");
+                String email = (String) jUser.get("email");
+                //String photo = (String) jUser.get("photo");
+                int rating = (Integer) jUser.get("rating");
+                int points = (Integer) jUser.get("points");
+                User user = new User(name, email, "", rating, points);
+                return user;
+            } catch (JSONException e) {
+                Log.e("errpr", e.toString());
+                return null;
+            } catch (Exception e) {
+                Log.e("errpr", e.toString());
+                return null;
+            }
         } catch (InterruptedException e) {
             Log.e("errpr", e.toString());
             return null;

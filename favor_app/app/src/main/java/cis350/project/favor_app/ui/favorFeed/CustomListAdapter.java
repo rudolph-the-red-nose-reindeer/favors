@@ -43,7 +43,6 @@ public class CustomListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) v.getTag();
         }
-        Log.d("zzzzz", listData.get(position).toString());
         holder.uUsername.setText(listData.get(position).getUsername());
         holder.uDetails.setText(listData.get(position).getDetails());
         holder.uUrgency.setText(listData.get(position).getUrgency());

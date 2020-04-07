@@ -23,25 +23,17 @@ public class AccessUserFromFavorTask extends AsyncTask<URL, String, JSONObject> 
             JSONObject body = new JSONObject();
             body.put("id", userId);
 
-            Log.d("bug", "no");
-
             // create connection and send Http request
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             //conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             conn.setDoOutput(true);
 
-            Log.d("bug", "no");
-
             DataOutputStream os = new DataOutputStream(conn.getOutputStream());
             os.writeBytes(body.toString());
 
-            Log.d("bug", body.toString());
-
             os.flush();
             os.close();
-
-            Log.d("bug", "no");
 
             Scanner in = new Scanner(conn.getInputStream());
 

@@ -23,6 +23,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
     private EditText urgencyText;
     private EditText locationText;
     private Button createFavorBtnTwo;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
         locationText = findViewById(R.id.etLocation);
         // Temp for now (to show deletion), to be updated when merging
 
+        userId = getIntent().getStringExtra("userId");
 
         createFavorBtnTwo = findViewById(R.id.btCreateFavorTwo);
 
@@ -48,6 +50,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
                     return;
                 }
                 WebFavorCreationTask favorTask = new WebFavorCreationTask();
+                favorTask.userId = userId;
                 favorTask.execute(urgency, location, details);
                 try {
 
@@ -59,6 +62,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
                     Toast.makeText(SubmitFavorActivity.this, "Successfully Registered",
                             Toast.LENGTH_LONG).show();
                     Intent i = new Intent(SubmitFavorActivity.this, CreatedFavorActivity.class);
+                    Log.d("idToDelete", idToDelete);
                     i.putExtra("idToDelete", idToDelete);
                     startActivity(i);
                     SubmitFavorActivity.this.finish();

@@ -74,21 +74,21 @@ class FavorApi {
             favorSchema.find({}, (err, favors) => {
                 if (err) {
                     console.log("something horrible happened" + err);
-                    res.json({});
+                    res.json([]);
                 }
                 else if (favors.length == 0) {
-                    res.json({});
+                    res.json([]);
                 } else if (favors.length == 1) {
                     var favor = favors[0];
                     var returnArray = [];
-                    returnArray.push( { "_id" : favor._id, "id" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
+                    returnArray.push( { "_id" : favor._id, "userId" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
                                         "details" : favor.details});
                     res.json(returnArray); 
                 } else {
                     // construct an array out of the result
                     var returnArray = [];
                     favors.forEach( (favor) => {
-                    returnArray.push( { "_id" : favor._id, "id" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
+                    returnArray.push( { "_id" : favor._id, "userId" : favor.userId, "date" : favor.datePosted, "location" : favor.location, "urgency" : favor.urgency, 
                                         "details" : favor.details});
                     });
                     res.json(returnArray); 
