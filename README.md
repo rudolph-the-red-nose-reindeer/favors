@@ -11,3 +11,15 @@
 Sometimes you’re feeling feverish and all you need is some Advil but you don’t have any. Other people have bottles of Advil just sitting around expiring by the second. What if your last pen runs out of ink, but it’s super cold outside. Someone in your dorm may have a whole handful of cluttering their desk. There are little favors that we all need sometimes, some of them bigger than others. The problem is that often, something stops us from asking others for help. We’d all benefit if we could streamline the favor asking/ receiving process; life would just get a little easier and especially when life is hard, sometimes all the little things become important. 
 
 Our goal is to help connect our community and solve these problems by providing a service where people can help each other out.
+
+# Iteration 1 (April 6th 2020) 
+Features Implemented 
+1) Favor feed
+2) Submit a favor and Delete a favor submitted 
+3) Verify college email address 
+4) Create an account and profile setup
+
+# All Features ! 
+
+
+
