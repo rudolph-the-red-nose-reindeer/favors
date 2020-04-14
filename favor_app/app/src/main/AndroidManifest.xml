@@ -47,6 +47,11 @@
             android:label="@string/title_activity_favor"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.userFavorHistory.UserFavorHistoryActivity"
+            android:label="History"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
