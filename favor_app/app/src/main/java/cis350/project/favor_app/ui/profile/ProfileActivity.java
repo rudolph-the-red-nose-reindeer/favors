@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
 import cis350.project.favor_app.ui.favorSubmission.SubmitFavorActivity;
+import cis350.project.favor_app.ui.userFavorHistory.UserFavorHistoryActivity;
 import cis350.project.favor_app.util.ImageUtil;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     private View uploadButton;
     private View seeFavorsButton;
     private View favorSubmissionButton;
+    private View seeUserFavorsButton;
 
     private String userId;
     private String username;
@@ -45,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public static final int GET_FROM_GALLERY = 3;
     public static final int REGISTER_ACTIVITY_ID = 4;
+    public static final int USER_FAVORS_ACTIVITY_ID = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         uploadButton = findViewById(R.id.upload_button);
         seeFavorsButton = findViewById(R.id.see_favors_button);
         favorSubmissionButton = findViewById(R.id.launch_favor_submit_button);
+        seeUserFavorsButton = findViewById(R.id.profile_user_favors_button);
 
         userId = getIntent().getStringExtra("userId");
         username = getIntent().getStringExtra("username");
@@ -119,6 +123,15 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openCreateFavorActivity();
+            }
+        });
+
+        seeUserFavorsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(self, UserFavorHistoryActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, USER_FAVORS_ACTIVITY_ID);
             }
         });
 

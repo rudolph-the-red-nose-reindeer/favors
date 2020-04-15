@@ -6,12 +6,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
-import java.util.concurrent.ExecutionException;
 
+import cis350.project.favor_app.data.model.Favor;
+import cis350.project.favor_app.data.model.User;
+
+/*
+ * Singleton class for the database
+ */
 public class Database {
+
+    private static Database instance = null;
+
+    private Database() {}
+
+    // static method to create instance of Singleton class
+    public static Database getInstance()
+    {
+        if (instance == null)
+            instance = new Database();
+
+        return instance;
+    }
+
     public HashSet<User> getAllUsers() {
         try {
             URL url = new URL("http://10.0.2.2:3000/users/all");
@@ -23,30 +41,27 @@ public class Database {
             for (int i = 0; i < allUsersArray.length(); i++) {
                 try {
                     JSONObject jUser = (JSONObject) allUsersArray.get(i);
-                    String name = (String) jUser.get("username");
-                    String email = (String) jUser.get("email");
-                    String photo = (String) jUser.get("photo");
-                    int rating = (Integer) jUser.get("rating");
-                    int points = (Integer) jUser.get("points");
-                    User user = new User(name, email, photo, rating, points);
+                    String userId = jUser.getString("_id");
+                    String name = jUser.getString("username");
+                    String email = jUser.getString("email");
+                    String photo = jUser.getString("photo");
+                    String bio = jUser.getString("bio");
+                    int rating = jUser.getInt("rating");
+                    int points = jUser.getInt("points");
+                    User user = new User(userId, name, email, photo, bio, rating, points);
                     allUsersSet.add(user);
                 } catch (JSONException e) {
-                    Log.e("Error getting JObject", e.toString());
+                    Log.e("Error getting user", e.toString());
                     return null;
                 }
             }
             return allUsersSet;
-        } catch (InterruptedException e) {
-            Log.e("errpr", e.toString());
-            return null;
-        } catch (ExecutionException e) {
-            Log.e("errpr", e.toString());
-            return null;
-        } catch (MalformedURLException e) {
-            Log.e("errpr", e.toString());
+        } catch (Exception e) {
+            Log.e("Error getting all users", e.toString());
             return null;
         }
     }
+
     public HashSet<Favor> getAllFavors() {
         try {
             URL url = new URL("http://10.0.2.2:3000/favors/all");
@@ -59,31 +74,33 @@ public class Database {
             HashSet allFavorSet = new HashSet<User>();
             for (int i = 0; i < allFavorArray.length(); i++) {
                 try {
-                    JSONObject jFavor = (JSONObject) allFavorArray.get(i);
-                    String userid = (String) jFavor.get("userId");
-                    String date = (String) jFavor.get("date");
-                    String location = (String) jFavor.get("location");
-                    int urgency = (Integer) jFavor.get("urgency");
-                    String details = (String) jFavor.get("details");
-                    Favor favor = new Favor(userid, date, urgency, location, details);
+                    JSONObject jFavor = allFavorArray.getJSONObject(i);
+                    Log.d("Json favor string", jFavor.toString());
+                    String favorId = jFavor.getString("_id");
+                    String userId = jFavor.getString("userId");
+                    String acceptedBy = null;
+                    if (jFavor.has("acceptedBy")) {
+                        acceptedBy = jFavor.getString("acceptedBy");
+                    }
+                    String date = jFavor.getString("datePosted");
+                    String location = jFavor.getString("location");
+                    int urgency = jFavor.getInt("urgency");
+                    String details = jFavor.getString("details");
+                    Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, location,
+                            details);
                     allFavorSet.add(favor);
                 } catch (JSONException e) {
-                    Log.e("Error getting jUser", e.toString());
+                    Log.e("Error getting favor", e.toString());
                     return null;
                 }
             }
             return allFavorSet;
-        } catch (InterruptedException e) {
-            Log.e("errpr", e.toString());
-            return null;
-        } catch (ExecutionException e) {
-            Log.e("errpr", e.toString());
-            return null;
-        } catch (MalformedURLException e) {
-            Log.e("errpr", e.toString());
+        } catch (Exception e) {
+            Log.e("Error all favors", e.toString());
             return null;
         }
     }
+
     public User getUserFromId(String id) {
         try {
             URL url = new URL("http://10.0.2.2:3000/users/find");
@@ -95,29 +112,101 @@ public class Database {
             if (jUser == null) {
                 return null;
             }
+
             try {
-                String name = (String) jUser.get("username");
-                String email = (String) jUser.get("email");
-                //String photo = (String) jUser.get("photo");
-                int rating = (Integer) jUser.get("rating");
-                int points = (Integer) jUser.get("points");
-                User user = new User(name, email, "", rating, points);
+                String userId = jUser.getString("_id");
+                String name = jUser.getString("username");
+                String email = jUser.getString("email");
+                String photo = jUser.getString("photo");
+                String bio = jUser.getString("bio");
+                int rating = jUser.getInt("rating");
+                int points = jUser.getInt("points");
+                User user = new User(userId, name, email, photo, bio, rating, points);
                 return user;
             } catch (JSONException e) {
-                Log.e("errpr", e.toString());
-                return null;
-            } catch (Exception e) {
-                Log.e("errpr", e.toString());
+                Log.e("Could not JSONfy user", e.toString());
                 return null;
             }
-        } catch (InterruptedException e) {
-            Log.e("errpr", e.toString());
+        } catch (Exception e) {
+            Log.e("Getting iduser error", e.toString());
             return null;
-        } catch (ExecutionException e) {
-            Log.e("errpr", e.toString());
+        }
+    }
+
+    public HashSet<Favor> getFavorsSubmittedByUser(String userId) {
+        try {
+            AccessFavorsSubmittedByUserTask task = new AccessFavorsSubmittedByUserTask();
+            task.userId = userId;
+            Log.d("userId", userId);
+            task.execute();
+            JSONArray allFavorArray = task.get();
+            if (allFavorArray == null) {
+                return null;
+            }
+            HashSet favorSet = new HashSet<User>();
+            for (int i = 0; i < allFavorArray.length(); i++) {
+                try {
+                    JSONObject jFavor = allFavorArray.getJSONObject(i);
+                    Log.d("Json favor string", jFavor.toString());
+                    String favorId = jFavor.getString("_id");
+                    String acceptedBy = null;
+                    if (jFavor.has("acceptedBy")) {
+                        acceptedBy = jFavor.getString("acceptedBy");
+                    }
+                    String date = jFavor.getString("datePosted");
+                    String location = jFavor.getString("location");
+                    int urgency = jFavor.getInt("urgency");
+                    String details = jFavor.getString("details");
+                    Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, location,
+                            details);
+                    favorSet.add(favor);
+                } catch (JSONException e) {
+                    Log.e("Error getting favor", e.toString());
+                    return null;
+                }
+            }
+            return favorSet;
+        } catch (Exception e) {
+            Log.e("Error favors by submitter", e.toString());
             return null;
-        } catch (MalformedURLException e) {
-            Log.e("errpr", e.toString());
+        }
+    }
+
+    public HashSet<Favor> getFavorsAcceptedByUser(String userId) {
+        try {
+            AccessFavorsAcceptedByUserTask task = new AccessFavorsAcceptedByUserTask();
+            task.userId = userId;
+            Log.d("userId", userId);
+            task.execute();
+            JSONArray allFavorArray = task.get();
+            if (allFavorArray == null) {
+                return null;
+            }
+            HashSet favorSet = new HashSet<User>();
+            for (int i = 0; i < allFavorArray.length(); i++) {
+                try {
+                    JSONObject jFavor = allFavorArray.getJSONObject(i);
+                    Log.d("Json favor string", jFavor.toString());
+                    String favorId = jFavor.getString("_id");
+                    String acceptedBy = null;
+                    if (jFavor.has("acceptedBy")) {
+                        acceptedBy = jFavor.getString("acceptedBy");
+                    }
+                    String date = jFavor.getString("datePosted");
+                    String location = jFavor.getString("location");
+                    int urgency = jFavor.getInt("urgency");
+                    String details = jFavor.getString("details");
+                    Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, location,
+                            details);
+                    favorSet.add(favor);
+                } catch (JSONException e) {
+                    Log.e("Error getting favor", e.toString());
+                    return null;
+                }
+            }
+            return favorSet;
+        } catch (Exception e) {
+            Log.e("Error favors by acceptor", e.toString());
             return null;
         }
     }

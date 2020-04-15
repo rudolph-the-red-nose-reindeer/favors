@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/user_favors_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -13,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/user_favors_submitted_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submitted" />
@@ -24,4 +26,13 @@
             android:text="Undertaken" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/user_favors_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_favors_tabLayout"
+        tools:layout_editor_absoluteX="-16dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

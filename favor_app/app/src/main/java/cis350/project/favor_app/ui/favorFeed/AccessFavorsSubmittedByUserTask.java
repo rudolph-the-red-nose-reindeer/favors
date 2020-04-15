@@ -1,8 +1,10 @@
 package cis350.project.favor_app.ui.favorFeed;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
@@ -10,18 +12,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class AccessUserFromFavorTask extends AsyncTask<URL, String, JSONObject> {
-
+public class AccessFavorsSubmittedByUserTask extends AsyncTask<URL, String, JSONArray> {
     public String userId;
-
+    @SuppressLint("LongLogTag")
     @Override
-    protected JSONObject doInBackground(URL... urls) {
+    protected JSONArray doInBackground(URL... urls) {
         try {// get the first URL from the array
-            URL url = urls[0];
-
+            URL url = new URL("http://10.0.2.2:3000/favors/getallfromuser");
             // formulate request body
             JSONObject body = new JSONObject();
-            body.put("id", userId);
+            body.put("userId", userId);
 
             // create connection and send Http request
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -41,11 +41,10 @@ public class AccessUserFromFavorTask extends AsyncTask<URL, String, JSONObject> 
             Log.d("result", msg);
             conn.disconnect();
 
-            //// use Android JSON library to parse JSON
-            JSONObject jo = new JSONObject(msg);
-            return jo;
+            JSONArray arr = new JSONArray(msg);
+            return arr;
         } catch (Exception e) {
-            Log.e("error 2", e.toString());
+            Log.e("Error doing favorbyuser task", e.toString());
             return null;
         }
     }

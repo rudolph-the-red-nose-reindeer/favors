@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 
 var favorSchema = new Schema({
 	userId: {type: mongoose.ObjectId, required: true},
+    acceptedBy: {type: mongoose.ObjectId},
 	datePosted: {type: Date, required: true},
 	urgency: {type: Number, required: true},
 	location: {type: String, required: false},

@@ -1,7 +1,6 @@
 package cis350.project.favor_app.ui.favorFeed;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -15,6 +14,8 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.model.Favor;
+import cis350.project.favor_app.data.model.User;
 
 
 public class FavorFeedActivity extends AppCompatActivity {
@@ -33,11 +34,12 @@ public class FavorFeedActivity extends AppCompatActivity {
         //Apply the adapter to the spinner
         spinner.setAdapter(adapter);
     }
+
     public void onButtonClick(View v) {
         Spinner spinner = (Spinner)findViewById(R.id.favor_feed_spinner);
         String sortBy = spinner.getSelectedItem().toString();
         Comparator<Favor> c;
-        Log.d("hihihi", "jijai");
+        //Log.d("hihihi", "jijai");
         if (sortBy.equals("Urgency")) {
             c = new Sorter().new UrgencyComparator<>();
         } else if (sortBy.equals("Username")) {
@@ -50,7 +52,8 @@ public class FavorFeedActivity extends AppCompatActivity {
         if (c != null) {
             for (Favor f : favorToUser.keySet()) {
                 User u = favorToUser.get(f);
-                ListItem li = new ListItem(u.uname, f.fdetails, "" + f.furgency, f.fdate);
+                ListItem li = new ListItem(u.getUsername(), f.getDetails(), "" +
+                        f.getUrgency(), f.getDate());
                 listItemsList.add(li);
             }
         } else {
@@ -64,12 +67,13 @@ public class FavorFeedActivity extends AppCompatActivity {
             Collections.sort(userList, new Comparator<User>() {
                 @Override
                 public int compare(User user, User t1) {
-                    return user.uname.compareTo(t1.uname);
+                    return user.getUsername().compareTo(t1.getUsername());
                 }
             });
             for (User u : userList) {
                 Favor f = userToFavor.get(u);
-                ListItem li = new ListItem(u.uname, f.fdetails, "" + f.furgency, f.fdate);
+                ListItem li = new ListItem(u.getUsername(), f.getDetails(), "" +
+                        f.getUrgency(), f.getDate());
                 listItemsList.add(li);
             }
         }
