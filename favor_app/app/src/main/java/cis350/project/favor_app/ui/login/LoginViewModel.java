@@ -18,11 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 import cis350.project.favor_app.data.LoginRepository;
 import cis350.project.favor_app.data.Result;
 import cis350.project.favor_app.data.model.User;
-import cis350.project.favor_app.util.UserApiUtil;
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.util.userApi.UserApiFindTask;
+import cis350.project.favor_app.util.requests.UserApiFindTask;
 
-import cis350.project.favor_app.util.userApi.UserApiFindTask;
 
 public class LoginViewModel extends ViewModel {
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();

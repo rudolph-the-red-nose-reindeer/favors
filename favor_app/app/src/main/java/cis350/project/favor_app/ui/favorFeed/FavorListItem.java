@@ -2,13 +2,13 @@ package cis350.project.favor_app.ui.favorFeed;
 
 import org.json.JSONObject;
 
-public class ListItem {
+public class FavorListItem {
     private String username;
     private String details;
     private String urgency;
     private String date;
 
-    public ListItem(String username, String details, String urgency, String date) {
+    public FavorListItem(String username, String details, String urgency, String date) {
         this.username = username;
         this.details = details;
         this.urgency = urgency;

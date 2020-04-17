@@ -27,7 +27,7 @@ class UserApi {
                 email: req.body.email,
                 salt: encode.salt,
                 hash: encode.hash,
-                photo: req.body.photo ? req.body.photo : null,
+                photo: req.body.photo ? req.body.photo : '',
                 bio: req.body.bio ? req.body.bio : '',
                 rating: 0,
                 points: 0
@@ -73,7 +73,7 @@ class UserApi {
                         res.send({user: null, err: err});
                     } else {
                         if (user) {
-                            console.log("found user " + user);
+                            console.log('found user ' + user);
                             //res.render('user_findone', {user: user});
                             this.update(user, req, res);
                         }
@@ -84,15 +84,23 @@ class UserApi {
     }
 
     // helper to update document
-    async update(user, req, res) {
-        // update user data
-        var promise = this.resize(req.body.photo);
-        promise.then(data => {
-            user.bio = req.body.bio;
-            user.photo = Buffer.from(data).toString('base64');
-            this.saveUser(user, res);
-        });
+    // async update(user, req, res) {
+    //     // update user data
+    //     var promise = this.resize(req.body.photo);
+    //     promise.then(data => {
+    //         user.bio = req.body.bio;
+    //         user.photo = Buffer.from(data).toString('base64');
+    //         this.saveUser(user, res);
+    //     });
         
+    // }
+
+    update(user, req, res) {
+        console.log(req.body);
+        user.bio = req.body.bio;
+        user.photo = req.body.photo;
+        user.points = req.body.points;
+        this.saveUser(user, res);
     }
 
     // resize image to 250x250 if larger
@@ -104,9 +112,9 @@ class UserApi {
     saveUser(user, res) {
         user.save((err) => {
             if (err) {
-                console.log("Error: " + err);
+                console.log('Error: ' + err);
             } else {
-                console.log("Saved: " + user);
+                console.log('Saved: ' + user);
                 res.send({user: user});
             }
 
@@ -182,7 +190,7 @@ class UserApi {
                         if (user) {
                             res.send(user);
                         } else {
-                            res.send({err: "there is no such user"});
+                            res.send({err: 'there is no such user'});
                         }
                     }
                 });

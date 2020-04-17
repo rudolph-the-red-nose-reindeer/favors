@@ -12,4 +12,4 @@ var givenRewardSchema = new Schema({
     });
 
 // export givenReward as a class called givenReward
-module.exports = mongoose.model('givenReward', givenRewardSchema);
+module.exports = mongoose.model('givenreward', givenRewardSchema);

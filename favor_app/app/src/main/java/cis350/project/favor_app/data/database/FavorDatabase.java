@@ -1,4 +1,4 @@
-package cis350.project.favor_app.ui.favorFeed;
+package cis350.project.favor_app.data.database;
 
 import android.util.Log;
 
@@ -11,21 +11,26 @@ import java.util.HashSet;
 
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
+import cis350.project.favor_app.ui.favorFeed.AccessAllFavorsTask;
+import cis350.project.favor_app.ui.favorFeed.AccessAllUsersTask;
+import cis350.project.favor_app.ui.favorFeed.AccessFavorsAcceptedByUserTask;
+import cis350.project.favor_app.ui.favorFeed.AccessFavorsSubmittedByUserTask;
+import cis350.project.favor_app.ui.favorFeed.AccessUserFromFavorTask;
 
 /*
  * Singleton class for the database
  */
-public class Database {
+public class FavorDatabase {
 
-    private static Database instance = null;
+    private static FavorDatabase instance = null;
 
-    private Database() {}
+    private FavorDatabase() {}
 
-    // static method to create instance of Singleton class
-    public static Database getInstance()
+    // static method to create instance of database class
+    public static FavorDatabase getInstance()
     {
         if (instance == null)
-            instance = new Database();
+            instance = new FavorDatabase();
 
         return instance;
     }

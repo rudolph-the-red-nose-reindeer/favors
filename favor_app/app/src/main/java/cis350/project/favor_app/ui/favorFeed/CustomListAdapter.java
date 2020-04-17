@@ -1,6 +1,5 @@
 package cis350.project.favor_app.ui.favorFeed;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,9 @@ import java.util.ArrayList;
 import cis350.project.favor_app.R;
 
 public class CustomListAdapter extends BaseAdapter {
-    private ArrayList<ListItem> listData;
+    private ArrayList<FavorListItem> listData;
     private LayoutInflater layoutInflater;
-    public CustomListAdapter(Context aContext, ArrayList<ListItem> listData) {
+    public CustomListAdapter(Context aContext, ArrayList<FavorListItem> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }

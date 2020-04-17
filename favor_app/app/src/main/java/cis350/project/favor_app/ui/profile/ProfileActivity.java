@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.service.autofill.UserData;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,17 +15,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.database.UserDatabase;
+import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
 import cis350.project.favor_app.ui.favorSubmission.SubmitFavorActivity;
+import cis350.project.favor_app.ui.login.LoginActivity;
+import cis350.project.favor_app.ui.rewards.RewardActivity;
 import cis350.project.favor_app.ui.userFavorHistory.UserFavorHistoryActivity;
 import cis350.project.favor_app.util.ImageUtil;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends Activity {
 
     private ProfileActivity self = this;
+
     private TextView usernameView;
     private TextView emailView;
     private ImageView photoView;
@@ -36,69 +43,47 @@ public class ProfileActivity extends AppCompatActivity {
     private View seeFavorsButton;
     private View favorSubmissionButton;
     private View seeUserFavorsButton;
+    private View seeRewardsButton;
+    private View logoutButton;
 
-    private String userId;
-    private String username;
-    private String email;
+    private User loggedInUser;
     private Bitmap photo;
-    private String bio;
-    private int rating;
-    private int points;
 
     public static final int GET_FROM_GALLERY = 3;
     public static final int REGISTER_ACTIVITY_ID = 4;
     public static final int USER_FAVORS_ACTIVITY_ID = 5;
+    public static final int REWARD_REDEMPTION_ACTIVITY_ID = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
         usernameView = findViewById(R.id.name_text);
         emailView = findViewById(R.id.email_text);
         bioView = findViewById(R.id.bio_text);
         photoView = findViewById(R.id.profile_pic);
         ratingView = findViewById(R.id.rating_text);
         pointsView = findViewById(R.id.points_text);
-        saveButton = findViewById(R.id.profile_save_button);
         uploadButton = findViewById(R.id.upload_button);
         seeFavorsButton = findViewById(R.id.see_favors_button);
         favorSubmissionButton = findViewById(R.id.launch_favor_submit_button);
         seeUserFavorsButton = findViewById(R.id.profile_user_favors_button);
+        seeRewardsButton = findViewById(R.id.profile_rewards_button);
+        logoutButton = findViewById(R.id.profile_logout_button);
 
-        userId = getIntent().getStringExtra("userId");
-        username = getIntent().getStringExtra("username");
-        email = getIntent().getStringExtra("email");
-        photo = ImageUtil.decodeBase64(getIntent().getStringExtra("photo"));
-        if (photo != null) {
-            photo = Bitmap.createScaledBitmap(photo, 250, 250, false);
-        }
-        bio = getIntent().getStringExtra("bio");
-        rating = getIntent().getIntExtra("rating", 0);
-        points = getIntent().getIntExtra("points", 0);
+        loggedInUser = UserDatabase.getInstance().findUserById(
+                getIntent().getStringExtra("userId"));
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        assignProfileFeatures();
+
+        bioView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                String encodedImage = ImageUtil.encodeBase64(self.photo);
-                WebSaveProfileTask updateTask = new WebSaveProfileTask();
-                updateTask.execute(self.username, encodedImage, self.bio);
-            }
-        });
-
-        bioView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                self.bio = s.toString();
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    loggedInUser.setBio(bioView.getText().toString());
+                    UserDatabase.getInstance().updateUser(loggedInUser);
+                }
             }
         });
 
@@ -130,13 +115,28 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(self, UserFavorHistoryActivity.class);
-                intent.putExtra("userId", userId);
+                intent.putExtra("userId", loggedInUser.getUserId());
                 startActivityForResult(intent, USER_FAVORS_ACTIVITY_ID);
             }
         });
 
+        seeRewardsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(self, RewardActivity.class);
+                intent.putExtra("userId", loggedInUser.getUserId());
+                startActivityForResult(intent, REWARD_REDEMPTION_ACTIVITY_ID);
+            }
+        });
 
-        assignProfileFeatures();
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(self, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -149,31 +149,38 @@ public class ProfileActivity extends AppCompatActivity {
             try {
                 uploadedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
                         selection);
-                uploadedBitmap = Bitmap.createScaledBitmap(uploadedBitmap, 250, 250,
-                        false);
-                photo = uploadedBitmap;
-                photoView.setImageBitmap(photo);
+                String encodedPhoto = ImageUtil.encodeBase64(uploadedBitmap);
+                loggedInUser.setPhoto(encodedPhoto);
+                photoView.setImageBitmap(uploadedBitmap);
             } catch (Exception e) {
                 Log.e("UPLOAD", e.toString());
             }
+        } else if (requestCode == REWARD_REDEMPTION_ACTIVITY_ID) {
+            loggedInUser = UserDatabase.getInstance().findUserById(loggedInUser.getUserId());
+            assignProfileFeatures();
         }
     }
 
     private void assignProfileFeatures() {
-        usernameView.setText(username);
-        emailView.setText(email);
+        usernameView.setText(loggedInUser.getUsername());
+        emailView.setText(loggedInUser.getEmail());
+
+        photo = ImageUtil.decodeBase64(loggedInUser.getPhoto());
+
         if (photo != null) {
             photoView.setImageBitmap(photo);
         }
-        bioView.setText(bio);
-        ratingView.setText("Rating: " + String.valueOf(rating));
-        pointsView.setText("Points: " + String.valueOf(points));
+        bioView.setText(loggedInUser.getBio());
+        ratingView.setText("Rating: " + String.valueOf(loggedInUser.getRating()));
+        pointsView.setText("Points: " + String.valueOf(loggedInUser.getPoints()));
+
+        UserDatabase.getInstance().updateUser(loggedInUser);
     }
 
 
     public void openCreateFavorActivity() {
         Intent intent = new Intent(this, SubmitFavorActivity.class);
-        intent.putExtra("userId", userId);
+        intent.putExtra("userId", loggedInUser.getUserId());
         startActivity(intent);
     }
 

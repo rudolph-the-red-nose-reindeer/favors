@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/reward_list_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:text="reward_name"
+        app:layout_constraintEnd_toEndOf="@+id/reward_list_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reward_list_image" />
+
+    <ImageView
+        android:id="@+id/reward_list_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/common_google_signin_btn_icon_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reward_list_description"
+        android:layout_width="235dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="5dp"
+        android:text="sample text"
+        app:layout_constraintBottom_toBottomOf="@+id/reward_list_name"
+        app:layout_constraintStart_toEndOf="@+id/reward_list_image"
+        app:layout_constraintTop_toTopOf="@+id/reward_list_image" />
+
+    <TextView
+        android:id="@+id/reward_list_points"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="1 billion points"
+        app:layout_constraintBottom_toBottomOf="@+id/reward_list_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/reward_list_description"
+        app:layout_constraintTop_toTopOf="@+id/reward_list_description" />
+</androidx.constraintlayout.widget.ConstraintLayout>

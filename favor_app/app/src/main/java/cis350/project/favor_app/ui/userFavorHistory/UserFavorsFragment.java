@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -23,7 +22,7 @@ import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.favorFeed.CustomListAdapter;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.ui.favorFeed.Grouper;
-import cis350.project.favor_app.ui.favorFeed.ListItem;
+import cis350.project.favor_app.ui.favorFeed.FavorListItem;
 import cis350.project.favor_app.ui.favorFeed.Sorter;
 
 public class UserFavorsFragment extends Fragment {
@@ -82,7 +81,7 @@ public class UserFavorsFragment extends Fragment {
                 } else {
                     c = new Sorter().new DateComparator();
                 }
-                ArrayList<ListItem> listItemsList = new ArrayList<>();
+                ArrayList<FavorListItem> listItemsFavorList = new ArrayList<>();
                 LinkedHashMap<Favor, User> favorToUser;
 
                 if (submittedView) {
@@ -96,9 +95,9 @@ public class UserFavorsFragment extends Fragment {
                 if (c != null) {
                     for (Favor f : favorToUser.keySet()) {
                         User u = favorToUser.get(f);
-                        ListItem li = new ListItem(u.getUsername(), f.getDetails(), "" +
+                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
                                 f.getUrgency(), f.getDate());
-                        listItemsList.add(li);
+                        listItemsFavorList.add(li);
                     }
                 } else {
                     ArrayList<User> userList = new ArrayList<User>();
@@ -116,16 +115,16 @@ public class UserFavorsFragment extends Fragment {
                     });
                     for (User u : userList) {
                         Favor f = userToFavor.get(u);
-                        ListItem li = new ListItem(u.getUsername(), f.getDetails(), "" +
+                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
                                 f.getUrgency(), f.getDate());
-                        listItemsList.add(li);
+                        listItemsFavorList.add(li);
                     }
                 }
 
-                Log.d("TTTTTT", listItemsList.toString());
+                Log.d("TTTTTT", listItemsFavorList.toString());
                 final ListView lv = (ListView) v.findViewById(userListId);
                 Log.d("listview?", String.valueOf(lv == null));
-                lv.setAdapter(new CustomListAdapter(v.getContext(), listItemsList));
+                lv.setAdapter(new CustomListAdapter(v.getContext(), listItemsFavorList));
             }
 
             @Override

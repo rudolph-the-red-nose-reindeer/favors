@@ -2,6 +2,8 @@ package cis350.project.favor_app.data.model;
 
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
@@ -53,5 +55,21 @@ public class User {
 
     public int getPoints() {
         return points;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void syncToDatabase() {
+
     }
 }

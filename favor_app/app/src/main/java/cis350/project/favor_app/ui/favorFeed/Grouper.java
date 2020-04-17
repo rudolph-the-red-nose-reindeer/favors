@@ -8,12 +8,13 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
+import cis350.project.favor_app.data.database.FavorDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 
 public class Grouper {
     public static LinkedHashMap<Favor, User> getFirstNFavors(int n, Comparator<Favor> c) {
-        Database db = Database.getInstance();
+        FavorDatabase db = FavorDatabase.getInstance();
         HashSet<Favor> allFavors = db.getAllFavors();
 
         Log.d("Grouper 1", "yes");
@@ -54,7 +55,7 @@ public class Grouper {
 
     public static LinkedHashMap<Favor, User> getFirstNFavorsSubmittedByUser(int n, String userId,
                                                                    Comparator<Favor> c) {
-        Database db = Database.getInstance();
+        FavorDatabase db = FavorDatabase.getInstance();
         HashSet<Favor> favors = db.getFavorsSubmittedByUser(userId);
 
         Log.d("Grouper 2", "yes");
@@ -95,7 +96,7 @@ public class Grouper {
 
     public static LinkedHashMap<Favor, User> getFirstNFavorsAcceptedByUser(int n, String userId,
                                                                            Comparator<Favor> c) {
-        Database db = Database.getInstance();
+        FavorDatabase db = FavorDatabase.getInstance();
         HashSet<Favor> favors = db.getFavorsAcceptedByUser(userId);
 
         Log.d("Grouper 2", "yes");

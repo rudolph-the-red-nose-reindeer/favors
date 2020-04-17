@@ -1,4 +1,4 @@
-package cis350.project.favor_app.util.userApi;
+package cis350.project.favor_app.util.requests;
 
 import android.os.AsyncTask;
 import android.util.Log;

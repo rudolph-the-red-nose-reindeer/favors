@@ -137,8 +137,8 @@ public class SignupActivity extends AppCompatActivity {
     private void success() {
         Toast.makeText(SignupActivity.this, "Successfully Registered",
                 Toast.LENGTH_LONG).show();
-        Intent i = new Intent(SignupActivity.this, LoginActivity.class);
-        SignupActivity.this.startActivityForResult(i, ID);
+//        Intent i = new Intent(SignupActivity.this, LoginActivity.class);
+//        SignupActivity.this.startActivityForResult(i, ID);
         SignupActivity.this.finish();
     }
 

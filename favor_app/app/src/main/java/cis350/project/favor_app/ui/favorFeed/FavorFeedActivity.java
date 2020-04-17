@@ -47,14 +47,14 @@ public class FavorFeedActivity extends AppCompatActivity {
         } else {
             c = new Sorter().new DateComparator();
         }
-        ArrayList<ListItem> listItemsList = new ArrayList<>();
+        ArrayList<FavorListItem> listItemsFavorList = new ArrayList<>();
         LinkedHashMap<Favor, User> favorToUser = Grouper.getFirstNFavors(25, c);
         if (c != null) {
             for (Favor f : favorToUser.keySet()) {
                 User u = favorToUser.get(f);
-                ListItem li = new ListItem(u.getUsername(), f.getDetails(), "" +
+                FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
                         f.getUrgency(), f.getDate());
-                listItemsList.add(li);
+                listItemsFavorList.add(li);
             }
         } else {
             ArrayList<User> userList = new ArrayList<User>();
@@ -72,12 +72,12 @@ public class FavorFeedActivity extends AppCompatActivity {
             });
             for (User u : userList) {
                 Favor f = userToFavor.get(u);
-                ListItem li = new ListItem(u.getUsername(), f.getDetails(), "" +
+                FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
                         f.getUrgency(), f.getDate());
-                listItemsList.add(li);
+                listItemsFavorList.add(li);
             }
         }
         final ListView lv = (ListView) findViewById(R.id.favor_feed_user_list);
-        lv.setAdapter(new CustomListAdapter(this, listItemsList));
+        lv.setAdapter(new CustomListAdapter(this, listItemsFavorList));
     }
 }

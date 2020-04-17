@@ -15,10 +15,18 @@ app.use(bodyParser.json({}));
 // load APIs
 var userApi = require('./apis/UserAPI.js');
 // hook express app to API
-new userApi(app)
+new userApi(app);
 
 var favorApi = require('./apis/FavorAPI.js');
-new favorApi(app)
+new favorApi(app);
+
+var rewardApi = require('./apis/RewardAPI.js');
+new rewardApi(app);
+
+var givenRewardApi = require('./apis/GivenRewardAPI.js');
+new givenRewardApi(app);
+
+
 
 /*************************************************/
 

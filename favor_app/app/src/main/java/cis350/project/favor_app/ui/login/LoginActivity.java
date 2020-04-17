@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.database.UserDatabase;
+import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.profile.ProfileActivity;
 import cis350.project.favor_app.ui.register.SignupActivity;
 
@@ -78,20 +81,12 @@ public class LoginActivity extends AppCompatActivity {
                     LoggedInUserView successResult = loginResult.getSuccess();
                     updateUiWithUser(successResult);
                     Intent intent = new Intent(self, ProfileActivity.class);
-                    intent.putExtra("userId", successResult.getUserId());
-                    intent.putExtra("username", successResult.getDisplayName());
-                    intent.putExtra("email", successResult.getEmail());
-                    intent.putExtra("photo", successResult.getPhoto());
-                    intent.putExtra("bio", successResult.getBio());
-                    intent.putExtra("rating", successResult.getRating());
-                    intent.putExtra("points", successResult.getPoints());
+                    User loggedInUser = UserDatabase.getInstance().findUserById(successResult.getUserId());
+                    intent.putExtra("userId", loggedInUser.getUserId());
                     startActivity(intent);
                     setResult(Activity.RESULT_OK);
                     finish();
                 }
-
-                //Complete and destroy login activity once successful
-                //finish();
             }
         });
 

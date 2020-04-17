@@ -52,6 +52,7 @@
             android:label="History"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".ui.rewards.RewardActivity" />
     </application>
 
 </manifest>
