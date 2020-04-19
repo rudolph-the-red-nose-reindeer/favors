@@ -100,6 +100,7 @@ public class ProfileActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(self, FavorFeedActivity.class);
+                intent.putExtra("CURR_ID", loggedInUser.getUserId());
                 startActivityForResult(intent, REGISTER_ACTIVITY_ID);
             }
         });

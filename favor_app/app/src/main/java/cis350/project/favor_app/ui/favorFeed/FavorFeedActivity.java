@@ -1,7 +1,10 @@
 package cis350.project.favor_app.ui.favorFeed;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -14,12 +17,15 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
+import cis350.project.favor_app.ui.chat.ChatActivity;
 
 
 public class FavorFeedActivity extends AppCompatActivity {
-
+    String CURR_ID = "123";
+    private FavorFeedActivity self = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +39,7 @@ public class FavorFeedActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        CURR_ID = getIntent().getStringExtra("CURR_ID");
     }
 
     public void onButtonClick(View v) {
@@ -79,5 +86,17 @@ public class FavorFeedActivity extends AppCompatActivity {
         }
         final ListView lv = (ListView) findViewById(R.id.favor_feed_user_list);
         lv.setAdapter(new CustomListAdapter(this, listItemsFavorList));
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                Intent intent = new Intent(self, ChatActivity.class);
+                FavorListItem clickedOnUser = (FavorListItem) adapterView.getItemAtPosition(pos);
+                intent.putExtra("OTHER_USERNAME", clickedOnUser.getUsername());
+                intent.putExtra("CURRENT_USERNAME", "Jonah");//UserDatabase.getInstance().
+                //findUserById(CURR_ID).getUsername());
+                Log.e("got here", "Just yerp checking babe");
+                startActivity(intent);
+            }
+        });
     }
 }
