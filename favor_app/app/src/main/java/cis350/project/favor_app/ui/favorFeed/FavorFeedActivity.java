@@ -24,7 +24,6 @@ import cis350.project.favor_app.ui.chat.ChatActivity;
 
 
 public class FavorFeedActivity extends AppCompatActivity {
-    String CURR_ID = "123";
     private FavorFeedActivity self = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class FavorFeedActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-        CURR_ID = getIntent().getStringExtra("CURR_ID");
     }
 
     public void onButtonClick(View v) {
@@ -92,7 +90,7 @@ public class FavorFeedActivity extends AppCompatActivity {
                 Intent intent = new Intent(self, ChatActivity.class);
                 FavorListItem clickedOnUser = (FavorListItem) adapterView.getItemAtPosition(pos);
                 intent.putExtra("OTHER_USERNAME", clickedOnUser.getUsername());
-                intent.putExtra("CURRENT_USERNAME", "Jonah");//UserDatabase.getInstance().
+                intent.putExtra("CURR_USERNAME", getIntent().getStringExtra("CURR_USERNAME"));//UserDatabase.getInstance().
                 //findUserById(CURR_ID).getUsername());
                 Log.e("got here", "Just yerp checking babe");
                 startActivity(intent);

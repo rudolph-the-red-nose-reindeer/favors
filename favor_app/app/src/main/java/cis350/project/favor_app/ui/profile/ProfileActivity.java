@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.User;
+import cis350.project.favor_app.ui.chat.FriendActivity;
 import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
 import cis350.project.favor_app.ui.favorSubmission.SubmitFavorActivity;
 import cis350.project.favor_app.ui.login.LoginActivity;
@@ -45,6 +46,7 @@ public class ProfileActivity extends Activity {
     private View seeUserFavorsButton;
     private View seeRewardsButton;
     private View logoutButton;
+    private View chatButton;
 
     private User loggedInUser;
     private Bitmap photo;
@@ -71,6 +73,7 @@ public class ProfileActivity extends Activity {
         seeUserFavorsButton = findViewById(R.id.profile_user_favors_button);
         seeRewardsButton = findViewById(R.id.profile_rewards_button);
         logoutButton = findViewById(R.id.profile_logout_button);
+        chatButton = findViewById(R.id.see_friends_button);
 
         loggedInUser = UserDatabase.getInstance().findUserById(
                 getIntent().getStringExtra("userId"));
@@ -100,7 +103,7 @@ public class ProfileActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(self, FavorFeedActivity.class);
-                intent.putExtra("CURR_ID", loggedInUser.getUserId());
+                intent.putExtra("CURR_USERNAME", loggedInUser.getUsername());
                 startActivityForResult(intent, REGISTER_ACTIVITY_ID);
             }
         });
@@ -138,6 +141,17 @@ public class ProfileActivity extends Activity {
                 finish();
             }
         });
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(self, FriendActivity.class);
+                intent.putExtra("CURR_USER", loggedInUser.getUsername());
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
     }
 
     @Override

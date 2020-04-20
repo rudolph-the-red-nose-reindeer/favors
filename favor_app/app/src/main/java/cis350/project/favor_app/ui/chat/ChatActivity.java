@@ -1,258 +1,222 @@
 package cis350.project.favor_app.ui.chat;
 
-
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.SnapshotParser;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.Console;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.logging.ConsoleHandler;
 
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.data.database.UserDatabase;
-import cis350.project.favor_app.data.model.User;
-import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
-import cis350.project.favor_app.ui.login.LoginActivity;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 
 public class ChatActivity extends AppCompatActivity {
-
-    public static class MessageViewHolder extends RecyclerView.ViewHolder {
-        TextView messageTextView;
-        TextView messengerTextView;
-        CircleImageView messengerImageView;
-
-        public MessageViewHolder(View v) {
-            super(v);
-            messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
-
-            messengerTextView = (TextView) itemView.findViewById(R.id.messengerTextView);
-
-            messengerImageView = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
-        }
-    }
-
-    public static final String MESSAGES_CHILD = "messages";
-    private static final int REQUEST_INVITE = 1;
-    private static final int REQUEST_IMAGE = 2;
-    private static final String LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif";
-    public static final int DEFAULT_MSG_LENGTH_LIMIT = 10;
-    public static final String ANONYMOUS = "anonymous";
-    private static final String MESSAGE_SENT_EVENT = "message_sent";
-    private String mUsername;
-    private String mPhotoUrl;
-    private SharedPreferences mSharedPreferences;
-    private GoogleApiClient mGoogleApiClient;
-    private static final String MESSAGE_URL = "http://friendlychat.firebase.google.com/message/";
-
-    private Button mSendButton;
-    private RecyclerView mMessageRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager;
-    private ProgressBar mProgressBar;
-    private EditText mMessageEditText;
-    private ImageView mAddMessageImageView;
-
-    // Firebase instance variables
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
-    private DatabaseReference mFirebaseDatabaseReference;
-    private FirebaseRecyclerAdapter<FavorMessage, MessageViewHolder>
-            mFirebaseAdapter;
+    LinearLayout layout;
+    ImageView sendButton;
+    EditText messageArea;
+    ScrollView scrollView;
+    Firebase mReference1, mReference2, fReference1, fReference2;
+    String fReference1URL, fReference2URL;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currFireBaseUser;
+    String chatWith, currUsername;
+    static String FIRE_MESSAGE_URL = "https://favor-a2d05.firebaseio.com/messages/";
+    static String FIRE_FRIEND_URL = "https://favor-a2d05.firebaseio.com/friend/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("got here", "Just checking babe");
         setContentView(R.layout.activity_chat);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        // Set default username is anonymous.
-        mUsername = ANONYMOUS;
-        //After musername has been initialized
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        //Create the mFirebaseOtherUser by getting email -> getting account -> getting id
-        String OTHER_USERNAME = getIntent().getStringExtra("OTHER_USERNAME");
-        User otherUser = UserDatabase.getInstance().findUserByUsername(OTHER_USERNAME);
-        String oEmail = otherUser.getEmail();
-        if (mFirebaseUser != null) {
-            Toast.makeText(getApplicationContext(), "User Id: " + mFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "User Id: User is null you should work on that", Toast.LENGTH_SHORT).show();
+
+        layout = (LinearLayout) findViewById(R.id.layout1);
+        sendButton = (ImageView) findViewById(R.id.sendButton);
+        messageArea = (EditText) findViewById(R.id.messageArea);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+        currUsername = getIntent().getStringExtra("CURR_USERNAME");
+        chatWith = getIntent().getStringExtra("OTHER_USERNAME");
+        //Logging test
+        Log.d("currUsername", currUsername);
+        Log.d("chatWith",  chatWith);
+        //
+        Firebase.setAndroidContext(this);
+
+
+        mReference1 = new Firebase(FIRE_MESSAGE_URL + currUsername + "_" + chatWith);
+        mReference2 = new Firebase(FIRE_MESSAGE_URL + chatWith + "_" + currUsername);
+
+        //Add to friends list if not already there
+        fReference1URL = FIRE_FRIEND_URL  + currUsername + ".json";
+        fReference2URL = FIRE_FRIEND_URL + chatWith + ".json";
+        fReference1 = new Firebase(FIRE_FRIEND_URL + currUsername);
+        fReference2 = new Firebase(FIRE_FRIEND_URL + chatWith);
+
+        Log.d("making sure ", "value");
+        StringRequest fReference1Req = new StringRequest(Request.Method.GET, fReference1URL, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String s) {
+                Log.d("referenceUrl1", fReference1URL);
+                setUpFriends(s, fReference1, chatWith);
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("volley 1 error: ", volleyError.toString());
+            }
+        });
+        //Add to request queue
+        RequestQueue rQueue = Volley.newRequestQueue(ChatActivity.this);
+        rQueue.add(fReference1Req);
+
+
+        StringRequest fReference2Req = new StringRequest(Request.Method.GET, fReference2URL, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String s) {
+                Log.d("referenceUrl2", fReference2URL);
+                setUpFriends(s, fReference2, currUsername);
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("volley 2 error: ", volleyError.toString());
+            }
+        });
+        //Add to request queue
+        rQueue.add(fReference2Req);
+
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String messageText = messageArea.getText().toString();
+
+                if(!messageText.equals("")){
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("message", messageText);
+                    map.put("user", currUsername);
+                    mReference1.push().setValue(map);
+                    mReference2.push().setValue(map);
+                }
+            }
+        });
+
+        mReference1.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Map map = dataSnapshot.getValue(Map.class);
+                String message = map.get("message").toString();
+                String userName = map.get("user").toString();
+
+                if(userName.equals(currUsername)){
+                    addMessageBox("You:-\n" + message, 1);
+                }
+                else{
+                    addMessageBox(chatWith + ":-\n" + message, 2);
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    public void addMessageBox(String message, int type){
+        TextView textView = new TextView(ChatActivity.this);
+        textView.setText(message);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, 0, 0, 10);
+        textView.setLayoutParams(lp);
+
+        if(type == 1) {
+            textView.setBackgroundResource(R.drawable.rounded_corner1);
         }
-//        if (mFirebaseUser == null) {
-//            // Not signed in, launch the Sign In activity
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
-//            return;
-//        } else {
-//            mUsername = mFirebaseUser.getDisplayName();
-//            if (mFirebaseUser.getPhotoUrl() != null) {
-//                mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
-//            }
-//        }
+        else{
+            textView.setBackgroundResource(R.drawable.rounded_corner2);
+        }
 
-        // Initialize ProgressBar and RecyclerView.
-        mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mLinearLayoutManager.setStackFromEnd(true);
-        mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        // New child entries
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        SnapshotParser<FavorMessage> parser = new SnapshotParser<FavorMessage>() {
-            @Override
-            public FavorMessage parseSnapshot(DataSnapshot dataSnapshot) {
-                FavorMessage favorMessage = dataSnapshot.getValue(FavorMessage.class);
-
-                if (favorMessage != null) {
-                    favorMessage.setId(dataSnapshot.getKey());
-                }
-                return favorMessage;
-            }
-        };
-
-        DatabaseReference messagesRef = mFirebaseDatabaseReference.child(MESSAGES_CHILD);
-        FirebaseRecyclerOptions<FavorMessage> options =
-                new FirebaseRecyclerOptions.Builder<FavorMessage>()
-                        .setQuery(messagesRef, parser)
-                        .build();
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<FavorMessage, MessageViewHolder>(options) {
-            @Override
-            public MessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                return new MessageViewHolder(inflater.inflate(R.layout.item__message, viewGroup, false));
-            }
-
-            @Override
-            protected void onBindViewHolder(final MessageViewHolder viewHolder,
-                                            int position,
-                                            FavorMessage favorMessage) {
-             //   mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                if (favorMessage.getText() != null) {
-                    viewHolder.messageTextView.setText(favorMessage.getText());
-                    viewHolder.messageTextView.setVisibility(TextView.VISIBLE);
-                }
-                viewHolder.messengerTextView.setText(favorMessage.getName());
-                }
-        };
-
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                int lastVisiblePosition =
-                        mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-                // If the recycler view is initially being loaded or the
-                // user is at the bottom of the list, scroll to the bottom
-                // of the list to show the newly added message.
-                if (lastVisiblePosition == -1 ||
-                        (positionStart >= (friendlyMessageCount - 1) &&
-                                lastVisiblePosition == (positionStart - 1))) {
-                    mMessageRecyclerView.scrollToPosition(positionStart);
-                }
-            }
-        });
-
-        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-
-        mMessageEditText = (EditText) findViewById(R.id.messageEditText);
-        mMessageEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().trim().length() > 0) {
-                    mSendButton.setEnabled(true);
-                } else {
-                    mSendButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
-        mSendButton = (Button) findViewById(R.id.sendButton);
-        mSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Send messages on click.
-            }
-        });
-
-        mAddMessageImageView = (ImageView) findViewById(R.id.addMessageImageView);
-        mAddMessageImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Select image for image message on click.
-            }
-        });
+        layout.addView(textView);
+        scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in.
-        // TODO: Add code to check if user is signed in.
-    }
+    public void setUpFriends(String jsonString, Firebase refForAdd, String toAdd) {
+        try {
+            Log.e("what is hapenning", "hi");
+            if (jsonString.equals(null) || jsonString.equals(JSONObject.NULL)) {
+                Log.d("went through", "yerp");
+                Map<String, String> map = new HashMap<>();
+                map.put(toAdd, toAdd);
+                refForAdd.push().setValue(map);
+                return;
+            }
+            JSONObject obj = new JSONObject(jsonString);
+            Log.d("jsonString", jsonString);
+            Iterator i = obj.keys();
+            String key = "";
+            boolean inListAlready = false;
+            while(i.hasNext()){
+                key = i.next().toString();
+                Log.d("json key", key);
+                if(key.equals(toAdd)) {
+                    inListAlready = true;
+                    break;
+                }
+            }
+            if (!inListAlready) {
+                Map<String, String> map = new HashMap<>();
+                map.put(toAdd, toAdd);
+                refForAdd.push().setValue(map);
+            }
 
-    @Override
-    public void onPause() {
-        mFirebaseAdapter.stopListening();
-        super.onPause();
-    }
+        }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mFirebaseAdapter.startListening();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        catch (JSONException e) {
+            Log.d("JSONException", e.toString());
+            e.printStackTrace();
+            Map<String, String> map = new HashMap<>();
+            map.put(toAdd, toAdd);
+            refForAdd.push().setValue(map);
+        }
     }
 }

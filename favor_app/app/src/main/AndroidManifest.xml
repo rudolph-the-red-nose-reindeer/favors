@@ -51,6 +51,7 @@
             android:label="History"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.rewards.RewardActivity" />
+        <activity android:name=".ui.chat.FriendActivity" />
     </application>
 
 </manifest>
