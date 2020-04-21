@@ -63,7 +63,9 @@ public class SubmitFavorActivity extends AppCompatActivity {
                 location = locationText.getText().toString();
                 Toast.makeText(SubmitFavorActivity.this, "Category : " + category,
                         Toast.LENGTH_LONG).show();
-
+                if ((details == null) || (urgency == null) || (location == null)) {
+                    failure();
+                }
                 if (!validUrgency(urgency)) {
                     updateUrgency();
                     return;

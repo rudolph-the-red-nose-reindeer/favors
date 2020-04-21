@@ -1,6 +1,7 @@
 package cis350.project.favor_app.data.database;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +17,7 @@ import cis350.project.favor_app.ui.favorFeed.AccessAllUsersTask;
 import cis350.project.favor_app.ui.favorFeed.AccessFavorsAcceptedByUserTask;
 import cis350.project.favor_app.ui.favorFeed.AccessFavorsSubmittedByUserTask;
 import cis350.project.favor_app.ui.favorFeed.AccessUserFromFavorTask;
+import cis350.project.favor_app.ui.favorSearch.favorSearchActivity;
 
 /*
  * Singleton class for the database

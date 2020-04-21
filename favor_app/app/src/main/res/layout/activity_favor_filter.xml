@@ -34,11 +34,11 @@
             android:padding="10dp">
             <EditText
                 android:id="@+id/find_favor_search_et"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:hint="Find Favor by details"
+                android:hint="Enter Details for Favor"
                 android:inputType="textAutoCorrect"
                 android:textColorHighlight="#ff7eff15"
                 android:textColorHint="#3AB75D"
@@ -69,9 +69,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
+            android:alpha="0.8"
             android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
             android:text="Home and Cleaning Favors"
             android:textAllCaps="false" />
 
@@ -82,9 +81,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/drinks"
             android:text="Drink \n Favors"
             android:textAllCaps="false" />
 
@@ -94,9 +92,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/booze"
             android:text="Booze Runs Favors"
             android:textAllCaps="false" />
 
@@ -115,9 +112,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/grocery"
             android:text="Grocery Delivery Favors"
             android:textAllCaps="false" />
 
@@ -127,9 +123,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/food"
             android:text="Food \n Delivery Favors"
             android:textAllCaps="false" />
 
@@ -139,9 +134,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/pharmacy"
             android:text="Pharmacy Delivery Favors"
             android:textAllCaps="false" />
 
@@ -159,9 +153,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/pets"
             android:text="Pet \n Favors"
             android:textAllCaps="false" />
 
@@ -171,9 +164,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/stationaries"
             android:text="Stationary and Electronic  Favors"
             android:textAllCaps="false" />
 
@@ -183,9 +175,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="25dp"
             android:layout_weight="1"
-            android:alpha="0.7"
-            android:background="@drawable/home_cleaning"
-            android:contentDescription="@string/app_name"
+            android:alpha="0.8"
+            android:background="@drawable/microwable_meals"
             android:text="Quick Snacks and Meals Favors"
             android:textAllCaps="false" />
 

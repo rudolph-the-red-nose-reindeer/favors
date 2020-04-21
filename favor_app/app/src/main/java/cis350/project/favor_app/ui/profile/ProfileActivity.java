@@ -22,6 +22,7 @@ import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
+import cis350.project.favor_app.ui.favorSearch.favorSearchActivity;
 import cis350.project.favor_app.ui.favorSubmission.SubmitFavorActivity;
 import cis350.project.favor_app.ui.login.LoginActivity;
 import cis350.project.favor_app.ui.rewards.RewardActivity;
@@ -45,6 +46,7 @@ public class ProfileActivity extends Activity {
     private View seeUserFavorsButton;
     private View seeRewardsButton;
     private View logoutButton;
+    private View findFavorButton;
 
     private User loggedInUser;
     private Bitmap photo;
@@ -71,6 +73,7 @@ public class ProfileActivity extends Activity {
         seeUserFavorsButton = findViewById(R.id.profile_user_favors_button);
         seeRewardsButton = findViewById(R.id.profile_rewards_button);
         logoutButton = findViewById(R.id.profile_logout_button);
+        findFavorButton = findViewById(R.id.find_favor_search_profile_btn);
 
         loggedInUser = UserDatabase.getInstance().findUserById(
                 getIntent().getStringExtra("userId"));
@@ -135,6 +138,13 @@ public class ProfileActivity extends Activity {
                 Intent intent = new Intent(self, LoginActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        findFavorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(self, favorSearchActivity.class);
+                startActivity(intent);
             }
         });
     }

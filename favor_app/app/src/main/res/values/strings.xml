@@ -17,6 +17,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_favor">FavorActivity</string>
     <string name="title_activity_created_favor">CreatedFavorActivity</string>
+    <string name="title_activity_find_favor">CreatedFindActivity</string>
     <string-array name="category">
         <item>Home and Cleaning</item>
         <item>Drinks</item>

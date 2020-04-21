@@ -46,6 +46,7 @@ public class FavorListItem {
             jo.put("details", details);
             jo.put("urgency", urgency);
             jo.put("date", date);
+            jo.put("category", category);
             return jo.toString();
         } catch (Exception e) {
             return "";
