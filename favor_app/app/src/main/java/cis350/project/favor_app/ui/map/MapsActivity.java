@@ -1,4 +1,4 @@
-package cis350.project.favor_app.ui;
+package cis350.project.favor_app.ui.map;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -14,6 +14,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashSet;
+
+import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.database.FavorDatabase;
+import cis350.project.favor_app.data.model.Favor;
 
 public class MapsActivity extends FragmentActivity implements
         GoogleMap.OnMarkerClickListener,

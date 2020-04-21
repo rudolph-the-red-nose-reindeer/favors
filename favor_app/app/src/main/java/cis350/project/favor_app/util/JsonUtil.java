@@ -69,21 +69,30 @@ public class JsonUtil {
     public static Favor getFavorFromJsonObject(JSONObject obj) {
         try {
             String favorId = obj.getString("_id");
-            String userId = obj.getString("username");
+            String userId = obj.getString("userId");
             String acceptedBy = "";
+            double lat = 0;
+            double lon = 0;
+            String date = obj.getString("datePosted");
+            int urgency = obj.getInt("urgency");
+            String details = obj.getString("details");
+            String location = "";
 
-            if (obj.has("username")) {
-                acceptedBy = obj.getString("username");
+            if (obj.has("acceptedBy") && !obj.isNull("acceptedBy")) {
+                acceptedBy = obj.getString("acceptedBy");
+            }
+            if (obj.has("lat") && !obj.isNull("lat")) {
+                lat = obj.getDouble("lat");
+            }
+            if (obj.has("lon") && !obj.isNull("lon")) {
+                lon = obj.getDouble("lon");
+            }
+            if (obj.has("location") && !obj.isNull("location")) {
+                location = obj.getString("location");
             }
 
-            String datePosted = obj.getString("datePosted");
-            int urgency = obj.getInt("urgency");
-            double longitude = obj.getDouble("longitude");
-            double latitude = obj.getDouble("latitude");
-            String details = obj.getString("details");
-
-            return new Favor(favorId, userId, acceptedBy, datePosted, urgency, longitude, latitude,
-                    details);
+            return new Favor(favorId, userId, acceptedBy, date, urgency, location, details,
+                    lat, lon);
         } catch (Exception e) {
             Log.d("Error converting JSON object to favor", e.toString());
             return null;

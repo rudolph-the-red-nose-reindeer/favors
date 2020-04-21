@@ -16,6 +16,7 @@ import cis350.project.favor_app.ui.favorFeed.AccessAllUsersTask;
 import cis350.project.favor_app.ui.favorFeed.AccessFavorsAcceptedByUserTask;
 import cis350.project.favor_app.ui.favorFeed.AccessFavorsSubmittedByUserTask;
 import cis350.project.favor_app.ui.favorFeed.AccessUserFromFavorTask;
+import cis350.project.favor_app.util.JsonUtil;
 
 /*
  * Singleton class for the database
@@ -49,27 +50,10 @@ public class FavorDatabase {
                 try {
                     JSONObject jFavor = allFavorArray.getJSONObject(i);
                     Log.d("Json favor string", jFavor.toString());
-                    String favorId = jFavor.getString("_id");
-                    String userId = jFavor.getString("userId");
-                    String acceptedBy = null;
-                    double longitude = 0;
-                    double latitude = 0;
-                    if (jFavor.has("acceptedBy")) {
-                        acceptedBy = jFavor.getString("acceptedBy");
+                    Favor favor = JsonUtil.getFavorFromJsonObject(jFavor);
+                    if (favor != null) {
+                        allFavorSet.add(favor);
                     }
-                    if (jFavor.has("longitude")) {
-                        longitude = jFavor.getDouble("longitude");
-                    }
-                    if (jFavor.has("latitude")) {
-                        latitude = jFavor.getDouble("latitude");
-                    }
-                    String date = jFavor.getString("datePosted");
-
-                    int urgency = jFavor.getInt("urgency");
-                    String details = jFavor.getString("details");
-                    Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, longitude,
-                            latitude, details);
-                    allFavorSet.add(favor);
                 } catch (JSONException e) {
                     Log.e("Error getting favor", e.toString());
                     return null;
@@ -97,26 +81,10 @@ public class FavorDatabase {
                 try {
                     JSONObject jFavor = allFavorArray.getJSONObject(i);
                     Log.d("Json favor string", jFavor.toString());
-                    String favorId = jFavor.getString("_id");
-                    String acceptedBy = null;
-                    double longitude = 0;
-                    double latitude = 0;
-                    if (jFavor.has("acceptedBy")) {
-                        acceptedBy = jFavor.getString("acceptedBy");
+                    Favor favor = JsonUtil.getFavorFromJsonObject(jFavor);
+                    if (favor != null) {
+                        favorSet.add(favor);
                     }
-                    if (jFavor.has("longitude")) {
-                        longitude = jFavor.getDouble("longitude");
-                    }
-                    if (jFavor.has("latitude")) {
-                        latitude = jFavor.getDouble("latitude");
-                    }
-                    String date = jFavor.getString("datePosted");
-
-                    int urgency = jFavor.getInt("urgency");
-                    String details = jFavor.getString("details");
-                    Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, longitude,
-                            latitude, details);
-                    favorSet.add(favor);
                 } catch (JSONException e) {
                     Log.e("Error getting favor", e.toString());
                     return null;
@@ -144,26 +112,10 @@ public class FavorDatabase {
                 try {
                     JSONObject jFavor = allFavorArray.getJSONObject(i);
                     Log.d("Json favor string", jFavor.toString());
-                    String favorId = jFavor.getString("_id");
-                    String acceptedBy = null;
-                    double longitude = 0;
-                    double latitude = 0;
-                    if (jFavor.has("acceptedBy")) {
-                        acceptedBy = jFavor.getString("acceptedBy");
+                    Favor favor = JsonUtil.getFavorFromJsonObject(jFavor);
+                    if (favor != null) {
+                        favorSet.add(favor);
                     }
-                    if (jFavor.has("longitude")) {
-                        longitude = jFavor.getDouble("longitude");
-                    }
-                    if (jFavor.has("latitude")) {
-                        latitude = jFavor.getDouble("latitude");
-                    }
-                    String date = jFavor.getString("datePosted");
-
-                    int urgency = jFavor.getInt("urgency");
-                    String details = jFavor.getString("details");
-                    Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, longitude,
-                            latitude, details);
-                    favorSet.add(favor);
                 } catch (JSONException e) {
                     Log.e("Error getting favor", e.toString());
                     return null;

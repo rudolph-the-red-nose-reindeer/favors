@@ -17,11 +17,10 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.chat.ChatActivity;
-import cis350.project.favor_app.ui.MapsActivity;
+import cis350.project.favor_app.ui.map.MapsActivity;
 
 
 public class FavorFeedActivity extends AppCompatActivity {
@@ -48,11 +47,11 @@ public class FavorFeedActivity extends AppCompatActivity {
         Comparator<Favor> c;
         //Log.d("hihihi", "jijai");
         if (sortBy.equals("Urgency")) {
-            c = new Sorter().new UrgencyComparator<>();
+            c = Sorter.getInstance().getUrgencyComparator();
         } else if (sortBy.equals("Username")) {
-            c = new Sorter().new UsernameComparator<>();
+            c = Sorter.getInstance().getUsernameComparator();
         } else {
-            c = new Sorter().new DateComparator();
+            c = Sorter.getInstance().getDateComparator();
         }
         ArrayList<FavorListItem> listItemsFavorList = new ArrayList<>();
         LinkedHashMap<Favor, User> favorToUser = Grouper.getFirstNFavors(25, c);

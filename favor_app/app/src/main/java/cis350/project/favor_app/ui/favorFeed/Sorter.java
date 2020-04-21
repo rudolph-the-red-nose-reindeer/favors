@@ -2,13 +2,21 @@ package cis350.project.favor_app.ui.favorFeed;
 
 import java.util.Comparator;
 
-import cis350.project.favor_app.data.database.FavorDatabase;
 import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 
 public class Sorter {
-    public class UrgencyComparator<Object> implements Comparator<Object> {
+    private static Sorter instance = null;
+
+    public static Sorter getInstance() {
+        if (instance == null) {
+            instance = new Sorter();
+        }
+        return instance;
+    }
+
+    private class UrgencyComparator<Object> implements Comparator<Object> {
         @Override
         public int compare(Object favor, Object t1) {
             Favor f = (Favor) favor;
@@ -16,7 +24,7 @@ public class Sorter {
             return g.getUrgency() - f.getUrgency();
         }
     }
-    public class UsernameComparator<Object> implements Comparator<Object> {
+    private class UsernameComparator<Object> implements Comparator<Object> {
         @Override
         public int compare(Object favor, Object t1) {
             Favor f = (Favor) favor;
@@ -27,12 +35,24 @@ public class Sorter {
             return u.getUsername().compareTo(v.getUsername());
         }
     }
-    public class DateComparator<Object> implements Comparator<Object> {
+    private class DateComparator<Object> implements Comparator<Object> {
         @Override
         public int compare(Object favor, Object t1) {
             Favor f = (Favor) favor;
             Favor g = (Favor) t1;
             return -1 * f.getDate().compareTo(g.getDate());
         }
+    }
+
+    public Comparator getUsernameComparator() {
+        return new UsernameComparator<>();
+    }
+
+    public Comparator getDateComparator() {
+        return new DateComparator<>();
+    }
+
+    public Comparator getUrgencyComparator() {
+        return new UrgencyComparator<>();
     }
 }

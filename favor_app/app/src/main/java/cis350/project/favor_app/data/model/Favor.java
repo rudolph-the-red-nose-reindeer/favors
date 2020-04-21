@@ -1,4 +1,4 @@
-package edu.upenn.cis350.maps;
+package cis350.project.favor_app.data.model;;
 
 public class Favor {
     private String favorId;

@@ -1,6 +1,5 @@
 package cis350.project.favor_app.ui.favorFeed;
 
-import android.service.autofill.UserData;
 import android.util.Log;
 
 import java.util.ArrayList;

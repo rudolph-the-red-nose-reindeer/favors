@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:onClick="mapClick"
         android:text="See map"
-        app:layout_constraintBottom_toTopOf="@+id/favor_feed_user_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,15 +41,16 @@
 
     <ListView
         android:id="@+id/favor_feed_user_list"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:dividerHeight="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/favor_feed_button"
-        app:layout_constraintTop_toBottomOf="@+id/favor_feed_button">
+        app:layout_constraintTop_toBottomOf="@+id/map_button"
+        app:layout_constraintVertical_bias="1.0">
 
     </ListView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

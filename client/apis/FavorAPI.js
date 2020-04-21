@@ -25,7 +25,9 @@ class FavorApi {
                 datePosted: Date.parse(req.body.datePosted),
                 urgency: req.body.urgency,
                 location: req.body.location,
-                details: req.body.details
+                details: req.body.details,
+                lat: req.body.lat,
+                lon: req.body.lon
             });
 
             // save the favor to the database

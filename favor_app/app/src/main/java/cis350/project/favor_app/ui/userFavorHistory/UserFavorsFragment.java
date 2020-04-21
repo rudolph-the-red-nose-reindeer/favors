@@ -75,11 +75,11 @@ public class UserFavorsFragment extends Fragment {
                 Comparator<Favor> c;
                 //Log.d("hihihi", "jijai");
                 if (sortBy.equals("Urgency")) {
-                    c = new Sorter().new UrgencyComparator<>();
+                    c = Sorter.getInstance().getUrgencyComparator();
                 } else if (sortBy.equals("Username")) {
-                    c = new Sorter().new UsernameComparator<>();
+                    c = Sorter.getInstance().getUsernameComparator();
                 } else {
-                    c = new Sorter().new DateComparator();
+                    c = Sorter.getInstance().getDateComparator();
                 }
                 ArrayList<FavorListItem> listItemsFavorList = new ArrayList<>();
                 LinkedHashMap<Favor, User> favorToUser;

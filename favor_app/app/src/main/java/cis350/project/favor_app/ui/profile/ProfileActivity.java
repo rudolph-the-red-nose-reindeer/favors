@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.database.UserDatabase;
+import cis350.project.favor_app.data.model.Location;
 import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.chat.FriendActivity;
 import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
@@ -28,6 +29,7 @@ import cis350.project.favor_app.ui.login.LoginActivity;
 import cis350.project.favor_app.ui.rewards.RewardActivity;
 import cis350.project.favor_app.ui.userFavorHistory.UserFavorHistoryActivity;
 import cis350.project.favor_app.util.ImageUtil;
+import cis350.project.favor_app.util.LocationUtil;
 
 public class ProfileActivity extends Activity {
 
@@ -47,6 +49,8 @@ public class ProfileActivity extends Activity {
     private View seeRewardsButton;
     private View logoutButton;
     private View chatButton;
+    private View testLocButton;
+
 
     private User loggedInUser;
     private Bitmap photo;
@@ -74,6 +78,8 @@ public class ProfileActivity extends Activity {
         seeRewardsButton = findViewById(R.id.profile_rewards_button);
         logoutButton = findViewById(R.id.profile_logout_button);
         chatButton = findViewById(R.id.see_friends_button);
+        testLocButton = findViewById(R.id.profile_test_loc);
+
 
         loggedInUser = UserDatabase.getInstance().findUserById(
                 getIntent().getStringExtra("userId"));
@@ -147,6 +153,14 @@ public class ProfileActivity extends Activity {
                 Intent intent = new Intent(self, FriendActivity.class);
                 intent.putExtra("CURR_USER", loggedInUser.getUsername());
                 startActivity(intent);
+            }
+        });
+
+        testLocButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Location loc = LocationUtil.getLastLocation(self);
+                Log.d("current location:", loc.toString());
             }
         });
 

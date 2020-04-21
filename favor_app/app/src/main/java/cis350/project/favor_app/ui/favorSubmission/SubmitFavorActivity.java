@@ -1,5 +1,6 @@
 package cis350.project.favor_app.ui.favorSubmission;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,8 +15,10 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.util.LocationUtil;
 
 public class SubmitFavorActivity extends AppCompatActivity {
+    private Activity self = this;
     private String details;
     private String urgency;
     private String longitude;
