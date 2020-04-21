@@ -1,4 +1,4 @@
-package cis350.project.favor_app.ui.map;
+package cis350.project.favor_app.ui;
 
 import androidx.fragment.app.FragmentActivity;
 
