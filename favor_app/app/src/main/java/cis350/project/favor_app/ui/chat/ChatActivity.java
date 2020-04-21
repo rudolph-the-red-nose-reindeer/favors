@@ -185,9 +185,7 @@ public class ChatActivity extends AppCompatActivity {
             Log.e("what is hapenning", "hi");
             if (jsonString.equals(null) || jsonString.equals(JSONObject.NULL)) {
                 Log.d("went through", "yerp");
-                Map<String, String> map = new HashMap<>();
-                map.put(toAdd, toAdd);
-                refForAdd.push().setValue(map);
+                refForAdd.push().setValue(toAdd);
                 return;
             }
             JSONObject obj = new JSONObject(jsonString);
@@ -198,15 +196,14 @@ public class ChatActivity extends AppCompatActivity {
             while(i.hasNext()){
                 key = i.next().toString();
                 Log.d("json key", key);
-                if(key.equals(toAdd)) {
+                String name = obj.getString(key);
+                if (name.equals(toAdd)) {
                     inListAlready = true;
                     break;
                 }
             }
             if (!inListAlready) {
-                Map<String, String> map = new HashMap<>();
-                map.put(toAdd, toAdd);
-                refForAdd.push().setValue(map);
+                refForAdd.push().setValue(toAdd);
             }
 
         }
@@ -214,9 +211,7 @@ public class ChatActivity extends AppCompatActivity {
         catch (JSONException e) {
             Log.d("JSONException", e.toString());
             e.printStackTrace();
-            Map<String, String> map = new HashMap<>();
-            map.put(toAdd, toAdd);
-            refForAdd.push().setValue(map);
+            refForAdd.push().setValue(toAdd);
         }
     }
 }
