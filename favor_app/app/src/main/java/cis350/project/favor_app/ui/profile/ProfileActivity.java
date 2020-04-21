@@ -147,8 +147,6 @@ public class ProfileActivity extends Activity {
                 Intent intent = new Intent(self, FriendActivity.class);
                 intent.putExtra("CURR_USER", loggedInUser.getUsername());
                 startActivity(intent);
-                finish();
-
             }
         });
 

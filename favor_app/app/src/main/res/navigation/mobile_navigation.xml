@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_profile_home">
+
+    <fragment
+        android:id="@+id/nav_profile_home"
+        android:name="temp.nav_drawer_temp.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_home"/>
+    <fragment
+        android:id="@+id/nav_user_favors"
+        android:name="temp.nav_drawer_temp.ui.home.HomeSecondFragment"
+        tools:layout="@layout/fragment_home_second">
+
+        <argument
+            android:name="myArg"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_favor_submission"
+        android:name="temp.nav_drawer_temp.ui.gallery.GalleryFragment"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_favor_feed"
+        android:name="temp.nav_drawer_temp.ui.slideshow.SlideshowFragment"
+        tools:layout="@layout/fragment_slideshow" />
+</navigation>

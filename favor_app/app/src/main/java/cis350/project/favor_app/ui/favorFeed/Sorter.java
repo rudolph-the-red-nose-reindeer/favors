@@ -3,6 +3,7 @@ package cis350.project.favor_app.ui.favorFeed;
 import java.util.Comparator;
 
 import cis350.project.favor_app.data.database.FavorDatabase;
+import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 
@@ -20,9 +21,9 @@ public class Sorter {
         public int compare(Object favor, Object t1) {
             Favor f = (Favor) favor;
             Favor g = (Favor) t1;
-            FavorDatabase db = FavorDatabase.getInstance();
-            User u = db.getUserFromId(f.getUserId());
-            User v = db.getUserFromId(g.getUserId());
+            UserDatabase db = UserDatabase.getInstance();
+            User u = db.findUserById(f.getUserId());
+            User v = db.findUserById(g.getUserId());
             return u.getUsername().compareTo(v.getUsername());
         }
     }

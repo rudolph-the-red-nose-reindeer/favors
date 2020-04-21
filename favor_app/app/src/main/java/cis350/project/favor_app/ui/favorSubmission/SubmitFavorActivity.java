@@ -18,10 +18,13 @@ import cis350.project.favor_app.R;
 public class SubmitFavorActivity extends AppCompatActivity {
     private String details;
     private String urgency;
-    private String location;
+    private String longitude;
+    private String latitude;
     private EditText detailsText;
     private EditText urgencyText;
-    private EditText locationText;
+    private EditText longitudeText;
+    private EditText latitudeText;
+
     private Button createFavorBtnTwo;
     private String userId;
 
@@ -31,27 +34,29 @@ public class SubmitFavorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favor);
         detailsText = findViewById(R.id.etDetails);
         urgencyText = findViewById(R.id.etUrgency);
-        locationText = findViewById(R.id.etLocation);
+        longitudeText = findViewById(R.id.etLongitude);
+        latitudeText = findViewById(R.id.etLatitude);
+
         // Temp for now (to show deletion), to be updated when merging
 
         userId = getIntent().getStringExtra("userId");
 
         createFavorBtnTwo = findViewById(R.id.btCreateFavorTwo);
 
-
         createFavorBtnTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 details = detailsText.getText().toString();
                 urgency = urgencyText.getText().toString();
-                location = locationText.getText().toString();
+                longitude = longitudeText.getText().toString();
+                latitude = latitudeText.getText().toString();
                 if (!validUrgency(urgency)) {
                     updateUrgency();
                     return;
                 }
                 WebFavorCreationTask favorTask = new WebFavorCreationTask();
                 favorTask.userId = userId;
-                favorTask.execute(urgency, location, details);
+                favorTask.execute(urgency, longitude, latitude, details);
                 try {
 
                     String res = favorTask.get();
@@ -98,7 +103,8 @@ public class SubmitFavorActivity extends AppCompatActivity {
     private void failure() {
         detailsText.setHint("Details");
         urgencyText.setHint("Urgency");
-        locationText.setText("Location");
+        longitudeText.setText("Longitude");
+        latitudeText.setText("Latitude");
         Toast.makeText(SubmitFavorActivity.this, "Favor Creation Failed",
                 Toast.LENGTH_LONG).show();
     }

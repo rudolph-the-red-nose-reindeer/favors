@@ -78,10 +78,12 @@ public class JsonUtil {
 
             String datePosted = obj.getString("datePosted");
             int urgency = obj.getInt("urgency");
-            String location = obj.getString("location");
+            double longitude = obj.getDouble("longitude");
+            double latitude = obj.getDouble("latitude");
             String details = obj.getString("details");
 
-            return new Favor(favorId, userId, acceptedBy, datePosted, urgency, location, details);
+            return new Favor(favorId, userId, acceptedBy, datePosted, urgency, longitude, latitude,
+                    details);
         } catch (Exception e) {
             Log.d("Error converting JSON object to favor", e.toString());
             return null;

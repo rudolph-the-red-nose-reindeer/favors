@@ -1,96 +1,100 @@
 <?xml version = "1.0" encoding = "utf-8"?>
-<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-    xmlns:tools = "http://schemas.android.com/tools" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
 
-    android:layout_height = "match_parent" android:paddingLeft= "@dimen/activity_horizontal_margin"
-    android:paddingRight = "@dimen/activity_horizontal_margin"
-    android:paddingTop = "@dimen/activity_vertical_margin"
-    android:paddingBottom = "@dimen/activity_vertical_margin" tools:context = ".MainActivity"
-    android:background = "@drawable/background" >
-    <TextView android:text = "" android:layout_width="wrap_content"
-        android:layout_height = "wrap_content"
-        android:id = "@+id/textview"
-        android:textSize = "35dp"
-        android:layout_alignParentTop = "true"
-        android:layout_centerHorizontal = "true" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_light"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
 
     <TextView
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Create Favor"
-        android:id = "@+id/textView"
-        android:layout_below = "@+id/textview"
-        android:layout_centerHorizontal = "true"
-        android:textColor = "#3AB75D"
-        android:textSize = "40dp" />
-
+        android:id="@+id/favorCreateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Create Favor"
+        android:textColor="#3AB75D"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etDetails"
-        android:layout_width="385dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
+        android:layout_marginTop="8dp"
         android:focusable="true"
         android:hint="Details"
         android:inputType="textAutoCorrect"
         android:textColorHighlight="#ff7eff15"
-        android:textColorHint="#3AB75D" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textview"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/favor_pic" />
+        android:textColorHint="#3AB75D"
+        app:layout_constraintEnd_toEndOf="@+id/etUrgency"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etUrgency"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/etUrgency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etDetails"
-        android:layout_alignEnd="@+id/etDetails"
-        android:layout_alignRight="@+id/etDetails"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Urgency"
         android:inputType="phone"
-        android:textColorHint="#3AB75D" />
+        android:textColorHint="#3AB75D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etLongitude"
+        app:layout_constraintTop_toBottomOf="@+id/etDetails" />
 
     <EditText
-        android:id="@+id/etLocation"
+        android:id="@+id/etLatitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etDetails"
-        android:layout_alignEnd="@+id/etDetails"
-        android:layout_alignRight="@+id/etDetails"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="97dp"
-        android:layout_marginEnd="-2dp"
-        android:layout_marginRight="-2dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Location"
-        android:inputType="textPostalAddress"
-        android:textColorHint="#3AB75D" />
+        android:hint="Latitude"
+        android:inputType="number"
+        android:textColorHint="#3AB75D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLongitude" />
+
+    <EditText
+        android:id="@+id/etLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Longitude"
+        android:inputType="number"
+        android:textColorHint="#3AB75D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etLatitude"
+        app:layout_constraintTop_toBottomOf="@+id/etUrgency" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/favor_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favorCreateTextView" />
 
 
     <Button
@@ -98,23 +102,23 @@
         android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="-189dp"
-        android:layout_marginLeft="-189dp"
-        android:layout_marginBottom="29dp"
         android:layout_toEndOf="@+id/textview"
         android:layout_toRightOf="@+id/textview"
-        android:text="Cancel" />
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLatitude"
+        tools:layout_editor_absoluteX="250dp" />
 
     <Button
         android:id="@+id/btCreateFavorTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-183dp"
-        android:layout_marginRight="-372dp"
-        android:layout_marginBottom="30dp"
         android:layout_toStartOf="@+id/textview"
         android:layout_toLeftOf="@+id/btCancel"
-        android:text="Create Favor " />
+        android:text="Create Favor "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLatitude"
+        tools:layout_editor_absoluteX="27dp" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

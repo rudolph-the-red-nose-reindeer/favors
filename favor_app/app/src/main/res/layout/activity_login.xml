@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/favorCreateTextView" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -88,7 +88,7 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/favorCreateTextView"
         android:layout_width="312dp"
         android:layout_height="130dp"
         android:text="Be Kind!"

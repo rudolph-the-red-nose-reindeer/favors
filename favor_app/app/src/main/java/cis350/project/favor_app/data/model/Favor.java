@@ -6,11 +6,12 @@ public class Favor {
     private String acceptedBy;
     private String date;
     private int urgency;
-    private String location;
+    private double longitude;
+    private double latitude;
     private String details;
 
     public Favor(String favorId, String userId, String acceptedBy, String date, int urgency,
-                 String location, String details) {
+                 double longitude, double latitude, String details) {
         this.favorId = favorId;
         this.userId = userId;
         if (acceptedBy != null) {
@@ -20,7 +21,8 @@ public class Favor {
         }
         this.date = date;
         this.urgency = urgency;
-        this.location = location;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.details = details;
     }
 
@@ -44,8 +46,12 @@ public class Favor {
         return urgency;
     }
 
-    public String getLocation() {
-        return location;
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
     }
 
     public String getDetails() {

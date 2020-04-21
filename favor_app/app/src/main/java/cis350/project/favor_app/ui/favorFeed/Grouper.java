@@ -1,5 +1,6 @@
 package cis350.project.favor_app.ui.favorFeed;
 
+import android.service.autofill.UserData;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -9,13 +10,15 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 import cis350.project.favor_app.data.database.FavorDatabase;
+import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 
 public class Grouper {
     public static LinkedHashMap<Favor, User> getFirstNFavors(int n, Comparator<Favor> c) {
-        FavorDatabase db = FavorDatabase.getInstance();
-        HashSet<Favor> allFavors = db.getAllFavors();
+        FavorDatabase favorDB = FavorDatabase.getInstance();
+        UserDatabase userDB = UserDatabase.getInstance();
+        HashSet<Favor> allFavors = favorDB.getAllFavors();
 
         Log.d("Grouper 1", "yes");
 
@@ -37,7 +40,7 @@ public class Grouper {
         LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();
         for (Favor f : allFavorsList) {
             n = n -1;
-            User u = db.getUserFromId(f.getUserId());
+            User u = userDB.findUserById(f.getUserId());
             if (u == null) {
                 continue;
             }
@@ -55,8 +58,9 @@ public class Grouper {
 
     public static LinkedHashMap<Favor, User> getFirstNFavorsSubmittedByUser(int n, String userId,
                                                                    Comparator<Favor> c) {
-        FavorDatabase db = FavorDatabase.getInstance();
-        HashSet<Favor> favors = db.getFavorsSubmittedByUser(userId);
+        FavorDatabase favorDB = FavorDatabase.getInstance();
+        UserDatabase userDB = UserDatabase.getInstance();
+        HashSet<Favor> favors = favorDB.getFavorsSubmittedByUser(userId);
 
         Log.d("Grouper 2", "yes");
 
@@ -78,7 +82,7 @@ public class Grouper {
         LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();
         for (Favor f : allFavorsList) {
             n = n -1;
-            User u = db.getUserFromId(f.getUserId());
+            User u = userDB.findUserByUsername(f.getUserId());
             if (u == null) {
                 continue;
             }
@@ -96,8 +100,9 @@ public class Grouper {
 
     public static LinkedHashMap<Favor, User> getFirstNFavorsAcceptedByUser(int n, String userId,
                                                                            Comparator<Favor> c) {
-        FavorDatabase db = FavorDatabase.getInstance();
-        HashSet<Favor> favors = db.getFavorsAcceptedByUser(userId);
+        FavorDatabase favorDB = FavorDatabase.getInstance();
+        UserDatabase userDB = UserDatabase.getInstance();
+        HashSet<Favor> favors = favorDB.getFavorsAcceptedByUser(userId);
 
         Log.d("Grouper 2", "yes");
 
@@ -119,7 +124,8 @@ public class Grouper {
         LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();
         for (Favor f : allFavorsList) {
             n = n -1;
-            User u = db.getUserFromId(f.getUserId());
+            User u = userDB.findUserById(f.getUserId());
+
             if (u == null) {
                 continue;
             }
