@@ -77,6 +77,7 @@ public class JsonUtil {
             String details = favor.getDetails();
             double lat = favor.getLat();
             double lon = favor.getLon();
+            String category = favor.getCategory();
 
             JSONObject out = new JSONObject();
             out.put("_id", favorId);
@@ -88,6 +89,7 @@ public class JsonUtil {
             out.put("details", details);
             out.put("lat", lat);
             out.put("lon", lon);
+            out.put("category", category);
 
             return out;
         } catch (Exception e) {

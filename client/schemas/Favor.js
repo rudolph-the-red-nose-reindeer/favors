@@ -13,7 +13,7 @@ var favorSchema = new Schema({
 	location: {type: String, required: false},
 	details: {type: String, required: true},
     lat: {type: Number, required: false},
-    lon: {type: Number, required: false}
+    lon: {type: Number, required: false},
 	category: {type: String, required: true}
     });
 

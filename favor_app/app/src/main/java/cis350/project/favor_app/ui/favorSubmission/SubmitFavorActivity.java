@@ -58,7 +58,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        category = spinner.getSelectedItem().toString();
+
         categoryText = findViewById(R.id.etCategory);
         detailsText = findViewById(R.id.etDetails);
         urgencyText = findViewById(R.id.etUrgency);
@@ -79,12 +79,13 @@ public class SubmitFavorActivity extends AppCompatActivity {
                 details = detailsText.getText().toString();
                 urgency = Integer.parseInt(urgencyText.getText().toString());
                 location = locationText.getText().toString();
+                category = spinner.getSelectedItem().toString();
                 Toast.makeText(SubmitFavorActivity.this, "Category : " + category,
                         Toast.LENGTH_LONG).show();
-                if ((details == null) || (urgency == null) || (location == null)) {
+                if (details == null || location == null) {
                     failure();
                 }
-                if (!validUrgency(urgency)) {
+                if (!validUrgency(String.valueOf(urgency))) {
                     updateUrgency();
                     return;
                 }
@@ -93,7 +94,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(Location loc) {
                         Favor newFavor = FavorDatabase.getInstance().addFavorToDatabase(userId, date,
-                                urgency, location, loc.getLat(), loc.getLon(), details);
+                                urgency, location, loc.getLat(), loc.getLon(), details, category);
 
                         Log.d("plzwork", JsonUtil.getJsonObjectFromFavor(newFavor).toString());
 
@@ -126,10 +127,8 @@ public class SubmitFavorActivity extends AppCompatActivity {
         boolean isValidInteger = false;
         try {
             int num = Integer.parseInt(urgency);
-            for (int i = 1; i < 11; i++) {
-                if (num == i) {
-                    isValidInteger = true;
-                }
+            if (num <= 10 && num >= 1) {
+                isValidInteger = true;
             }
         } catch (NumberFormatException ex) {
         }

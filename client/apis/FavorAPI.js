@@ -27,7 +27,7 @@ class FavorApi {
                 location: req.body.location,
                 details: req.body.details,
                 lat: req.body.lat,
-                lon: req.body.lon
+                lon: req.body.lon,
                 category: req.body.category
             });
 

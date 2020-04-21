@@ -133,7 +133,7 @@ public class FavorDatabase {
     }
 
     public Favor addFavorToDatabase(String userId, String date, int urgency, String location,
-                                    double lat, double lon, String details) {
+                                    double lat, double lon, String details, String category) {
         String connString = Constants.WEB_CONNECTION_STRING + "favors/create";
         JSONObject requestBody = new JSONObject();
 
@@ -145,6 +145,7 @@ public class FavorDatabase {
             requestBody.put("lat", lat);
             requestBody.put("lon", lon);
             requestBody.put("details", details);
+            requestBody.put("category", category);
 
             JSONObjectWebTask task = new JSONObjectWebTask();
 
