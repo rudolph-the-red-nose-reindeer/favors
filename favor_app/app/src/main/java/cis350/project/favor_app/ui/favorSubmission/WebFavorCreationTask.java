@@ -30,6 +30,7 @@ public class WebFavorCreationTask extends AsyncTask<String, Void, String> {
             body.put("urgency", strings[0]);
             body.put("location", strings[1]);
             body.put("details", strings[2]);
+            body.put("category", strings[3]);
 
             String connString = "http://10.0.2.2:3000/favors/create";
 

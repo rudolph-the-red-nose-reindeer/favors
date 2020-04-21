@@ -11,7 +11,8 @@ var favorSchema = new Schema({
 	datePosted: {type: Date, required: true},
 	urgency: {type: Number, required: true},
 	location: {type: String, required: false},
-	details: {type: String, required: true}
+	details: {type: String, required: true},
+	category: {type: String, required: true}
     });
 
 // export favorSchema as a class called favor

@@ -8,9 +8,10 @@ public class Favor {
     private int urgency;
     private String location;
     private String details;
+    private String category;
 
     public Favor(String favorId, String userId, String acceptedBy, String date, int urgency,
-                 String location, String details) {
+                 String location, String details, String category) {
         this.favorId = favorId;
         this.userId = userId;
         if (acceptedBy != null) {
@@ -22,6 +23,7 @@ public class Favor {
         this.urgency = urgency;
         this.location = location;
         this.details = details;
+        this.category = category;
     }
 
     public String getFavorId() {
@@ -50,5 +52,9 @@ public class Favor {
 
     public String getDetails() {
         return details;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }

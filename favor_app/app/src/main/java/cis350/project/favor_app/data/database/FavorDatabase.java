@@ -91,8 +91,9 @@ public class FavorDatabase {
                     String location = jFavor.getString("location");
                     int urgency = jFavor.getInt("urgency");
                     String details = jFavor.getString("details");
+                    String category = jFavor.getString("category");
                     Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, location,
-                            details);
+                            details, category);
                     allFavorSet.add(favor);
                 } catch (JSONException e) {
                     Log.e("Error getting favor", e.toString());
@@ -162,8 +163,9 @@ public class FavorDatabase {
                     String location = jFavor.getString("location");
                     int urgency = jFavor.getInt("urgency");
                     String details = jFavor.getString("details");
+                    String category = jFavor.getString("category");
                     Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, location,
-                            details);
+                            details, category);
                     favorSet.add(favor);
                 } catch (JSONException e) {
                     Log.e("Error getting favor", e.toString());
@@ -172,7 +174,7 @@ public class FavorDatabase {
             }
             return favorSet;
         } catch (Exception e) {
-            Log.e("Error favors by submitter", e.toString());
+            Log.e("Error favs by submitter", e.toString());
             return null;
         }
     }
@@ -201,8 +203,9 @@ public class FavorDatabase {
                     String location = jFavor.getString("location");
                     int urgency = jFavor.getInt("urgency");
                     String details = jFavor.getString("details");
+                    String category = jFavor.getString("category");
                     Favor favor = new Favor(favorId, userId, acceptedBy, date, urgency, location,
-                            details);
+                            details, category);
                     favorSet.add(favor);
                 } catch (JSONException e) {
                     Log.e("Error getting favor", e.toString());
@@ -211,7 +214,7 @@ public class FavorDatabase {
             }
             return favorSet;
         } catch (Exception e) {
-            Log.e("Error favors by acceptor", e.toString());
+            Log.e("Error favs by acceptor", e.toString());
             return null;
         }
     }
