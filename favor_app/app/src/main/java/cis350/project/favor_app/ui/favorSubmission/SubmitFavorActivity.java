@@ -14,17 +14,27 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.database.FavorDatabase;
+import cis350.project.favor_app.data.model.Favor;
+import cis350.project.favor_app.data.model.Location;
+import cis350.project.favor_app.util.JsonUtil;
 import cis350.project.favor_app.util.LocationUtil;
 
 public class SubmitFavorActivity extends AppCompatActivity {
     private Activity self = this;
     private String details;
-    private String urgency;
-    private String longitude;
-    private String latitude;
+    private int urgency;
+    private String location;
+    private double longitude;
+    private double latitude;
     private EditText detailsText;
     private EditText urgencyText;
+    private EditText locationText;
     private EditText longitudeText;
     private EditText latitudeText;
 
@@ -37,8 +47,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favor);
         detailsText = findViewById(R.id.etDetails);
         urgencyText = findViewById(R.id.etUrgency);
-        longitudeText = findViewById(R.id.etLongitude);
-        latitudeText = findViewById(R.id.etLatitude);
+        locationText = findViewById(R.id.etLocation);
 
         // Temp for now (to show deletion), to be updated when merging
 
@@ -49,39 +58,40 @@ public class SubmitFavorActivity extends AppCompatActivity {
         createFavorBtnTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+                Date now = new Date();
+                String date = format.format(now);
                 details = detailsText.getText().toString();
-                urgency = urgencyText.getText().toString();
-                longitude = longitudeText.getText().toString();
-                latitude = latitudeText.getText().toString();
-                if (!validUrgency(urgency)) {
+                urgency = Integer.parseInt(urgencyText.getText().toString());
+                location = locationText.getText().toString();
+                if (!validUrgency(urgencyText.getText().toString())) {
                     updateUrgency();
                     return;
                 }
-                WebFavorCreationTask favorTask = new WebFavorCreationTask();
-                favorTask.userId = userId;
-                favorTask.execute(urgency, longitude, latitude, details);
-                try {
 
-                    String res = favorTask.get();
-                    JSONObject resObj = new JSONObject(res);
+                LocationUtil.getLastLocation(SubmitFavorActivity.this, new LocationUtil.LocationCallback() {
+                    @Override
+                    public void onComplete(Location loc) {
+                        Favor newFavor = FavorDatabase.getInstance().addFavorToDatabase(userId, date,
+                                urgency, location, loc.getLat(), loc.getLon(), details);
 
-                    String idToDelete = resObj.getString("_id");
+                        Log.d("plzwork", JsonUtil.getJsonObjectFromFavor(newFavor).toString());
 
-                    Toast.makeText(SubmitFavorActivity.this, "Successfully Registered",
-                            Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(SubmitFavorActivity.this, CreatedFavorActivity.class);
-                    Log.d("idToDelete", idToDelete);
-                    i.putExtra("idToDelete", idToDelete);
-                    startActivity(i);
-                    SubmitFavorActivity.this.finish();
+                        if (newFavor == null) {
+                            failure();
+                        } else {
+                            Toast.makeText(SubmitFavorActivity.this, "Successfully Registered",
+                                    Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(SubmitFavorActivity.this, CreatedFavorActivity.class);
+                            Log.d("idToDelete", newFavor.getFavorId());
+                            i.putExtra("idToDelete", newFavor.getFavorId());
+                            startActivity(i);
+                        }
+                    }
+                });
 
-                } catch (Exception e) {
-                    Log.d("Register", e.toString());
-                    failure();
-                }
+
             }
-
-
         });
 
     }

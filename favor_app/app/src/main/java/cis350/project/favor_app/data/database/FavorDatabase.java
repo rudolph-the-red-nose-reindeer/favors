@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.net.URL;
 import java.util.HashSet;
 
+import cis350.project.favor_app.Constants;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.favorFeed.AccessAllFavorsTask;
@@ -17,6 +18,7 @@ import cis350.project.favor_app.ui.favorFeed.AccessFavorsAcceptedByUserTask;
 import cis350.project.favor_app.ui.favorFeed.AccessFavorsSubmittedByUserTask;
 import cis350.project.favor_app.ui.favorFeed.AccessUserFromFavorTask;
 import cis350.project.favor_app.util.JsonUtil;
+import cis350.project.favor_app.util.requests.JSONObjectWebTask;
 
 /*
  * Singleton class for the database
@@ -124,6 +126,56 @@ public class FavorDatabase {
             return favorSet;
         } catch (Exception e) {
             Log.e("Error favors by acceptor", e.toString());
+            return null;
+        }
+    }
+
+    public Favor addFavorToDatabase(String userId, String date, int urgency, String location,
+                                    double lat, double lon, String details) {
+        String connString = Constants.WEB_CONNECTION_STRING + "favors/create";
+        JSONObject requestBody = new JSONObject();
+
+        try {
+            requestBody.put("userId", userId);
+            requestBody.put("datePosted", date);
+            requestBody.put("urgency", urgency);
+            requestBody.put("location", location);
+            requestBody.put("lat", lat);
+            requestBody.put("lon", lon);
+            requestBody.put("details", details);
+
+            JSONObjectWebTask task = new JSONObjectWebTask();
+
+            task.setBody(requestBody);
+            task.setConnString(connString);
+            task.execute();
+
+            Favor created = JsonUtil.getFavorFromJsonObject(task.get());
+
+            return created;
+        } catch (Exception e) {
+            Log.d("Error creating favor", e.toString());
+            return null;
+        }
+    }
+
+    public Favor deleteFavorFromDatabase(String favorId) {
+        String connString = Constants.WEB_CONNECTION_STRING + "favors/delete";
+        JSONObject requestBody = new JSONObject();
+
+        try {
+            requestBody.put("id", favorId);
+            JSONObjectWebTask task = new JSONObjectWebTask();
+            task.setBody(requestBody);
+
+            task.setConnString(connString);
+            task.execute();
+
+            Favor deleted = JsonUtil.getFavorFromJsonObject(task.get());
+
+            return deleted;
+        } catch (Exception e) {
+            Log.d("Error creating favor", e.toString());
             return null;
         }
     }

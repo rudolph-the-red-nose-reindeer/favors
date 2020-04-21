@@ -48,7 +48,7 @@ class FavorApi {
     bindDeleteRoute(app) {
         // route for deleting a favor
         app.use('/favors/delete', (req, res) => {
-            favorId = mongoose.Types.ObjectId(req.body.id);
+            var favorId = mongoose.Types.ObjectId(req.body.id);
             // try to find one favor in the database
             favorSchema.findById(favorId, (err1,favor) => {
                 if (err1) {

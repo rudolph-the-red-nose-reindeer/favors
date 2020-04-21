@@ -8,8 +8,11 @@ import org.json.JSONObject;
 import java.io.DataOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class WebFavorCreationTask extends AsyncTask<String, Void, String> {
@@ -18,9 +21,9 @@ public class WebFavorCreationTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         try {
             // Temp for now, to be updated when merging
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            final String date = dtf.format(now);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
+            Date now = new Date();
+            String date = format.format(now);
 //        Log.d("date", date);
 
 

@@ -79,7 +79,7 @@ public class Grouper {
         LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();
         for (Favor f : allFavorsList) {
             n = n -1;
-            User u = userDB.findUserByUsername(f.getUserId());
+            User u = userDB.findUserById(f.getUserId());
             if (u == null) {
                 continue;
             }

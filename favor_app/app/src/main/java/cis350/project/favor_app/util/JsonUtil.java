@@ -66,6 +66,37 @@ public class JsonUtil {
     }
 
     @SuppressLint("LongLogTag")
+    public static JSONObject getJsonObjectFromFavor(Favor favor) {
+        try {
+            String favorId = favor.getFavorId();
+            String userId = favor.getUserId();
+            String acceptedby = favor.getAcceptedBy();
+            String date = favor.getDate();
+            int urgency = favor.getUrgency();
+            String location = favor.getLocation();
+            String details = favor.getDetails();
+            double lat = favor.getLat();
+            double lon = favor.getLon();
+
+            JSONObject out = new JSONObject();
+            out.put("_id", favorId);
+            out.put("userId", userId);
+            out.put("acceptedBy", acceptedby);
+            out.put("datePosted", date);
+            out.put("urgency", urgency);
+            out.put("location", location);
+            out.put("details", details);
+            out.put("lat", lat);
+            out.put("lon", lon);
+
+            return out;
+        } catch (Exception e) {
+            Log.d("Error converting user to JSON object", e.toString());
+            return null;
+        }
+    }
+
+    @SuppressLint("LongLogTag")
     public static Favor getFavorFromJsonObject(JSONObject obj) {
         try {
             String favorId = obj.getString("_id");

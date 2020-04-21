@@ -121,6 +121,7 @@ public class ChatActivity extends AppCompatActivity {
                     map.put("user", currUsername);
                     mReference1.push().setValue(map);
                     mReference2.push().setValue(map);
+                    messageArea.setText("");
                 }
             }
         });

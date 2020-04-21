@@ -35,55 +35,43 @@
         android:focusable="true"
         android:hint="Details"
         android:inputType="textAutoCorrect"
+        android:padding="10dp"
         android:textColorHighlight="#ff7eff15"
+        android:textColorHint="#3AB75D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+    <EditText
+        android:id="@+id/etLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDetails"
+        android:ems="10"
+        android:hint="Location"
+        android:inputType="textAutoCorrect"
+        android:padding="10dp"
         android:textColorHint="#3AB75D"
         app:layout_constraintEnd_toEndOf="@+id/etUrgency"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/etUrgency"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/etUrgency" />
 
     <EditText
         android:id="@+id/etUrgency"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Urgency"
         android:inputType="phone"
+        android:padding="10dp"
         android:textColorHint="#3AB75D"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/etDetails"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/etLongitude"
+        app:layout_constraintStart_toStartOf="@+id/etDetails"
         app:layout_constraintTop_toBottomOf="@+id/etDetails" />
-
-    <EditText
-        android:id="@+id/etLatitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etDetails"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Latitude"
-        android:inputType="number"
-        android:textColorHint="#3AB75D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLongitude" />
-
-    <EditText
-        android:id="@+id/etLongitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="Longitude"
-        android:inputType="number"
-        android:textColorHint="#3AB75D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/etLatitude"
-        app:layout_constraintTop_toBottomOf="@+id/etUrgency" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -99,26 +87,32 @@
 
     <Button
         android:id="@+id/btCancel"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="68dp"
         android:layout_toEndOf="@+id/textview"
         android:layout_toRightOf="@+id/textview"
         android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLatitude"
-        tools:layout_editor_absoluteX="250dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/btCreateFavorTwo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btCreateFavorTwo"
+        app:layout_constraintTop_toTopOf="@+id/btCreateFavorTwo"
+        app:layout_constraintVertical_bias="0.346" />
 
     <Button
         android:id="@+id/btCreateFavorTwo"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
         android:layout_toStartOf="@+id/textview"
         android:layout_toLeftOf="@+id/btCancel"
         android:text="Create Favor "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etLatitude"
-        tools:layout_editor_absoluteX="27dp" />
+        app:layout_constraintEnd_toStartOf="@+id/btCancel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

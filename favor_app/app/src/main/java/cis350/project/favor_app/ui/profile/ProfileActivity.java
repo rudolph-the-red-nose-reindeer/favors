@@ -49,7 +49,6 @@ public class ProfileActivity extends Activity {
     private View seeRewardsButton;
     private View logoutButton;
     private View chatButton;
-    private View testLocButton;
 
 
     private User loggedInUser;
@@ -78,7 +77,6 @@ public class ProfileActivity extends Activity {
         seeRewardsButton = findViewById(R.id.profile_rewards_button);
         logoutButton = findViewById(R.id.profile_logout_button);
         chatButton = findViewById(R.id.see_friends_button);
-        testLocButton = findViewById(R.id.profile_test_loc);
 
 
         loggedInUser = UserDatabase.getInstance().findUserById(
@@ -101,7 +99,8 @@ public class ProfileActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intent, GET_FROM_GALLERY);;
+                startActivityForResult(intent, GET_FROM_GALLERY);
+                ;
             }
         });
 
@@ -155,15 +154,6 @@ public class ProfileActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-        testLocButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Location loc = LocationUtil.getLastLocation(self);
-                Log.d("current location:", loc.toString());
-            }
-        });
-
     }
 
     @Override
