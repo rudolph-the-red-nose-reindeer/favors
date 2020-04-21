@@ -1,4 +1,4 @@
-package cis350.project.favor_app.data.model;
+package edu.upenn.cis350.maps;
 
 public class Favor {
     private String favorId;
@@ -6,12 +6,13 @@ public class Favor {
     private String acceptedBy;
     private String date;
     private int urgency;
-    private double longitude;
-    private double latitude;
+    private String location;
     private String details;
+    private double lat;
+    private double lon;
 
     public Favor(String favorId, String userId, String acceptedBy, String date, int urgency,
-                 double longitude, double latitude, String details) {
+                 String location, String details, double lat, double lon) {
         this.favorId = favorId;
         this.userId = userId;
         if (acceptedBy != null) {
@@ -21,9 +22,10 @@ public class Favor {
         }
         this.date = date;
         this.urgency = urgency;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.location = location;
         this.details = details;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     public String getFavorId() {
@@ -46,15 +48,19 @@ public class Favor {
         return urgency;
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
+    public String getLocation() {
+        return location;
     }
 
     public String getDetails() {
         return details;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
     }
 }

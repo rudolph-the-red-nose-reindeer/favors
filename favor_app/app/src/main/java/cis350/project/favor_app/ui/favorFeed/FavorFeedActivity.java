@@ -21,9 +21,11 @@ import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.chat.ChatActivity;
+import cis350.project.favor_app.ui.MapsActivity;
 
 
 public class FavorFeedActivity extends AppCompatActivity {
+    private static final int ID = 1;
     private FavorFeedActivity self = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,5 +98,10 @@ public class FavorFeedActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void mapClick(View v) {
+        Intent i = new Intent(this, MapsActivity.class);
+        startActivityForResult(i, ID);
     }
 }

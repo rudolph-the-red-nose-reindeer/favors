@@ -21,11 +21,24 @@
         android:layout_height="wrap_content"
         android:onClick="onButtonClick"
         android:text="Submit query!"
-        app:layout_constraintBottom_toTopOf="@+id/favor_feed_user_list"
+        app:layout_constraintBottom_toTopOf="@+id/map_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favor_feed_spinner" />
+
+    <Button
+        android:id="@+id/map_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="mapClick"
+        android:text="See map"
+        app:layout_constraintBottom_toTopOf="@+id/favor_feed_user_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favor_feed_button" />
+
 
     <ListView
         android:id="@+id/favor_feed_user_list"
@@ -38,4 +51,7 @@
 
     </ListView>
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
