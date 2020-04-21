@@ -21,7 +21,7 @@ import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.chat.ChatActivity;
-import cis350.project.favor_app.ui.map.MapsActivity;
+import cis350.project.favor_app.ui.MapsActivity;
 
 
 public class FavorFeedActivity extends AppCompatActivity {
