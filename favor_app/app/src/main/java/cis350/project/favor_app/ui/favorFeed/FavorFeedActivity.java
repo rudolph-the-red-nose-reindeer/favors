@@ -59,7 +59,7 @@ public class FavorFeedActivity extends AppCompatActivity {
             for (Favor f : favorToUser.keySet()) {
                 User u = favorToUser.get(f);
                 FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                        f.getUrgency(), f.getDate());
+                        f.getUrgency(), f.getDate(), f.getCategory() );
                 listItemsFavorList.add(li);
             }
         } else {
@@ -79,7 +79,7 @@ public class FavorFeedActivity extends AppCompatActivity {
             for (User u : userList) {
                 Favor f = userToFavor.get(u);
                 FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                        f.getUrgency(), f.getDate());
+                        f.getUrgency(), f.getDate(), f.getCategory());
                 listItemsFavorList.add(li);
             }
         }

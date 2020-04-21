@@ -17,4 +17,16 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_favor">FavorActivity</string>
     <string name="title_activity_created_favor">CreatedFavorActivity</string>
+    <string name="title_activity_find_favor">CreatedFindActivity</string>
+    <string-array name="category">
+        <item>Home and Cleaning</item>
+        <item>Drinks</item>
+        <item>Booze Runs</item>
+        <item>Grocery delivery</item>
+        <item>Food delivery</item>
+        <item>Pharmacy delivery</item>
+        <item>Pet items</item>
+        <item>Stationary and Electronic items</item>
+        <item>Quick Snacks and Meals</item>
+    </string-array>
 </resources>

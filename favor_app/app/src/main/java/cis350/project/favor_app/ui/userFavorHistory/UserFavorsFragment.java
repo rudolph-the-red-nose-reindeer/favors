@@ -96,29 +96,29 @@ public class UserFavorsFragment extends Fragment {
                     for (Favor f : favorToUser.keySet()) {
                         User u = favorToUser.get(f);
                         FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                                f.getUrgency(), f.getDate());
+                                f.getUrgency(), f.getDate(), f.getCategory());
                         listItemsFavorList.add(li);
                     }
-//                } else {
-//                    ArrayList<User> userList = new ArrayList<User>();
-//                    LinkedHashMap<User, Favor> userToFavor = new LinkedHashMap<>();
-//                    for (Favor f : favorToUser.keySet()) {
-//                        User u = favorToUser.get(f);
-//                        userList.add(u);
-//                        userToFavor.put(u, f);
-//                    }
-//                    Collections.sort(userList, new Comparator<User>() {
-//                        @Override
-//                        public int compare(User user, User t1) {
-//                            return user.getUsername().compareTo(t1.getUsername());
-//                        }
-//                    });
-//                    for (User u : userList) {
-//                        Favor f = userToFavor.get(u);
-//                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-//                                f.getUrgency(), f.getDate());
-//                        listItemsFavorList.add(li);
-//                    }
+                } else {
+                    ArrayList<User> userList = new ArrayList<User>();
+                    LinkedHashMap<User, Favor> userToFavor = new LinkedHashMap<>();
+                    for (Favor f : favorToUser.keySet()) {
+                        User u = favorToUser.get(f);
+                        userList.add(u);
+                        userToFavor.put(u, f);
+                    }
+                    Collections.sort(userList, new Comparator<User>() {
+                        @Override
+                        public int compare(User user, User t1) {
+                            return user.getUsername().compareTo(t1.getUsername());
+                        }
+                    });
+                    for (User u : userList) {
+                        Favor f = userToFavor.get(u);
+                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
+                                f.getUrgency(), f.getDate(), f.getCategory());
+                        listItemsFavorList.add(li);
+                    }
                 }
 
                 Log.d("TTTTTT", listItemsFavorList.toString());

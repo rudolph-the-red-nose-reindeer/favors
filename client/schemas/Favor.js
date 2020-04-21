@@ -14,6 +14,7 @@ var favorSchema = new Schema({
 	details: {type: String, required: true},
     lat: {type: Number, required: false},
     lon: {type: Number, required: false}
+	category: {type: String, required: true}
     });
 
 // export favorSchema as a class called favor

@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -37,14 +40,26 @@ public class SubmitFavorActivity extends AppCompatActivity {
     private EditText locationText;
     private EditText longitudeText;
     private EditText latitudeText;
+    private TextView categoryText;
 
     private Button createFavorBtnTwo;
     private String userId;
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favor);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerCategory);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.category, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        category = spinner.getSelectedItem().toString();
+        categoryText = findViewById(R.id.etCategory);
         detailsText = findViewById(R.id.etDetails);
         urgencyText = findViewById(R.id.etUrgency);
         locationText = findViewById(R.id.etLocation);
@@ -64,7 +79,12 @@ public class SubmitFavorActivity extends AppCompatActivity {
                 details = detailsText.getText().toString();
                 urgency = Integer.parseInt(urgencyText.getText().toString());
                 location = locationText.getText().toString();
-                if (!validUrgency(urgencyText.getText().toString())) {
+                Toast.makeText(SubmitFavorActivity.this, "Category : " + category,
+                        Toast.LENGTH_LONG).show();
+                if ((details == null) || (urgency == null) || (location == null)) {
+                    failure();
+                }
+                if (!validUrgency(urgency)) {
                     updateUrgency();
                     return;
                 }
@@ -98,15 +118,19 @@ public class SubmitFavorActivity extends AppCompatActivity {
 
     private void updateUrgency() {
         urgencyText.setHint("urgency is a number between 1 to 10");
-        Toast.makeText(SubmitFavorActivity.this, "Favor Creation Failed",
+        Toast.makeText(SubmitFavorActivity.this, "Favor Creation Failed, incorrect urgency",
                 Toast.LENGTH_LONG).show();
     }
 
     private boolean validUrgency(String urgency) {
         boolean isValidInteger = false;
         try {
-            Integer.parseInt(urgency);
-            isValidInteger = true;
+            int num = Integer.parseInt(urgency);
+            for (int i = 1; i < 11; i++) {
+                if (num == i) {
+                    isValidInteger = true;
+                }
+            }
         } catch (NumberFormatException ex) {
         }
         return isValidInteger;

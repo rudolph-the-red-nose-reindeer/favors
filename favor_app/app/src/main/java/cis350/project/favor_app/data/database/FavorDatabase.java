@@ -1,6 +1,7 @@
 package cis350.project.favor_app.data.database;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import cis350.project.favor_app.ui.favorFeed.AccessFavorsSubmittedByUserTask;
 import cis350.project.favor_app.ui.favorFeed.AccessUserFromFavorTask;
 import cis350.project.favor_app.util.JsonUtil;
 import cis350.project.favor_app.util.requests.JSONObjectWebTask;
+import cis350.project.favor_app.ui.favorSearch.favorSearchActivity;
 
 /*
  * Singleton class for the database
@@ -94,7 +96,7 @@ public class FavorDatabase {
             }
             return favorSet;
         } catch (Exception e) {
-            Log.e("Error favors by submitter", e.toString());
+            Log.e("Error favs by submitter", e.toString());
             return null;
         }
     }
@@ -125,7 +127,7 @@ public class FavorDatabase {
             }
             return favorSet;
         } catch (Exception e) {
-            Log.e("Error favors by acceptor", e.toString());
+            Log.e("Error favs by acceptor", e.toString());
             return null;
         }
     }

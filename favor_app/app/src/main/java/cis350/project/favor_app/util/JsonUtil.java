@@ -108,6 +108,7 @@ public class JsonUtil {
             int urgency = obj.getInt("urgency");
             String details = obj.getString("details");
             String location = "";
+            String category = obj.getString("category");
 
             if (obj.has("acceptedBy") && !obj.isNull("acceptedBy")) {
                 acceptedBy = obj.getString("acceptedBy");
@@ -123,7 +124,7 @@ public class JsonUtil {
             }
 
             return new Favor(favorId, userId, acceptedBy, date, urgency, location, details,
-                    lat, lon);
+                    lat, lon, category);
         } catch (Exception e) {
             Log.d("Error converting JSON object to favor", e.toString());
             return null;

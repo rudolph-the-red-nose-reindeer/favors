@@ -28,6 +28,7 @@ class FavorApi {
                 details: req.body.details,
                 lat: req.body.lat,
                 lon: req.body.lon
+                category: req.body.category
             });
 
             // save the favor to the database

@@ -10,9 +10,10 @@ public class Favor {
     private String details;
     private double lat;
     private double lon;
+    private String category;
 
     public Favor(String favorId, String userId, String acceptedBy, String date, int urgency,
-                 String location, String details, double lat, double lon) {
+                 String location, String details, double lat, double lon, String category) {
         this.favorId = favorId;
         this.userId = userId;
         if (acceptedBy != null) {
@@ -26,6 +27,7 @@ public class Favor {
         this.details = details;
         this.lat = lat;
         this.lon = lon;
+        this.category = category;
     }
 
     public String getFavorId() {
@@ -62,5 +64,9 @@ public class Favor {
 
     public double getLon() {
         return lon;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }

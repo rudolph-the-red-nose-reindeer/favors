@@ -7,12 +7,14 @@ public class FavorListItem {
     private String details;
     private String urgency;
     private String date;
+    private String category;
 
-    public FavorListItem(String username, String details, String urgency, String date) {
+    public FavorListItem(String username, String details, String urgency, String date, String category) {
         this.username = username;
         this.details = details;
         this.urgency = urgency;
         this.date = date;
+        this.category = category;
     }
     public String getUsername() {
         return username;
@@ -32,9 +34,9 @@ public class FavorListItem {
     public void setUrgency(String urgency) {
         this.urgency = urgency;
     }
-    public String getDate() {
-        return date;
-    }
+    public String getDate() { return date; }
+    public void setCategory(String category) {this.category = category;}
+    public String getCategory() { return category; }
 
     public String toString() {
         JSONObject jo = new JSONObject();
@@ -44,6 +46,7 @@ public class FavorListItem {
             jo.put("details", details);
             jo.put("urgency", urgency);
             jo.put("date", date);
+            jo.put("category", category);
             return jo.toString();
         } catch (Exception e) {
             return "";
