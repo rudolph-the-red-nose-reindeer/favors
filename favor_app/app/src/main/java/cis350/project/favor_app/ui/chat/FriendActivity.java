@@ -8,6 +8,7 @@ import cis350.project.favor_app.R;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -82,11 +83,8 @@ public class FriendActivity extends AppCompatActivity {
 
             while(i.hasNext()){
                 key = i.next().toString();
-                JSONObject obj2 = obj.getJSONObject(key);
-                Iterator it = obj2.keys();
-                while (it.hasNext()) {
-                    al.add(it.next().toString());
-                }
+                String username = obj.getString(key);
+                al.add(username.toString());
                 totalUsers++;
             }
 
@@ -94,7 +92,7 @@ public class FriendActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(totalUsers <=1){
+        if(totalUsers < 1){
             noUsersText.setVisibility(View.VISIBLE);
             usersList.setVisibility(View.GONE);
         }

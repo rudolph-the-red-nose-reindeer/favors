@@ -33,8 +33,6 @@ public class Grouper {
         }
         if (c != null) {
             Collections.sort(allFavorsList, c);
-        } else {
-            return new LinkedHashMap<Favor, User>();
         }
         Log.d("Grouper 1", "yes");
         LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();

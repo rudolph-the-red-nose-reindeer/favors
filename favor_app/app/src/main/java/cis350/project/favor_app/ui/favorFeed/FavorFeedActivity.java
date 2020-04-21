@@ -48,7 +48,7 @@ public class FavorFeedActivity extends AppCompatActivity {
         if (sortBy.equals("Urgency")) {
             c = new Sorter().new UrgencyComparator<>();
         } else if (sortBy.equals("Username")) {
-            c = null;
+            c = new Sorter().new UsernameComparator<>();
         } else {
             c = new Sorter().new DateComparator();
         }
