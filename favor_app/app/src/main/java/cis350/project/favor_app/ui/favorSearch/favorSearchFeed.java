@@ -56,10 +56,9 @@ public class favorSearchFeed extends AppCompatActivity {
             for (Favor f : favorToUser.keySet()) {
                 User u = favorToUser.get(f);
                 String details = f.getDetails();
-                String location = f.getLocation();
                 FavorListItem li = new FavorListItem(u.getUsername(), details, "" +
-                        f.getUrgency(), location, f.getCategory());
-                if (details.toLowerCase().contains(searchCat.toLowerCase()) || location.toLowerCase().contains(searchCat.toLowerCase())) {
+                        f.getUrgency(), f.getDate(), f.getCategory());
+                if (details.toLowerCase().contains(searchCat.toLowerCase())) {
                     listItemsFavorList.add(li);
                 }
             }
