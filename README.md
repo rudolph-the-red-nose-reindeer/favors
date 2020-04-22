@@ -19,7 +19,28 @@ Features Implemented
 3) Verify college email address 
 4) Create an account and profile setup
 
-# All Features ! 
 
+# Iteration 2 (April 21st 2020) 
+Features Implemented 
+1) Interative Map (look at a map to see if anyone nearby is requesting any favors)
+2) logging out
+3) See the history of completed favors/current favors 
+4) Search, filter and categorize the favors
+5) End to End Communication with users (chat box) 
+
+
+I should be able to redeem my points for something of value
+
+
+# All Features ! 
+ - Favor feed
+ - Submit a favor and Delete a favor submitted 
+ - Verify college email address 
+ - Create an account and profile setup
+ - Interative Map (look at a map to see if anyone nearby is requesting any favors)
+ - logging out
+ - See the history of completed favors/current favors 
+ - Search, filter and categorize the favors
+ - End to End Communication with users (chat box) 
 
 
