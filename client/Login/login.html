@@ -36,18 +36,21 @@ function validate()
 	var valid = false;
 	var usernameArray = ["Dinesh", "Jonah", "Nicha", "Kyven"];
 	var passwordArray = ["penguin", "penguin", "penguin", "penguin"];
+	var currName = "Dinesh";
 	for (var i = 0; i < usernameArray.length; i++)
  {
 
 	if ((un == usernameArray[i]) && (pw == passwordArray[i]))
 	{
+		currName = usernameArray[i];
 		valid = true;
 		break;
 	}
 }
 	if (valid)
 	{
-		alert("Login was successful");
+		window.sessionStorage.setItem("username", currName);
+		alert("Login was successful, Hello " + sessionStorage.getItem("username"));
 		window.location.assign("http://localhost:3000/getdata")
 		return false;
 	}
