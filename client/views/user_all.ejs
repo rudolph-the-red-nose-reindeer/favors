@@ -1,0 +1,8 @@
+Here are all the people:
+<ul>
+<% users.forEach( (user) => { %>
+
+<li><%= user._id%>: <%= user.username %> : <%= user.email %></li>
+
+<% }); %>
+</ul>

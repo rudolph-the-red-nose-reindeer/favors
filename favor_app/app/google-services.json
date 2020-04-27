@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "745912459870",
+    "firebase_url": "https://favor-a2d05.firebaseio.com",
+    "project_id": "favor-a2d05",
+    "storage_bucket": "favor-a2d05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745912459870:android:0a23c8c82f5caba7768acf",
+        "android_client_info": {
+          "package_name": "cis350.project.favor_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745912459870-vqvlncjjg96vk2ejblma8kc1r6d9s3l4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0jcTmRU854RUGLdjP9VaFgG9y8nN_qrI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745912459870-vqvlncjjg96vk2ejblma8kc1r6d9s3l4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

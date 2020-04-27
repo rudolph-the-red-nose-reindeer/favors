@@ -1,0 +1,8 @@
+Here are all the favors:
+<ul>
+<% favors.forEach( (favor) => { %>
+
+<li><%= favor._id %> : <%= favor.userId.toString() %>: <%= favor.details %></li>
+
+<% }); %>
+</ul>

@@ -34,8 +34,8 @@ function validate()
 	var un = document.login.username.value;
 	var pw = document.login.password.value;
 	var valid = false;
-	var usernameArray = ["Jonah", "Bob"];
-	var passwordArray = ["cashcash1", "54321"];
+	var usernameArray = ["Dinesh", "Jonah", "Nicha", "Kyven"];
+	var passwordArray = ["penguin", "penguin", "penguin", "penguin"];
 	for (var i = 0; i < usernameArray.length; i++)
  {
 
@@ -48,7 +48,7 @@ function validate()
 	if (valid)
 	{
 		alert("Login was successful");
-		window.location.assign("https://www.w3schools.com")
+		window.location.assign("http://localhost:3000/getdata")
 		return false;
 	}
 	var again = " tries";
