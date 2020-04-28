@@ -19,8 +19,11 @@ input {
 
 h1 {
 	font-family: sans-serif;
-	color: #2d0766
+	color: black
 }
+img {
+	border-radius: 16%;
+  }
 
 .container {
 	font-family:  sans-serif;
@@ -49,7 +52,7 @@ h1 {
 }
 
 .submit:hover {
-	background-color: rgb(102, 52, 240);
+	background-color: black;
 	color: black;
 	border: 1px solid black;
 	font-family: sans-serif;
@@ -63,5 +66,5 @@ width: 80%;
 }
 
 body {
-	background-color: rgb(51, 51, 51);
+	background-color: rgb(31.25, 162.26, 222.11);
 }
