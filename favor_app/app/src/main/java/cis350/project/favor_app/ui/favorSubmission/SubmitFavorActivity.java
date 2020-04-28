@@ -92,7 +92,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
 
                 LocationUtil.getLastLocation(SubmitFavorActivity.this, new LocationUtil.LocationCallback() {
                     @Override
-                    public void onComplete(Location loc) {
+                    public void onSuccess(Location loc) {
                         Favor newFavor = FavorDatabase.getInstance().addFavorToDatabase(userId, date,
                                 urgency, location, loc.getLat(), loc.getLon(), details, category);
 
@@ -108,6 +108,11 @@ public class SubmitFavorActivity extends AppCompatActivity {
                             i.putExtra("idToDelete", newFavor.getFavorId());
                             startActivity(i);
                         }
+                    }
+
+                    public void onFailure(Exception e) {
+                        Log.d("Failed to submit favor", e.toString());
+                        failure();
                     }
                 });
 
@@ -139,8 +144,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
     private void failure() {
         detailsText.setHint("Details");
         urgencyText.setHint("Urgency");
-        longitudeText.setText("Longitude");
-        latitudeText.setText("Latitude");
+        locationText.setHint("Location");
         Toast.makeText(SubmitFavorActivity.this, "Favor Creation Failed",
                 Toast.LENGTH_LONG).show();
     }

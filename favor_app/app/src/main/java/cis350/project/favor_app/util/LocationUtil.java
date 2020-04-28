@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -22,7 +25,8 @@ import cis350.project.favor_app.data.model.Location;
 
 public class LocationUtil {
     public interface LocationCallback {
-        void onComplete(Location location);
+        void onSuccess(Location location);
+        void onFailure(Exception e);
     }
 
     private static FusedLocationProviderClient client;
@@ -38,10 +42,15 @@ public class LocationUtil {
                             Log.d("location util pinging location", "success");
                             if (location != null) {
                                 Log.d("location util pinging location", "not null");
-                                callback.onComplete(new Location(location.getLatitude(),
+                                callback.onSuccess(new Location(location.getLatitude(),
                                         location.getLongitude()));
                             }
                         }
-                    });
+                    }).addOnFailureListener(context, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                callback.onFailure(e);
+            }
+        });
     }
 }
