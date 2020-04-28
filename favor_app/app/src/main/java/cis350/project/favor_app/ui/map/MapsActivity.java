@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.HashSet;
+import java.util.List;
 
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.database.FavorDatabase;
@@ -42,9 +43,7 @@ public class MapsActivity extends FragmentActivity implements
         mMap = map;
 
         FavorDatabase db = FavorDatabase.getInstance();
-        HashSet<Favor> allFavors = db.getAllFavors();
-
-
+        List<Favor> allFavors = db.getAllFavors("Date");
         for (Favor f : allFavors) {
             double lat = f.getLat();
             double lon = f.getLon();

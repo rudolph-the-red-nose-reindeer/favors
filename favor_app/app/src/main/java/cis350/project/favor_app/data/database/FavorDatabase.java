@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import cis350.project.favor_app.Constants;
 import cis350.project.favor_app.data.model.Favor;
@@ -40,7 +42,7 @@ public class FavorDatabase {
         return instance;
     }
 
-    public HashSet<Favor> getAllFavors() {
+    public List<Favor> getAllFavors(String compare) {
         try {
             URL url = new URL("http://10.0.2.2:3000/favors/all");
             AccessAllFavorsTask task = new AccessAllFavorsTask();
@@ -49,7 +51,7 @@ public class FavorDatabase {
             if (allFavorArray == null) {
                 return null;
             }
-            HashSet allFavorSet = new HashSet<User>();
+            List allFavorSet = new LinkedList<Favor>();
             for (int i = 0; i < allFavorArray.length(); i++) {
                 try {
                     JSONObject jFavor = allFavorArray.getJSONObject(i);
@@ -70,10 +72,11 @@ public class FavorDatabase {
         }
     }
 
-    public HashSet<Favor> getFavorsSubmittedByUser(String userId) {
+    public HashSet<Favor> getFavorsSubmittedByUser(String userId, String compare) {
         try {
             AccessFavorsSubmittedByUserTask task = new AccessFavorsSubmittedByUserTask();
             task.userId = userId;
+            task.compare = compare;
             Log.d("userId", userId);
             task.execute();
             JSONArray allFavorArray = task.get();
@@ -101,10 +104,11 @@ public class FavorDatabase {
         }
     }
 
-    public HashSet<Favor> getFavorsAcceptedByUser(String userId) {
+    public HashSet<Favor> getFavorsAcceptedByUser(String userId, String compare) {
         try {
             AccessFavorsAcceptedByUserTask task = new AccessFavorsAcceptedByUserTask();
             task.userId = userId;
+            task.compare = compare;
             Log.d("userId", userId);
             task.execute();
             JSONArray allFavorArray = task.get();

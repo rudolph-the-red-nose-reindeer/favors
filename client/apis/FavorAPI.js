@@ -16,6 +16,19 @@ class FavorApi {
         this.bindFindFavorsAcceptedRoute(app);
     }
 
+      sortBy = function(favors, compare) {
+        console.log("favors in sort", favors);
+        if (compare == "Urgency") {
+            favors.sort((a,b) => b.urgency - a.urgency);
+            console.log("favors after urgency sort", favors);
+        } else if (compare == "Date") {
+            favors.sort((a, b) => b.datePosted - a.datePosted);
+            console.log("favors after Date sort", favors);
+        } else {
+            return favors;
+        }   
+    }
+
     bindCreateRoute(app) {
         // route for creating a new favor
         app.use('/favors/create', (req, res) => {
@@ -89,11 +102,10 @@ class FavorApi {
                     var favor = favors[0];
                     res.send([favor]); 
                 } else {
-                    // construct an array out of the result
-                    var returnArray = [];
-                    favors.forEach( (favor) => {
-                    returnArray.push( favor );
-                    });
+                    console.log("favors", favors);
+                    console.log("req.body.compare", req.body.compare);
+                    this.sortBy(favors, req.body.compare);
+                    console.log("favors after returning from sortBy", favors);
                     res.json(favors); 
                 }
             });
@@ -144,6 +156,8 @@ class FavorApi {
                 }
                 else {
                     if (favors) {
+                        sortBy(favors, req.body.compare);
+                        console.log("req.body.compare for ye", req.body.compare);
                         res.send(favors);
                     }
                     else {
@@ -166,6 +180,7 @@ class FavorApi {
                 }
                 else {
                     if (favors) {
+                        sortBy(favors, req.body.compare);
                         res.send(favors);
                     }
                     else {
