@@ -17,7 +17,7 @@
 
         .navbar {
           width: 100%;  
-          background-color: #555;
+          background-color: rgb(31.25, 162.26, 222.11);
           overflow: auto;
           position: fixed;
           top: 0;
@@ -33,11 +33,11 @@
         }
 
         .navbar a:hover {
-          background-color: #000;
+          background-color: white;
         }
 
         .active {
-          background-color: #4CAF50;
+          background-color: rgb(16, 16, 17);
         }
 
         @media screen and (max-width: 500px) {
@@ -45,6 +45,8 @@
             float: none;
             display: block;
           }
+      
+        #black_link {color:  rgb(16, 16, 17);}
 }
     </style>
 
@@ -224,13 +226,13 @@ for (const [key, value] of locationMap.entries()) {
 </script>
 
 <div class="navbar">
-  <a class="active" href="http://localhost:3000/getdata"><i class="fa fa-fw fa-home"></i> Home</a> 
-  <a href="#"><i class="fa fa-fw fa-bullhorn"></i> Make announcment</a> 
-  <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+  <a class="active" href="http://localhost:3000/getdata" style="color:rgb(31.25, 162.26, 222.11)"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a href="#" style="color:black"><i class="fa fa-fw fa-bullhorn" ></i> Make announcment</a> 
+  <a href="#" style="color:black"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
   <script>
-  window.document.write('<a href="http://localhost:3000/Login/login.html"><i class="fa fa-fw fa-user"></i> Logout ' + window.sessionStorage.getItem("username") + ' </a> ');
+  window.document.write('<a href="http://localhost:3000/Login/login.html" style="color:black"><i class="fa fa-fw fa-user"></i> Logout ' + window.sessionStorage.getItem("username") + ' </a> ');
   </script>
-  <a href="https://cloud.mongodb.com/v2/5e8009e99ad2b345aca1adf4#clusters"><i class="fa fa-fw fa-database"></i> Go to Mongo Database</a> 
+  <a href="https://cloud.mongodb.com/v2/5e8009e99ad2b345aca1adf4#clusters" style="color:black"><i class="fa fa-fw fa-database"></i> Go to Mongo Database</a> 
 </div>
   
 </body>

@@ -10,21 +10,21 @@ li {
 }
 
 input {
-	background-color: #333;
+	background-color: rgb(108, 112, 145);
 	border: none;
 	border-radius: 2px;
 	text-align: left;
-	color: white;
+	color: rgb(17, 13, 13);
 }
 
 h1 {
 	font-family: sans-serif;
-	color: #F07334
+	color: #2d0766
 }
 
 .container {
 	font-family:  sans-serif;
-	border: 2px solid #F07334;
+	border: 2px solid #e0ccff;
 	width: 24%;
 	text-align:  center;
 	margin: auto;
@@ -49,7 +49,7 @@ h1 {
 }
 
 .submit:hover {
-	background-color: #F07334;
+	background-color: rgb(102, 52, 240);
 	color: black;
 	border: 1px solid black;
 	font-family: sans-serif;
@@ -63,5 +63,5 @@ width: 80%;
 }
 
 body {
-	background-color: #333;
+	background-color: rgb(51, 51, 51);
 }
