@@ -28,11 +28,14 @@ new givenRewardApi(app);
 
 
 
+var chartApi = require('./apis/chartAPI.js');
+new chartApi(app)
+
 /*************************************************/
 
-app.use('/public', express.static('public'));
+app.use('/Login', express.static('Login'));
 
-app.use('/', (req, res) => { res.redirect('/public/public.html'); } );
+app.use('/', (req, res) => { res.redirect('/Login/login.html'); } );
 
 app.listen(3000,  () => {
     console.log('Listening on port 3000');

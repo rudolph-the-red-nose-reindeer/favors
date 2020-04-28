@@ -9,7 +9,8 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.7",
     "pbkdf2": "^3.0.17",
-    "sharp": "^0.25.2"
+    "sharp": "^0.25.2",
+    "zingchart": "^2.9.0"
   },
   "devDependencies": {},
   "scripts": {
@@ -19,3 +20,4 @@
   "author": "",
   "license": "ISC"
 }
+
