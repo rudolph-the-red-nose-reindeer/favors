@@ -206,6 +206,7 @@ public class ProfileActivity extends Activity {
     public void openCreateFavorActivity() {
         Intent intent = new Intent(this, SubmitFavorActivity.class);
         intent.putExtra("userId", loggedInUser.getUserId());
+        intent.putExtra("username", loggedInUser.getUsername());
         startActivity(intent);
     }
 

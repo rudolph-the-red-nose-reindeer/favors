@@ -1,28 +1,18 @@
 package cis350.project.favor_app.data.database;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 import cis350.project.favor_app.Constants;
 import cis350.project.favor_app.data.model.Favor;
-import cis350.project.favor_app.data.model.User;
-import cis350.project.favor_app.ui.favorFeed.AccessAllFavorsTask;
-import cis350.project.favor_app.ui.favorFeed.AccessAllUsersTask;
-import cis350.project.favor_app.ui.favorFeed.AccessFavorsAcceptedByUserTask;
-import cis350.project.favor_app.ui.favorFeed.AccessFavorsSubmittedByUserTask;
-import cis350.project.favor_app.ui.favorFeed.AccessUserFromFavorTask;
 import cis350.project.favor_app.util.JsonUtil;
+import cis350.project.favor_app.util.requests.JSONArrayWebTask;
 import cis350.project.favor_app.util.requests.JSONObjectWebTask;
-import cis350.project.favor_app.ui.favorSearch.favorSearchActivity;
 
 /*
  * Singleton class for the database
@@ -43,106 +33,112 @@ public class FavorDatabase {
     }
 
     public List<Favor> getAllFavors(String compare) {
-        try {
-            URL url = new URL("http://10.0.2.2:3000/favors/all");
-            AccessAllFavorsTask task = new AccessAllFavorsTask();
-            task.execute(url);
-            JSONArray allFavorArray = task.get();
-            if (allFavorArray == null) {
-                return null;
-            }
-            List allFavorSet = new LinkedList<Favor>();
-            for (int i = 0; i < allFavorArray.length(); i++) {
-                try {
-                    JSONObject jFavor = allFavorArray.getJSONObject(i);
-                    Log.d("Json favor string", jFavor.toString());
-                    Favor favor = JsonUtil.getFavorFromJsonObject(jFavor);
-                    if (favor != null) {
-                        allFavorSet.add(favor);
-                    }
-                } catch (JSONException e) {
-                    Log.e("Error getting favor", e.toString());
-                    return null;
-                }
-            }
-            return allFavorSet;
-        } catch (Exception e) {
-            Log.e("Error all favors", e.toString());
-            return null;
-        }
-    }
+        String connString = Constants.WEB_CONNECTION_STRING + "favors/all";
+        JSONObject requestBody = new JSONObject();
 
-    public HashSet<Favor> getFavorsSubmittedByUser(String userId, String compare) {
         try {
-            AccessFavorsSubmittedByUserTask task = new AccessFavorsSubmittedByUserTask();
-            task.userId = userId;
-            task.compare = compare;
-            Log.d("userId", userId);
+            requestBody.put("compare", compare);
+
+            JSONArrayWebTask task = new JSONArrayWebTask();
+
+            task.setBody(requestBody);
+            task.setConnString(connString);
             task.execute();
-            JSONArray allFavorArray = task.get();
-            if (allFavorArray == null) {
-                return null;
-            }
-            HashSet favorSet = new HashSet<User>();
-            for (int i = 0; i < allFavorArray.length(); i++) {
-                try {
-                    JSONObject jFavor = allFavorArray.getJSONObject(i);
-                    Log.d("Json favor string", jFavor.toString());
-                    Favor favor = JsonUtil.getFavorFromJsonObject(jFavor);
-                    if (favor != null) {
-                        favorSet.add(favor);
-                    }
-                } catch (JSONException e) {
-                    Log.e("Error getting favor", e.toString());
-                    return null;
+
+            List<Favor> favors = new LinkedList<Favor>();
+
+
+            JSONArray result = task.get();
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject obj = result.getJSONObject(i);
+                Favor favor = JsonUtil.getFavorFromJsonObject(obj);
+                if (favor != null) {
+                    favors.add(favor);
                 }
             }
-            return favorSet;
+
+            return favors;
         } catch (Exception e) {
-            Log.e("Error favs by submitter", e.toString());
+            Log.d("Error creating favor", e.toString());
             return null;
         }
     }
 
-    public HashSet<Favor> getFavorsAcceptedByUser(String userId, String compare) {
+    public List<Favor> getFavorsSubmittedByUser(String userId, String compare) {
+        String connString = Constants.WEB_CONNECTION_STRING + "favors/getallfromuser";
+        JSONObject requestBody = new JSONObject();
+
         try {
-            AccessFavorsAcceptedByUserTask task = new AccessFavorsAcceptedByUserTask();
-            task.userId = userId;
-            task.compare = compare;
-            Log.d("userId", userId);
+            requestBody.put("userId", userId);
+            requestBody.put("compare", compare);
+
+            JSONArrayWebTask task = new JSONArrayWebTask();
+
+            task.setBody(requestBody);
+            task.setConnString(connString);
             task.execute();
-            JSONArray allFavorArray = task.get();
-            if (allFavorArray == null) {
-                return null;
-            }
-            HashSet favorSet = new HashSet<User>();
-            for (int i = 0; i < allFavorArray.length(); i++) {
-                try {
-                    JSONObject jFavor = allFavorArray.getJSONObject(i);
-                    Log.d("Json favor string", jFavor.toString());
-                    Favor favor = JsonUtil.getFavorFromJsonObject(jFavor);
-                    if (favor != null) {
-                        favorSet.add(favor);
-                    }
-                } catch (JSONException e) {
-                    Log.e("Error getting favor", e.toString());
-                    return null;
+
+            List<Favor> favors = new LinkedList<Favor>();
+
+
+            JSONArray result = task.get();
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject obj = result.getJSONObject(i);
+                Favor favor = JsonUtil.getFavorFromJsonObject(obj);
+                if (favor != null) {
+                    favors.add(favor);
                 }
             }
-            return favorSet;
+
+            return favors;
         } catch (Exception e) {
-            Log.e("Error favs by acceptor", e.toString());
+            Log.d("Error creating favor", e.toString());
             return null;
         }
     }
 
-    public Favor addFavorToDatabase(String userId, String date, int urgency, String location,
-                                    double lat, double lon, String details, String category) {
+    public List<Favor> getFavorsAcceptedByUser(String userId, String compare) {
+        String connString = Constants.WEB_CONNECTION_STRING + "favors/getallacceptedbyuser";
+        JSONObject requestBody = new JSONObject();
+
+        try {
+            requestBody.put("userId", userId);
+            requestBody.put("compare", compare);
+
+            JSONArrayWebTask task = new JSONArrayWebTask();
+
+            task.setBody(requestBody);
+            task.setConnString(connString);
+            task.execute();
+
+            List<Favor> favors = new LinkedList<Favor>();
+
+
+            JSONArray result = task.get();
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject obj = result.getJSONObject(i);
+                Favor favor = JsonUtil.getFavorFromJsonObject(obj);
+                if (favor != null) {
+                    favors.add(favor);
+                }
+            }
+
+            return favors;
+        } catch (Exception e) {
+            Log.d("Error creating favor", e.toString());
+            return null;
+        }
+    }
+
+    public Favor addFavorToDatabase(String userId, String username, String date, int urgency,
+                                    String location, double lat, double lon, String details,
+                                    String category) {
         String connString = Constants.WEB_CONNECTION_STRING + "favors/create";
         JSONObject requestBody = new JSONObject();
 
         try {
             requestBody.put("userId", userId);
+            requestBody.put("username", username);
             requestBody.put("datePosted", date);
             requestBody.put("urgency", urgency);
             requestBody.put("location", location);

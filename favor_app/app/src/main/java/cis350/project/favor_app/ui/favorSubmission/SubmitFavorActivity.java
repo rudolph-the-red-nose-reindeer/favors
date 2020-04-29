@@ -44,6 +44,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
 
     private Button createFavorBtnTwo;
     private String userId;
+    private String username;
     private String category;
 
     @Override
@@ -67,6 +68,7 @@ public class SubmitFavorActivity extends AppCompatActivity {
         // Temp for now (to show deletion), to be updated when merging
 
         userId = getIntent().getStringExtra("userId");
+        username = getIntent().getStringExtra("username");
 
         createFavorBtnTwo = findViewById(R.id.btCreateFavorTwo);
 
@@ -93,8 +95,9 @@ public class SubmitFavorActivity extends AppCompatActivity {
                 LocationUtil.getLastLocation(SubmitFavorActivity.this, new LocationUtil.LocationCallback() {
                     @Override
                     public void onSuccess(Location loc) {
-                        Favor newFavor = FavorDatabase.getInstance().addFavorToDatabase(userId, date,
-                                urgency, location, loc.getLat(), loc.getLon(), details, category);
+                        Favor newFavor = FavorDatabase.getInstance().addFavorToDatabase(userId,
+                                username, date, urgency, location, loc.getLat(), loc.getLon(),
+                                details, category);
 
                         Log.d("plzwork", JsonUtil.getJsonObjectFromFavor(newFavor).toString());
 

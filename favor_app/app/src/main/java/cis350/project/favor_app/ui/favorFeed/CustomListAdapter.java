@@ -1,5 +1,6 @@
 package cis350.project.favor_app.ui.favorFeed;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,14 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.model.Favor;
 
 public class CustomListAdapter extends BaseAdapter {
-    private ArrayList<FavorListItem> listData;
+    private ArrayList<Favor> listData;
     private LayoutInflater layoutInflater;
-    public CustomListAdapter(Context aContext, ArrayList<FavorListItem> listData) {
-        this.listData = listData;
+    public CustomListAdapter(Context aContext, List<Favor> listData) {
+        this.listData = new ArrayList<Favor>(listData);
+        Log.d("list", listData.toString());
         layoutInflater = LayoutInflater.from(aContext);
     }
     @Override
@@ -44,7 +48,7 @@ public class CustomListAdapter extends BaseAdapter {
         }
         holder.uUsername.setText(listData.get(position).getUsername());
         holder.uDetails.setText(listData.get(position).getDetails());
-        holder.uUrgency.setText(listData.get(position).getUrgency());
+        holder.uUrgency.setText(String.valueOf(listData.get(position).getUrgency()));
         holder.uDate.setText(listData.get(position).getDate());
         return v;
     }

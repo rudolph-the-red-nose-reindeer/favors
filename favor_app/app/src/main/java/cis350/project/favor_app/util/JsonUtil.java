@@ -70,6 +70,7 @@ public class JsonUtil {
         try {
             String favorId = favor.getFavorId();
             String userId = favor.getUserId();
+            String username = favor.getUsername();
             String acceptedby = favor.getAcceptedBy();
             String date = favor.getDate();
             int urgency = favor.getUrgency();
@@ -82,6 +83,7 @@ public class JsonUtil {
             JSONObject out = new JSONObject();
             out.put("_id", favorId);
             out.put("userId", userId);
+            out.put("username", username);
             out.put("acceptedBy", acceptedby);
             out.put("datePosted", date);
             out.put("urgency", urgency);
@@ -103,6 +105,7 @@ public class JsonUtil {
         try {
             String favorId = obj.getString("_id");
             String userId = obj.getString("userId");
+            String username = obj.getString("username");
             String acceptedBy = "";
             double lat = 0;
             double lon = 0;
@@ -125,8 +128,8 @@ public class JsonUtil {
                 location = obj.getString("location");
             }
 
-            return new Favor(favorId, userId, acceptedBy, date, urgency, location, details,
-                    lat, lon, category);
+            return new Favor(favorId, userId, username, acceptedBy, date, urgency, location,
+                    details, lat, lon, category);
         } catch (Exception e) {
             Log.d("Error converting JSON object to favor", e.toString());
             return null;

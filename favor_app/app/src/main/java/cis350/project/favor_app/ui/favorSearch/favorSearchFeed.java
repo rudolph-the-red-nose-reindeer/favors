@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.database.FavorDatabase;
@@ -77,7 +78,7 @@ public class favorSearchFeed extends AppCompatActivity {
         private LinkedHashMap<Favor, User> getFavorsUsers () {
             FavorDatabase favorDb = FavorDatabase.getInstance();
             UserDatabase userDb = UserDatabase.getInstance();
-            HashSet<Favor> allFavors = favorDb.getAllFavors();
+            List<Favor> allFavors = favorDb.getAllFavors("Urgency");
 
             if (allFavors == null) {
                 Toast.makeText(favorSearchFeed.this, "Error: There are Favors that are missing field values", Toast.LENGTH_LONG).show();

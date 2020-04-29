@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import cis350.project.favor_app.data.database.FavorDatabase;
@@ -15,114 +16,81 @@ import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
 
 public class Grouper {
-    public static LinkedHashMap<Favor, User> getFirstNFavors(int n, String compare) {
+    public static List<Favor> getFirstNFavors(int n, String compare) {
         FavorDatabase favorDB = FavorDatabase.getInstance();
-        UserDatabase userDB = UserDatabase.getInstance();
         List<Favor> allFavors = favorDB.getAllFavors(compare);
 
         Log.d("Grouper 1", "yes");
 
         if (allFavors == null) {
-            return new LinkedHashMap<Favor, User>();
+            return new LinkedList<>();
             //throw new IllegalArgumentException("all Favors is null/cannot access favors in db");
         }
         Log.d("Grouper 1", "yes");
-        ArrayList<Favor> allFavorsList = new ArrayList<Favor>();
+
+        List<Favor> outList = new LinkedList();
+
         for (Favor f : allFavors) {
-            allFavorsList.add(f);
+            n = n -1;
+
+            outList.add(f);
+
+            if (n == 0) {
+                break;
+            }
+        }
+        return outList;
+    }
+
+    public static List<Favor> getFirstNFavorsSubmittedByUser(int n, String userId, String compare) {
+        FavorDatabase favorDB = FavorDatabase.getInstance();
+        List<Favor> allFavors = favorDB.getFavorsSubmittedByUser(userId, compare);
+
+        Log.d("Grouper 1", "yes");
+
+        if (allFavors == null) {
+            return new LinkedList<>();
+            //throw new IllegalArgumentException("all Favors is null/cannot access favors in db");
         }
         Log.d("Grouper 1", "yes");
-        LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();
-        for (Favor f : allFavorsList) {
+
+        List<Favor> outList = new LinkedList();
+
+        for (Favor f : allFavors) {
             n = n -1;
-            User u = userDB.findUserById(f.getUserId());
-            if (u == null) {
-                continue;
-            }
-            favorToUser.put(f, u);
+
+            outList.add(f);
+
             if (n == 0) {
                 break;
             }
         }
-        if (favorToUser.isEmpty()) {
-            return new LinkedHashMap<Favor, User>();
-            //throw new IllegalStateException("Yeah, favor to user shouldn't be empty");
-        }
-        return favorToUser;
+        return outList;
     }
 
-    public static LinkedHashMap<Favor, User> getFirstNFavorsSubmittedByUser(int n, String userId,
-                                                                   String compare) {
+    public static List<Favor> getFirstNFavorsAcceptedByUser(int n, String userId, String compare) {
         FavorDatabase favorDB = FavorDatabase.getInstance();
-        UserDatabase userDB = UserDatabase.getInstance();
-        HashSet<Favor> favors = favorDB.getFavorsSubmittedByUser(userId, compare);
+        List<Favor> allFavors = favorDB.getFavorsAcceptedByUser(userId, compare);
 
-        Log.d("Grouper 2", "yes");
+        Log.d("Grouper 1", "yes");
 
-        if (favors == null) {
-            return new LinkedHashMap<Favor, User>();
+        if (allFavors == null) {
+            return new LinkedList<>();
             //throw new IllegalArgumentException("all Favors is null/cannot access favors in db");
         }
-        Log.d("Grouper 2", "yes");
-        ArrayList<Favor> allFavorsList = new ArrayList<Favor>();
-        for (Favor f : favors) {
-            allFavorsList.add(f);
-        }
-        Log.d("Grouper 2", "yes");
-        LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();
-        for (Favor f : allFavorsList) {
+        Log.d("Grouper 1", "yes");
+
+        List<Favor> outList = new LinkedList();
+
+        for (Favor f : allFavors) {
             n = n -1;
-            User u = userDB.findUserByUsername(f.getUserId());
-            if (u == null) {
-                continue;
-            }
-            favorToUser.put(f, u);
+
+            outList.add(f);
+
             if (n == 0) {
                 break;
             }
         }
-        if (favorToUser.isEmpty()) {
-            return new LinkedHashMap<Favor, User>();
-            //throw new IllegalStateException("Yeah, favor to user shouldn't be empty");
-        }
-        return favorToUser;
-    }
-
-    public static LinkedHashMap<Favor, User> getFirstNFavorsAcceptedByUser(int n, String userId,
-                                                                           String compare) {
-        FavorDatabase favorDB = FavorDatabase.getInstance();
-        UserDatabase userDB = UserDatabase.getInstance();
-        HashSet<Favor> favors = favorDB.getFavorsAcceptedByUser(userId, compare);
-
-        Log.d("Grouper 2", "yes");
-
-        if (favors == null) {
-            return new LinkedHashMap<Favor, User>();
-            //throw new IllegalArgumentException("all Favors is null/cannot access favors in db");
-        }
-        Log.d("Grouper 2", "yes");
-        ArrayList<Favor> allFavorsList = new ArrayList<Favor>();
-        for (Favor f : favors) {
-            allFavorsList.add(f);
-        }
-        Log.d("Grouper 2", "yes");
-        LinkedHashMap<Favor, User> favorToUser = new LinkedHashMap<Favor, User>();
-        for (Favor f : allFavorsList) {
-            n = n -1;
-            User u = userDB.findUserById(f.getUserId());
-
-            if (u == null) {
-                continue;
-            }
-            favorToUser.put(f, u);
-            if (n == 0) {
-                break;
-            }
-        }
-        if (favorToUser.isEmpty()) {
-            return new LinkedHashMap<Favor, User>();
-            //throw new IllegalStateException("Yeah, favor to user shouldn't be empty");
-        }
-        return favorToUser;
+        return outList;
     }
 }

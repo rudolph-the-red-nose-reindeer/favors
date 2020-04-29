@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.model.Favor;
@@ -45,47 +46,10 @@ public class FavorFeedActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sortBy = spinner.getSelectedItem().toString();
-                Comparator<Favor> c;
-                //Log.d("hihihi", "jijai");
-                if (sortBy.equals("Urgency")) {
-                    c = Sorter.getInstance().getUrgencyComparator();
-                } else if (sortBy.equals("Username")) {
-                    c = Sorter.getInstance().getUsernameComparator();
-                } else {
-                    c = Sorter.getInstance().getDateComparator();
-                }
-                ArrayList<FavorListItem> listItemsFavorList = new ArrayList<>();
-                LinkedHashMap<Favor, User> favorToUser = Grouper.getFirstNFavors(25, c);
-                if (c != null) {
-                    for (Favor f : favorToUser.keySet()) {
-                        User u = favorToUser.get(f);
-                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                                f.getUrgency(), f.getDate(), f.getCategory() );
-                        listItemsFavorList.add(li);
-                    }
-                } else {
-                    ArrayList<User> userList = new ArrayList<User>();
-                    LinkedHashMap<User, Favor> userToFavor = new LinkedHashMap<>();
-                    for (Favor f : favorToUser.keySet()) {
-                        User u = favorToUser.get(f);
-                        userList.add(u);
-                        userToFavor.put(u, f);
-                    }
-                    Collections.sort(userList, new Comparator<User>() {
-                        @Override
-                        public int compare(User user, User t1) {
-                            return user.getUsername().compareTo(t1.getUsername());
-                        }
-                    });
-                    for (User u : userList) {
-                        Favor f = userToFavor.get(u);
-                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                                f.getUrgency(), f.getDate(), f.getCategory());
-                        listItemsFavorList.add(li);
-                    }
-                }
+                List<Favor> favors = Grouper.getFirstNFavors(25, sortBy);
+
                 final ListView lv = (ListView) findViewById(R.id.favor_feed_user_list);
-                lv.setAdapter(new CustomListAdapter(self, listItemsFavorList));
+                lv.setAdapter(new CustomListAdapter(self, favors));
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {

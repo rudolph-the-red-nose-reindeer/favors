@@ -3,6 +3,7 @@ package cis350.project.favor_app.data.model;;
 public class Favor {
     private String favorId;
     private String userId;
+    private String username;
     private String acceptedBy;
     private String date;
     private int urgency;
@@ -12,10 +13,12 @@ public class Favor {
     private double lon;
     private String category;
 
-    public Favor(String favorId, String userId, String acceptedBy, String date, int urgency,
-                 String location, String details, double lat, double lon, String category) {
+    public Favor(String favorId, String userId, String username, String acceptedBy, String date,
+                 int urgency, String location, String details, double lat, double lon,
+                 String category) {
         this.favorId = favorId;
         this.userId = userId;
+        this.username = username;
         if (acceptedBy != null) {
             this.acceptedBy = acceptedBy;
         } else {
@@ -36,6 +39,10 @@ public class Favor {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getAcceptedBy() {
@@ -69,4 +76,5 @@ public class Favor {
     public String getCategory() {
         return category;
     }
+
 }

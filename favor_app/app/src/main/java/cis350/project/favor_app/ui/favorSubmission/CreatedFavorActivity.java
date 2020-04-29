@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import cis350.project.favor_app.R;
+import cis350.project.favor_app.data.database.FavorDatabase;
+import cis350.project.favor_app.data.model.Favor;
 
 public class CreatedFavorActivity extends AppCompatActivity {
     private Button createDeleteBtn;
@@ -29,24 +31,17 @@ public class CreatedFavorActivity extends AppCompatActivity {
         createDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Favor result = FavorDatabase.getInstance().deleteFavorFromDatabase(idToDelete);
 
-                WebFavorDeletionTask favorTask = new WebFavorDeletionTask();
-                favorTask.idToDelete = idToDelete;
-                favorTask.execute();
-                try {
-                    Toast.makeText(CreatedFavorActivity.this, "Successfully Deleted Favor",
-                            Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(CreatedFavorActivity.this, SubmitFavorActivity.class);
-                    startActivity(i);
-                    CreatedFavorActivity.this.finish();
-
-                } catch (Exception e) {
-                    Log.d("Register", e.toString());
+                if (result == null) {
                     Toast.makeText(CreatedFavorActivity.this, "Favor Not Deleted",
                             Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(CreatedFavorActivity.this, "Successfully Deleted Favor",
+                            Toast.LENGTH_LONG).show();
+                    CreatedFavorActivity.this.finish();
                 }
             }
-
 
         });
 

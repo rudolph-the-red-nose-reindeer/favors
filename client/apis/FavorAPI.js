@@ -17,15 +17,12 @@ class FavorApi {
     }
 
       sortBy = function(favors, compare) {
-        console.log("favors in sort", favors);
         if (compare == "Urgency") {
-            favors.sort((a,b) => b.urgency - a.urgency);
-            console.log("favors after urgency sort", favors);
+            favors.sort((a, b) => b.urgency - a.urgency);
         } else if (compare == "Date") {
             favors.sort((a, b) => b.datePosted - a.datePosted);
-            console.log("favors after Date sort", favors);
         } else {
-            return favors;
+            favors.sort((a, b) => a.username - b.username)
         }   
     }
 
@@ -35,6 +32,7 @@ class FavorApi {
             // construct the favor from the form data which is in the request body
             var newFavor = new favorSchema ({
                 userId: mongoose.Types.ObjectId(req.body.userId),
+                username: req.body.username,
                 datePosted: Date.parse(req.body.datePosted),
                 urgency: req.body.urgency,
                 location: req.body.location,
@@ -102,10 +100,8 @@ class FavorApi {
                     var favor = favors[0];
                     res.send([favor]); 
                 } else {
-                    console.log("favors", favors);
                     console.log("req.body.compare", req.body.compare);
                     this.sortBy(favors, req.body.compare);
-                    console.log("favors after returning from sortBy", favors);
                     res.json(favors); 
                 }
             });
@@ -156,8 +152,8 @@ class FavorApi {
                 }
                 else {
                     if (favors) {
-                        sortBy(favors, req.body.compare);
                         console.log("req.body.compare for ye", req.body.compare);
+                        this.sortBy(favors, req.body.compare);
                         res.send(favors);
                     }
                     else {
@@ -180,7 +176,8 @@ class FavorApi {
                 }
                 else {
                     if (favors) {
-                        sortBy(favors, req.body.compare);
+                        console.log("req.body.compare for ye", req.body.compare);
+                        this.sortBy(favors, req.body.compare);
                         res.send(favors);
                     }
                     else {

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.model.User;
@@ -72,59 +74,22 @@ public class UserFavorsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String sortBy = spinner.getSelectedItem().toString();
                 Log.d("spinner selection:", sortBy);
-                Comparator<Favor> c;
-                //Log.d("hihihi", "jijai");
-                if (sortBy.equals("Urgency")) {
-                    c = Sorter.getInstance().getUrgencyComparator();
-                } else if (sortBy.equals("Username")) {
-                    c = Sorter.getInstance().getUsernameComparator();
-                } else {
-                    c = Sorter.getInstance().getDateComparator();
-                }
-                ArrayList<FavorListItem> listItemsFavorList = new ArrayList<>();
-                LinkedHashMap<Favor, User> favorToUser;
+
+                List<Favor> favors;
 
                 if (submittedView) {
-                    favorToUser = Grouper.getFirstNFavorsSubmittedByUser(25, userId, c);
+                    favors = Grouper.getFirstNFavorsSubmittedByUser(25, userId, sortBy);
                 } else {
-                    favorToUser = Grouper.getFirstNFavorsAcceptedByUser(25, userId, c);
+                    favors = Grouper.getFirstNFavorsAcceptedByUser(25, userId, sortBy);
                 }
 
-                Log.d("favorToUser", favorToUser.toString());
-
-                if (c != null) {
-                    for (Favor f : favorToUser.keySet()) {
-                        User u = favorToUser.get(f);
-                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                                f.getUrgency(), f.getDate(), f.getCategory());
-                        listItemsFavorList.add(li);
-                    }
-                } else {
-                    ArrayList<User> userList = new ArrayList<User>();
-                    LinkedHashMap<User, Favor> userToFavor = new LinkedHashMap<>();
-                    for (Favor f : favorToUser.keySet()) {
-                        User u = favorToUser.get(f);
-                        userList.add(u);
-                        userToFavor.put(u, f);
-                    }
-                    Collections.sort(userList, new Comparator<User>() {
-                        @Override
-                        public int compare(User user, User t1) {
-                            return user.getUsername().compareTo(t1.getUsername());
-                        }
-                    });
-                    for (User u : userList) {
-                        Favor f = userToFavor.get(u);
-                        FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                                f.getUrgency(), f.getDate(), f.getCategory());
-                        listItemsFavorList.add(li);
-                    }
+                if (favors == null) {
+                    favors = new LinkedList<Favor>();
                 }
 
-                Log.d("TTTTTT", listItemsFavorList.toString());
                 final ListView lv = (ListView) v.findViewById(userListId);
                 Log.d("listview?", String.valueOf(lv == null));
-                lv.setAdapter(new CustomListAdapter(v.getContext(), listItemsFavorList));
+                lv.setAdapter(new CustomListAdapter(v.getContext(), favors));
             }
 
             @Override
