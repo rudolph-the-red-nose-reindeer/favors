@@ -27,6 +27,7 @@ import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.Location;
 import cis350.project.favor_app.util.JsonUtil;
 import cis350.project.favor_app.util.LocationUtil;
+import cis350.project.favor_app.util.TimeUtil;
 
 public class SubmitFavorActivity extends AppCompatActivity {
     private Activity self = this;
@@ -75,9 +76,6 @@ public class SubmitFavorActivity extends AppCompatActivity {
         createFavorBtnTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.US);
-                Date now = new Date();
-                String date = format.format(now);
                 details = detailsText.getText().toString();
                 urgency = Integer.parseInt(urgencyText.getText().toString());
                 location = locationText.getText().toString();
@@ -96,14 +94,14 @@ public class SubmitFavorActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Location loc) {
                         Favor newFavor = FavorDatabase.getInstance().addFavorToDatabase(userId,
-                                username, date, urgency, location, loc.getLat(), loc.getLon(),
+                                username, urgency, location, loc.getLat(), loc.getLon(),
                                 details, category);
 
-                        Log.d("plzwork", JsonUtil.getJsonObjectFromFavor(newFavor).toString());
 
                         if (newFavor == null) {
                             failure();
                         } else {
+                            Log.d("plzwork", JsonUtil.getJsonObjectFromFavor(newFavor).toString());
                             Toast.makeText(SubmitFavorActivity.this, "Successfully Registered",
                                     Toast.LENGTH_LONG).show();
                             Intent i = new Intent(SubmitFavorActivity.this, CreatedFavorActivity.class);

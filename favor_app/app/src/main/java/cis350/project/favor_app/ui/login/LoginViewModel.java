@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import cis350.project.favor_app.data.LoginRepository;
 import cis350.project.favor_app.data.Result;
@@ -125,7 +126,9 @@ public class LoginViewModel extends ViewModel {
 
     private void success(Result.Success<User> result) {
         //Log.d("LOGIN SUCCESS:", username + " " + password);
+
         User data = result.getData();
+
         loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUserId(),
                 data.getUsername(),
                 data.getEmail(),

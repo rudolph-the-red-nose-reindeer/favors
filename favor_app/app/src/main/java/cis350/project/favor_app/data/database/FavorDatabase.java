@@ -130,7 +130,7 @@ public class FavorDatabase {
         }
     }
 
-    public Favor addFavorToDatabase(String userId, String username, String date, int urgency,
+    public Favor addFavorToDatabase(String userId, String username, int urgency,
                                     String location, double lat, double lon, String details,
                                     String category) {
         String connString = Constants.WEB_CONNECTION_STRING + "favors/create";
@@ -139,7 +139,6 @@ public class FavorDatabase {
         try {
             requestBody.put("userId", userId);
             requestBody.put("username", username);
-            requestBody.put("datePosted", date);
             requestBody.put("urgency", urgency);
             requestBody.put("location", location);
             requestBody.put("lat", lat);

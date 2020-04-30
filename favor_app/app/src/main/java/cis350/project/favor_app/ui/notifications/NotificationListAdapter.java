@@ -1,4 +1,4 @@
-package cis350.project.favor_app.ui.favorFeed;
+package cis350.project.favor_app.ui.notifications;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +13,10 @@ import java.util.List;
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.model.Favor;
 
-public class CustomListAdapter extends BaseAdapter {
+public class NotificationListAdapter extends BaseAdapter {
     private ArrayList<Favor> listData;
     private LayoutInflater layoutInflater;
-    public CustomListAdapter(Context aContext, List<Favor> listData) {
+    public NotificationListAdapter(Context aContext, List<Favor> listData) {
         this.listData = new ArrayList<Favor>(listData);
         Log.d("list", listData.toString());
         layoutInflater = LayoutInflater.from(aContext);

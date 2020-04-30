@@ -5,6 +5,10 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.Reward;
 import cis350.project.favor_app.data.model.User;
@@ -110,6 +114,7 @@ public class JsonUtil {
             double lat = 0;
             double lon = 0;
             String date = obj.getString("datePosted");
+            date = TimeUtil.convertFromMongoToAppFormat(date);
             int urgency = obj.getInt("urgency");
             String details = obj.getString("details");
             String location = "";

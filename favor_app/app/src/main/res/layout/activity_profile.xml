@@ -172,11 +172,11 @@
         android:layout_height="55dp"
         android:text="Chat"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout"
-        app:layout_constraintEnd_toStartOf="@+id/name_text"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/find_favor_search_profile_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/find_favor_search_profile_btn"
@@ -184,10 +184,39 @@
         android:layout_height="55dp"
         android:text="Filter Favors"
         app:layout_constraintBottom_toBottomOf="@+id/see_friends_button"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/name_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.627" />
+
+    <Button
+        android:id="@+id/profile_notif_button"
+        android:layout_width="40dp"
+        android:layout_height="41dp"
+        android:background="@drawable/bell"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/see_friends_button"
+        app:layout_constraintEnd_toStartOf="@+id/see_friends_button"
+        app:layout_constraintHorizontal_bias="0.243"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.548" />
+
+    <ImageView
+        android:id="@+id/profile_notif_circle"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:elevation="10dp"
+        android:src="@drawable/notif_circle"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_notif_button"
+        app:layout_constraintEnd_toEndOf="@+id/profile_notif_button"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/profile_notif_button"
+        app:layout_constraintTop_toTopOf="@+id/profile_notif_button"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

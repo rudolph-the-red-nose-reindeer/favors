@@ -17,10 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".services.CustomMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/channel_id"/>
         
         <activity android:name=".ui.map.MapsActivity" />
         <activity android:name=".ui.chat.ChatActivity"></activity>

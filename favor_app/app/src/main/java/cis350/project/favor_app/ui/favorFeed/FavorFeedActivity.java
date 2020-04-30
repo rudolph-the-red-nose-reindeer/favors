@@ -11,15 +11,10 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.model.Favor;
-import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.chat.ChatActivity;
 import cis350.project.favor_app.ui.map.MapsActivity;
 
@@ -49,7 +44,7 @@ public class FavorFeedActivity extends AppCompatActivity {
                 List<Favor> favors = Grouper.getFirstNFavors(25, sortBy);
 
                 final ListView lv = (ListView) findViewById(R.id.favor_feed_user_list);
-                lv.setAdapter(new CustomListAdapter(self, favors));
+                lv.setAdapter(new FavorListAdapter(self, favors));
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {

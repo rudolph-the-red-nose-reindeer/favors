@@ -18,6 +18,9 @@
     <string name="title_activity_favor">FavorActivity</string>
     <string name="title_activity_created_favor">CreatedFavorActivity</string>
     <string name="title_activity_find_favor">CreatedFindActivity</string>
+    <string name="channel_name">Favor App notifications</string>
+    <string name="channel_description">The default notification channel</string>
+    <string name="channel_id">default_channel</string>
     <string-array name="category">
         <item>Home and Cleaning</item>
         <item>Drinks</item>

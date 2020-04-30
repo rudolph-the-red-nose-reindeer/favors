@@ -1,26 +1,23 @@
 package cis350.project.favor_app.ui.profile;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.service.autofill.UserData;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-
+import cis350.project.favor_app.services.CustomMessagingService;
 import cis350.project.favor_app.R;
 import cis350.project.favor_app.data.database.UserDatabase;
-import cis350.project.favor_app.data.model.Location;
 import cis350.project.favor_app.data.model.User;
 import cis350.project.favor_app.ui.chat.FriendActivity;
 import cis350.project.favor_app.ui.favorFeed.FavorFeedActivity;
@@ -30,7 +27,8 @@ import cis350.project.favor_app.ui.login.LoginActivity;
 import cis350.project.favor_app.ui.rewards.RewardActivity;
 import cis350.project.favor_app.ui.userFavorHistory.UserFavorHistoryActivity;
 import cis350.project.favor_app.util.ImageUtil;
-import cis350.project.favor_app.util.LocationUtil;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class ProfileActivity extends Activity {
 
@@ -203,12 +201,11 @@ public class ProfileActivity extends Activity {
     }
 
 
-    public void openCreateFavorActivity() {
+    private void openCreateFavorActivity() {
         Intent intent = new Intent(this, SubmitFavorActivity.class);
         intent.putExtra("userId", loggedInUser.getUserId());
         intent.putExtra("username", loggedInUser.getUsername());
         startActivity(intent);
     }
-
 
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE hmtl>
+
+<html>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/chart.css">
+
+<head>
+  <style>
+    #chart {
+      height: 300px;
+      width: 300px;
+    }
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+      .form {
+        position: absolute;
+        display: block;
+        top: 50px;
+      }
+
+      .navbar {
+        width: 100%;  
+        background-color: rgb(31.25, 162.26, 222.11);
+        overflow: auto;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .navbar a {
+        float: left;
+        padding: 12px;
+        color: white;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .navbar a:hover {
+        background-color: white;
+      }
+
+      .active {
+        background-color: rgb(16, 16, 17);
+      }
+
+      @media screen and (max-width: 500px) {
+        .navbar a {
+          float: none;
+          display: block;
+        }
+    
+      #black_link {color:  rgb(16, 16, 17);}
+  </style>
+</head>
+
+<body>
+
+  <div>
+    <div class="navbar">
+      <a href="http://localhost:3000/getdata" style="color:black"><i class="fa fa-fw fa-home"></i> Home</a> 
+      <a class="active" href="http://localhost:3000/announcement" style="color:rgb(31.25, 162.26, 222.11)"><i class="fa fa-fw fa-bullhorn" ></i> Make announcement</a> 
+      <a href="#" style="color:black"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+      <script>
+      window.document.write('<a href="http://localhost:3000/Login/login.html" style="color:black"><i class="fa fa-fw fa-user"></i> Logout ' + window.sessionStorage.getItem("username") + ' </a> ');
+      </script>
+      <a href="https://cloud.mongodb.com/v2/5e8009e99ad2b345aca1adf4#clusters" style="color:black"><i class="fa fa-fw fa-database"></i> Go to Mongo Database</a> 
+    </div>
+  </div>
+
+  <div class="form">
+      <label for="message">Message:</label>
+      <input type="text" id="message" name="message" value=""><br><br>
+      <input type="submit" onclick="submit()"></input>
+    <script>
+      function submit() {
+        var xhr = new XMLHttpRequest();
+        var message = document.getElementById("message").value
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                console.log(xhr.response);
+            }
+        }
+
+        body = JSON.stringify({message: message});
+
+        console.log(body);
+        xhr.open('post', '/announcementapi/sendtoall', true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.send(body);
+      }
+    </script>
+  </div>
+</body>
+
+</html> 

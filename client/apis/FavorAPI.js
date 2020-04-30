@@ -30,10 +30,11 @@ class FavorApi {
         // route for creating a new favor
         app.use('/favors/create', (req, res) => {
             // construct the favor from the form data which is in the request body
+            console.log('now:', Date.now());
             var newFavor = new favorSchema ({
                 userId: mongoose.Types.ObjectId(req.body.userId),
                 username: req.body.username,
-                datePosted: Date.parse(req.body.datePosted),
+                datePosted: Date.now(),
                 urgency: req.body.urgency,
                 location: req.body.location,
                 details: req.body.details,

@@ -1,4 +1,4 @@
-package cis350.project.favor_app.ui.userFavorHistory;
+package cis350.project.favor_app.ui.notifications;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +16,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.ui.favorFeed.FavorListAdapter;
 import cis350.project.favor_app.data.model.Favor;
+import cis350.project.favor_app.ui.favorFeed.FavorListAdapter;
 import cis350.project.favor_app.ui.favorFeed.Grouper;
 
 public class UserFavorsFragment extends Fragment {
