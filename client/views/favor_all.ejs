@@ -1,8 +1,147 @@
-Here are all the favors:
-<ul>
-<% favors.forEach( (favor) => { %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Delete Favors</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+      body {font-family: Arial, Helvetica, sans-serif;}
 
-<li><%= favor._id %> : <%= favor.userId.toString() %>: <%= favor.details %></li>
+      .form {
+        position: absolute;
+        display: block;
+        top: 50px;
+      }
 
-<% }); %>
-</ul>
+      .navbar {
+        width: 100%;  
+        background-color: rgb(31.25, 162.26, 222.11);
+        overflow: auto;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .navbar a {
+        float: left;
+        padding: 12px;
+        color: blue;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .navbar a:hover {
+        background-color: blue;
+      }
+
+       @media screen and (max-width: 500px) {
+      .navbar a {
+        float: none;
+        display: block;
+      }
+
+    
+      #black_link {color:  rgb(16, 16, 17);}
+    table, td, th {  
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    
+    table {
+      border-collapse: collapse;
+      width: 50%;
+     
+    }
+    .table-data{
+      position: relative;
+      left:150px;
+      top:100px;
+    }
+    th, td {
+      padding: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="table-data">
+<h2>Display The Favors</h2>
+    <table border="1">
+        <tr>
+           <th>Favor Number</th>
+     <!--        <th>Favor Id</th>
+            <th>userId</th> -->
+            <th>username</th>
+            <th>Date Posted</th>
+            <th>urgency</th>
+            <th>location</th>
+            <th>details</th>
+            <th>lat</th>
+            <th>lon</th>
+            <th>category</th>
+            <th>Delete</th>
+        </tr>
+
+
+<!--   <script>
+      const url = 'http://localhost:3000/favors/all';
+      fetch(url)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then(data => {
+           favors = data;
+          }
+   </script>
+ -->
+        <%
+        if(allFavors.length!=0){
+        var i=1;
+        allFavors.forEach(function(data){
+        %>
+        <tr>
+            <td><%=i; %></td>
+<!--             <td><%=data._id.toString() %></td>
+            <td><%=data.userId %></td> -->
+            <td><%=data.username %></td>
+            <td><%=data.datePosted %></td>
+            <td><%=data.urgency %></td>
+            <td><%=data.location %></td>
+            <td><%=data.details %></td>
+            <td><%=data.lat %></td>
+            <td><%=data.lon %></td>
+            <td><%=data.category %></td>
+            <td>  <input type="submit" onclick="deleteFavor();" value="Delete Favor"></input>
+                <script>
+                function deleteFavor() {
+                  console.log("wtf is this not working");
+                  var data = JSON.stringify({"id":data._id.toString()});
+                  var xhr = new XMLHttpRequest();
+                  xhr.withCredentials = true;
+
+                  xhr.addEventListener("readystatechange", function() {
+                    if(this.readyState === 4) {
+                      console.log(this.responseText);
+                    }
+                  });
+
+                  xhr.open("GET", "http://localhost:3000/favors/delete");
+                  xhr.setRequestHeader("Content-Type", "application/json");
+                  xhr.send(data);
+                }
+              </script>
+
+
+            </td>
+        </tr>
+        <%  i++; }) %>
+        <% } else{ %>
+            <tr>
+                <td colspan="7">No Data Found</td>
+            </tr>
+        <% } %>
+    </table>
+    </div>
+</body>

@@ -31,6 +31,13 @@ new chartApi(app)
 
 /*************************************************/
 
+
+
+// app.use('/favors', (req, res) => {
+//     res.render('favor_all.ejs');
+// });
+
+
 announcement = require('./tools/announcement.js');
 
 app.use('/announcement', (req, res) => {
