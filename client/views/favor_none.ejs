@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/chart.css">
+<head>
+   <a> </a> 
+   <a> </a> 
+   <a> </a> 
+
+  <title></title>
+    <a> </a> 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+      body {font-family: Arial, Helvetica, sans-serif;}
+
+      .form {
+        position: absolute;
+        display: block;
+        top: 50px;
+      }
+
+         .navbar {
+          width: 100%;  
+          background-color: rgb(31.25, 162.26, 222.11);
+          overflow: auto;
+          position: fixed;
+          top: 0;
+          right: 0;
+        }
+
+        .navbar a {
+          float: left;
+          padding: 12px;
+          color: white;
+          text-decoration: none;
+          font-size: 17px;
+        }
+
+        .navbar a:hover {
+          background-color: white;
+        }
+
+        .active {
+          background-color: rgb(16, 16, 17);
+        }
+
+       @media screen and (max-width: 500px) {
+      .navbar a {
+        float: none;
+        display: block;
+      }
+
+    
+      #black_link {color:  rgb(16, 16, 17);}
+    table, td, th {  
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+
+    </style>
+</head>
+<h2>Sorr  No Favors</h2>
+<body>
+<h2>Sorry  No Favors :( <i class="fa fa-fw fa-sad"></i> </h2>
+
+
+<div class="navbar">
+  <a href="http://localhost:3000/getdata" style="color:black"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a href="http://localhost:3000/announcement" style="color:black"><i class="fa fa-fw fa-bullhorn" ></i> Make announcement</a>
+  <a class="active" href="http://localhost:3000/favors/moderate" style="color:rgb(31.25, 162.26, 222.11)"><i class="fa fa-fw fa-heart" ></i> Moderate Favors </a>  
+  <a href="#" style="color:black"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+  <script>
+  window.document.write('<a href="http://localhost:3000/Login/login.html" style="color:black"><i class="fa fa-fw fa-user"></i> Logout ' + window.sessionStorage.getItem("username") + ' </a> ');
+  </script>
+  <a href="https://cloud.mongodb.com/v2/5e8009e99ad2b345aca1adf4#clusters" style="color:black"><i class="fa fa-fw fa-database"></i> Go to Mongo Database</a> 
+  
+</div>
+
+
+</body>
+</html> 
+
+

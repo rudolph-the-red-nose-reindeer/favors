@@ -76,6 +76,8 @@ class FavorApi {
                                 res.send({ err: err });
                             } else {
                                 res.send(favor);
+                                location.reload();
+
                             }
                         });
                     } else {
@@ -86,7 +88,7 @@ class FavorApi {
             });
         });
     }
-    // Make favors/delete use (req.body.id) use req.query.id 
+    // Make favors/delete display favor_all to screen 
      bindDeleteSecondRoute(app) {
         // route for deleting a favor
         app.use('/favors/query-delete', (req, res) => {
@@ -108,10 +110,10 @@ class FavorApi {
                                         console.log("something horrible happened" + err);
                                         res.json([]);
                                     } else if (favors.length == 0) {
-                                        res.json([]);
+                                        res.render('favor_none', { allFavors: favors });
                                     } else if (favors.length == 1) {
                                         var favor = favors[0];
-                                        res.send([favor]);
+                                        res.render('favor_all', { allFavors: favors });
                                     } else {
                                         console.log("req.body.compare", req.body.compare);
                                         this.sortBy(favors, req.body.compare);
@@ -159,10 +161,10 @@ class FavorApi {
                     console.log("something horrible happened" + err);
                     res.json([]);
                 } else if (favors.length == 0) {
-                    res.json([]);
+                      res.render('favor_none', { allFavors: favors });
                 } else if (favors.length == 1) {
                     var favor = favors[0];
-                    res.send([favor]);
+                    res.render('favor_all', { allFavors: favors });
                 } else {
                     console.log("req.body.compare", req.body.compare);
                     this.sortBy(favors, req.body.compare);
