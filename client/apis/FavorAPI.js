@@ -76,8 +76,6 @@ class FavorApi {
                                 res.send({ err: err });
                             } else {
                                 res.send(favor);
-                                location.reload();
-
                             }
                         });
                     } else {
