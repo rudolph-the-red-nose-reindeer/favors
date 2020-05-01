@@ -1,6 +1,3 @@
-## Web Design  
-This Repo is all about web design/web development, here you will find all sorts of things.
-
 ## License
 
 This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit [http://creativecommons.org/licenses/by/4.0/](http://creativecommons.org/licenses/by/4.0/)
@@ -36,9 +33,14 @@ Features Implemented
 3) See the history of completed favors/current favors 
 4) Search, filter and categorize the favors
 5) End to End Communication with users (chat box) 
+6) Reward redemption
 
-
-I should be able to redeem my points for something of value
+# Iteration 3 (May 1st 2020)
+Features Implemented
+1) Log in and log out of the web client
+2) Data visualization
+3) Making announcements to app users
+4) Moderation of favors
 
 
 # All Features ! 
@@ -50,6 +52,11 @@ I should be able to redeem my points for something of value
  - logging out
  - See the history of completed favors/current favors 
  - Search, filter and categorize the favors
- - End to End Communication with users (chat box) 
+ - End to End Communication with users (chat box)
+ - Reward redemption
+ - Log in and log out of the web client
+ - Data visualization
+ - Making announcements
+ - Moderation of favors
 
 
