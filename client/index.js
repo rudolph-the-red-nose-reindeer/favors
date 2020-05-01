@@ -27,11 +27,6 @@ var givenRewardApi = require('./apis/GivenRewardAPI.js');
 new givenRewardApi(app);
 
 
-<<<<<<< Updated upstream
-=======
-/*************************************************/
-
-
 
 app.use('/favors', (req, res) => {
     res.render('favor_all.ejs');
@@ -65,7 +60,7 @@ app.use('/announcementapi/sendtouser', (req, res) => {
 
 
 app.use('/Login', express.static('Login'));
->>>>>>> Stashed changes
+
 
 /*************************************************/
 

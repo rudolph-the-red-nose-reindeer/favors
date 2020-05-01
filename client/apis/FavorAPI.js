@@ -87,19 +87,17 @@ class FavorApi {
                     var favor = favors[0];
                     res.send([favor]); 
                 } else {
-<<<<<<< Updated upstream
+
                     // construct an array out of the result
                     var returnArray = [];
                     favors.forEach( (favor) => {
                     returnArray.push( favor );
                     });
                     res.json(favors); 
-=======
                     console.log("req.body.compare", req.body.compare);
                     this.sortBy(favors, req.body.compare);
                     res.render('Favors', { title: 'favors', favors: favors});
                     res.json({favors :favors}); 
->>>>>>> Stashed changes
                 }
             });
         });
