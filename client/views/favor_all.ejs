@@ -1,8 +1,90 @@
-Here are all the favors:
-<ul>
-<% favors.forEach( (favor) => { %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Delete Favors</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    table, td, th {  
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    
+    table {
+      border-collapse: collapse;
+      width: 50%;
+     
+    }
+    .table-data{
+        position: relative;
+      left:150px;
+      top:100px;
+    }
+    th, td {
+      padding: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="table-data">
+<h2>Display The Favors</h2>
+    <table border="1">
+        <tr>
+        	<th>Favor id</th>
+            <th>userId</th>
+            <th>username</th>
+            <th>Date Posted</th>
+            <th>urgency</th>
+            <th>location</th>
+            <th>details</th>
+            <th>lat</th>
+            <th>lon</th>
+            <th>category</th>
+            <th>Delete</th>
+        </tr>
 
-<li><%= favor._id %> : <%= favor.userId.toString() %>: <%= favor.details %></li>
+  <% var favors; %>
 
-<% }); %>
-</ul>
+  <script>
+      const url = 'http://localhost:3000/favors/all';
+      fetch(url)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then(data => {
+           favors = data;
+          }
+   </script>
+
+        <%
+        if(favors.length!=0){
+        var i=1;
+        favors.forEach(function(data){
+        %>
+        <tr>
+            <td><%=i; %></td>
+            <td><%=data._id.str %></td>
+            <td><%=data.userId %></td>
+            <td><%=data.username %></td>
+            <td><%=data.datePosted %></td>
+            <td><%=data.urgency %></td>
+			<td><%=data.location %></td>
+            <td><%=data.details %></td>
+            <td><%=data.lat %></td>
+            <td><%=data.lon %></td>
+            <td><%=data.category %></td>
+
+            <td><a href="/user/delete/<%=data._id.str%>">Delete</a></td>
+        </tr>
+        <%  i++; }) %>
+        <% } else{ %>
+            <tr>
+                <td colspan="7">No Data Found</td>
+            </tr>
+        <% } %>
+    </table>
+    </div>
+</body>
