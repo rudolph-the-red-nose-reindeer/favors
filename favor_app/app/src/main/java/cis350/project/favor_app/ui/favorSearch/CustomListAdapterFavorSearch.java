@@ -1,19 +1,20 @@
 package cis350.project.favor_app.ui.favorSearch;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import java.util.ArrayList;
+
+import java.util.List;
+
 import cis350.project.favor_app.R;
-import cis350.project.favor_app.ui.favorFeed.FavorListItem;
+import cis350.project.favor_app.data.model.Favor;
 
 public class CustomListAdapterFavorSearch extends BaseAdapter {
-    private ArrayList<FavorListItem> listData;
+    private List<Favor> listData;
     private LayoutInflater layoutInflater;
-    public CustomListAdapterFavorSearch(Context aContext, ArrayList<FavorListItem> listData) {
+    public CustomListAdapterFavorSearch(Context aContext, List<Favor> listData) {
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
@@ -45,7 +46,7 @@ public class CustomListAdapterFavorSearch extends BaseAdapter {
         }
         holder.uUsername.setText(listData.get(position).getUsername());
         holder.uDetails.setText(listData.get(position).getDetails());
-        holder.uUrgency.setText(listData.get(position).getUrgency());
+        holder.uUrgency.setText(String.valueOf(listData.get(position).getUrgency()));
         holder.uDate.setText(listData.get(position).getDate());
         return v;
     }

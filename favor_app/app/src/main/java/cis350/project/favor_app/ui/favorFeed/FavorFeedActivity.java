@@ -49,7 +49,7 @@ public class FavorFeedActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                         Intent intent = new Intent(self, ChatActivity.class);
-                        FavorListItem clickedOnUser = (FavorListItem) adapterView.getItemAtPosition(pos);
+                        Favor clickedOnUser = (Favor) adapterView.getItemAtPosition(pos);
                         intent.putExtra("OTHER_USERNAME", clickedOnUser.getUsername());
                         intent.putExtra("CURR_USERNAME", getIntent().getStringExtra("CURR_USERNAME"));//UserDatabase.getInstance().
                         //findUserById(CURR_ID).getUsername());

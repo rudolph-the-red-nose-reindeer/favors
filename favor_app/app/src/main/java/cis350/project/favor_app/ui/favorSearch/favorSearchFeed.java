@@ -1,6 +1,5 @@
 package cis350.project.favor_app.ui.favorSearch;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -20,7 +17,6 @@ import cis350.project.favor_app.data.database.FavorDatabase;
 import cis350.project.favor_app.data.database.UserDatabase;
 import cis350.project.favor_app.data.model.Favor;
 import cis350.project.favor_app.data.model.User;
-import cis350.project.favor_app.ui.favorFeed.FavorListItem;
 import cis350.project.favor_app.ui.favorFeed.Sorter;
 
 public class favorSearchFeed extends AppCompatActivity {
@@ -29,8 +25,9 @@ public class favorSearchFeed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favor_filter_results);
-        ArrayList<FavorListItem> listItemsFavorList = new ArrayList<>();
-        LinkedHashMap<Favor, User> favorToUser = getFavorsUsers();
+
+        List<Favor> allFavorList = FavorDatabase.getInstance().getAllFavors("Urgency");
+        List<Favor> outList = new ArrayList<Favor>();
 //        Log.d("check favorToUser", "favorUsers: " + favorToUser.toString());
         Bundle incomingMessages = getIntent().getExtras();
         favor_filter_results_final_tv = (TextView) findViewById(R.id.favor_filter_results_final_tv);
@@ -42,35 +39,29 @@ public class favorSearchFeed extends AppCompatActivity {
         if (check(searchCat)) {
             String messageText = "Category: " + searchCat;
             favor_filter_results_final_tv.setText(messageText);
-            for (Favor f : favorToUser.keySet()) {
-                User u = favorToUser.get(f);
+            for (Favor f : allFavorList) {
                 String category =  f.getCategory();
-                FavorListItem li = new FavorListItem(u.getUsername(), f.getDetails(), "" +
-                        f.getUrgency(), f.getDate(),category);
                 if (category.equals(searchCat)) {
-                    listItemsFavorList.add(li);
+                    outList.add(f);
                 }
             }
         } else {
             String messageText = "Search Results for: " + searchCat;
             favor_filter_results_final_tv.setText(messageText);
-            for (Favor f : favorToUser.keySet()) {
-                User u = favorToUser.get(f);
+            for (Favor f : allFavorList) {
                 String details = f.getDetails();
-                FavorListItem li = new FavorListItem(u.getUsername(), details, "" +
-                        f.getUrgency(), f.getDate(), f.getCategory());
                 if (details.toLowerCase().contains(searchCat.toLowerCase())) {
-                    listItemsFavorList.add(li);
+                    outList.add(f);
                 }
             }
         }
 
 //            Log.d("check_ii", "listItemsFavorList: " + listItemsFavorList.toString());
-            if (listItemsFavorList.size() == 0) {
+            if (outList.size() == 0) {
                 Toast.makeText(favorSearchFeed.this, "Sorry! No results for query found!", Toast.LENGTH_LONG).show();
             }
             final ListView lv = (ListView) findViewById(R.id.favor_filter_results_list_lv);
-            ListAdapter adapter = new CustomListAdapterFavorSearch(this, listItemsFavorList);
+            ListAdapter adapter = new CustomListAdapterFavorSearch(this, outList);
             lv.setAdapter(adapter);
         }
 

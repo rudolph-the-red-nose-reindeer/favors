@@ -7,6 +7,8 @@ app.set('view engine', 'ejs');
 
 // set up BodyParser
 var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({}));
 
@@ -31,11 +33,6 @@ new chartApi(app)
 
 /*************************************************/
 
-
-
-// app.use('/favors', (req, res) => {
-//     res.render('favor_all.ejs');
-// });
 
 
 announcement = require('./tools/announcement.js');

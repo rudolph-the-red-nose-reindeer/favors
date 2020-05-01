@@ -116,6 +116,30 @@
           }
    </script>
  -->
+
+        <script>
+          function deleteFavor(id) {
+            console.log("wtf is this not working");
+            var data = JSON.stringify({"id":id});
+
+            console.log(data);
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function() {
+              if(this.readyState === 4) {
+                console.log(this.responseText);
+              }
+            });
+
+            xhr.open("PUT", "/favors/delete");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(data);
+          }
+        </script>
+
         <%
         if(allFavors.length!=0){
         var i=1;
@@ -133,7 +157,7 @@
             <td><%=data.lat %></td>
             <td><%=data.lon %></td>
             <td><%=data.category %></td>
-            <td><a href="query-delete?id=<%=data._id.toString()%>"><i class="fa fa-fw fa-sad">Delete Favor</a></td>
+            <td><button onclick="<%="deleteFavor('" + data._id.toString() + "')"%>">Delete Favor</button></td>
             <!-- <td>  <input type="submit" onclick="deleteFavor();" value="Delete Favor"></input> -->
         
 
@@ -167,7 +191,14 @@
     </div>
 
 <div class="navbar">
-  <a class="active" href="http://localhost:3000/getdata" style="color:rgb(31.25, 162.26, 222.11)"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a href="http://localhost:3000/getdata" style="color:black"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a href="http://localhost:3000/announcement" style="color:black"><i class="fa fa-fw fa-bullhorn" ></i> Make announcement</a>
+  <a class="active" href="http://localhost:3000/favors/moderate" style="color:rgb(31.25, 162.26, 222.11)"><i class="fa fa-fw fa-heart" ></i> Moderate Favors </a>  
+  <a href="#" style="color:black"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+  <script>
+  window.document.write('<a href="http://localhost:3000/Login/login.html" style="color:black"><i class="fa fa-fw fa-user"></i> Logout ' + window.sessionStorage.getItem("username") + ' </a> ');
+  </script>
+  <a href="https://cloud.mongodb.com/v2/5e8009e99ad2b345aca1adf4#clusters" style="color:black"><i class="fa fa-fw fa-database"></i> Go to Mongo Database</a> 
   
 </div>
 
