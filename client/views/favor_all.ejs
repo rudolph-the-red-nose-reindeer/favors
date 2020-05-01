@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/chart.css">
 <head>
-  <title>Delete Favors</title>
+   <a> </a> 
+   <a> </a> 
+   <a> </a> 
+
+  <title></title>
+    <a> </a> 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -13,26 +20,30 @@
         top: 50px;
       }
 
-      .navbar {
-        width: 100%;  
-        background-color: rgb(31.25, 162.26, 222.11);
-        overflow: auto;
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
+         .navbar {
+          width: 100%;  
+          background-color: rgb(31.25, 162.26, 222.11);
+          overflow: auto;
+          position: fixed;
+          top: 0;
+          right: 0;
+        }
 
-      .navbar a {
-        float: left;
-        padding: 12px;
-        color: blue;
-        text-decoration: none;
-        font-size: 17px;
-      }
+        .navbar a {
+          float: left;
+          padding: 12px;
+          color: white;
+          text-decoration: none;
+          font-size: 17px;
+        }
 
-      .navbar a:hover {
-        background-color: blue;
-      }
+        .navbar a:hover {
+          background-color: white;
+        }
+
+        .active {
+          background-color: rgb(16, 16, 17);
+        }
 
        @media screen and (max-width: 500px) {
       .navbar a {
@@ -46,10 +57,14 @@
       border: 1px solid #ddd;
       text-align: center;
     }
+
     
     table {
       border-collapse: collapse;
       width: 50%;
+      color: blue
+      background-color: #4CAF50;
+      color: white;
      
     }
     .table-data{
@@ -57,19 +72,24 @@
       left:150px;
       top:100px;
     }
+/*    tr:nth-child(even){background-color: #f2f2f2}
+*/
     th, td {
-      padding: 15px;
+      padding: 10px;
+/*      background-color: #4CAF50;
+      color: white;*/
     }
     </style>
 </head>
+<h2>Favor Moderation</h2>
 <body>
     <div class="table-data">
-<h2>Display The Favors</h2>
+    <h2>Favor Moderation</h2>
     <table border="1">
         <tr>
            <th>Favor Number</th>
-     <!--        <th>Favor Id</th>
-            <th>userId</th> -->
+            <th>Favor Id</th>
+            <th>userId</th>
             <th>username</th>
             <th>Date Posted</th>
             <th>urgency</th>
@@ -103,8 +123,8 @@
         %>
         <tr>
             <td><%=i; %></td>
-<!--             <td><%=data._id.toString() %></td>
-            <td><%=data.userId %></td> -->
+            <td><%=data._id.toString() %></td>
+            <td><%=data.userId %></td>
             <td><%=data.username %></td>
             <td><%=data.datePosted %></td>
             <td><%=data.urgency %></td>
@@ -113,8 +133,13 @@
             <td><%=data.lat %></td>
             <td><%=data.lon %></td>
             <td><%=data.category %></td>
-            <td>  <input type="submit" onclick="deleteFavor();" value="Delete Favor"></input>
-                <script>
+            <td><a href="query-delete?id=<%=data._id.toString()%>"><i class="fa fa-fw fa-sad">Delete Favor</a></td>
+            <!-- <td>  <input type="submit" onclick="deleteFavor();" value="Delete Favor"></input> -->
+        
+
+            </td>
+        </tr>
+<!--                 <script>
                 function deleteFavor() {
                   console.log("wtf is this not working");
                   var data = JSON.stringify({"id":data._id.toString()});
@@ -131,11 +156,7 @@
                   xhr.setRequestHeader("Content-Type", "application/json");
                   xhr.send(data);
                 }
-              </script>
-
-
-            </td>
-        </tr>
+              </script> -->
         <%  i++; }) %>
         <% } else{ %>
             <tr>
@@ -144,4 +165,14 @@
         <% } %>
     </table>
     </div>
+
+<div class="navbar">
+  <a class="active" href="http://localhost:3000/getdata" style="color:rgb(31.25, 162.26, 222.11)"><i class="fa fa-fw fa-home"></i> Home</a> 
+  
+</div>
+
+
 </body>
+</html> 
+
+

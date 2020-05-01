@@ -10,6 +10,7 @@ class FavorApi {
     bindRoutes(app) {
         this.bindCreateRoute(app);
         this.bindDeleteRoute(app);
+        this.bindDeleteSecondRoute(app);
         this.bindFindAllRoute(app);
         this.bindModerateAllRoute(app);
         this.bindAcceptFavorRoute(app);
@@ -86,33 +87,47 @@ class FavorApi {
         });
     }
     // Make favors/delete use (req.body.id) use req.query.id 
-    //  bindDeleteSecondRoute(app) {
-    //     // route for deleting a favor
-    //     app.use('/favors/delete', (req, res) => {
-    //         var favorId = mongoose.Types.ObjectId(req.body.id);
-    //         // try to find one favor in the database
-    //         favorSchema.findById(favorId, (err1, favor) => {
-    //             if (err1) {
-    //                 console.log('Error: ' + err);
-    //                 res.send({ err: err });
-    //             } else {
-    //                 if (favor) {
-    //                     favorSchema.deleteOne({ _id: favorId }, (err2) => {
-    //                         if (err2) {
-    //                             console.log('Error: ' + err);
-    //                             res.send({ err: err });
-    //                         } else {
-    //                             res.send(favor);
-    //                         }
-    //                     });
-    //                 } else {
-    //                     console.log('There is no favor with that id');
-    //                     res.send({ err: "there is no favor with that id" });
-    //                 }
-    //             }
-    //         });
-    //     });
-    // }
+     bindDeleteSecondRoute(app) {
+        // route for deleting a favor
+        app.use('/favors/query-delete', (req, res) => {
+            var favorId = mongoose.Types.ObjectId(req.query.id);
+            // try to find one favor in the database
+            favorSchema.findById(favorId, (err1, favor) => {
+                if (err1) {
+                    console.log('Error: ' + err);
+                    res.send({ err: err });
+                } else {
+                    if (favor) {
+                        favorSchema.deleteOne({ _id: favorId }, (err2) => {
+                            if (err2) {
+                                console.log('Error: ' + err);
+                                res.send({ err: err });
+                            } else {
+                                    favorSchema.find({}, (err, favors) => {
+                                    if (err) {
+                                        console.log("something horrible happened" + err);
+                                        res.json([]);
+                                    } else if (favors.length == 0) {
+                                        res.json([]);
+                                    } else if (favors.length == 1) {
+                                        var favor = favors[0];
+                                        res.send([favor]);
+                                    } else {
+                                        console.log("req.body.compare", req.body.compare);
+                                        this.sortBy(favors, req.body.compare);
+                                        res.render('favor_all', { allFavors: favors });
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        console.log('There is no favor with that id');
+                        res.send({ err: "there is no favor with that id" });
+                    }
+                }
+            });
+        });
+    }
 
     bindFindAllRoute(app) {
         app.use("/favors/all", (req, res) => {
